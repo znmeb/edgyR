@@ -1,0 +1,12 @@
+#! /bin/bash
+
+set -e
+
+sudo docker login
+sudo docker images
+
+# push L4T image only on Tegra host
+if [ `uname -r | grep tegra | wc -l` -gt "0" -a `uname -m` == "aarch64" ]
+then
+  /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-jetson-l4t:latest"
+fi

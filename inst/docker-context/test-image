@@ -1,7 +1,9 @@
 #! /bin/bash
 
-sudo docker rm -f algocompsynth
+sudo docker rm -f edgyr
 sudo docker run --detach \
-  --env ALGOCOMPSYNTH_PASSWORD=$ALGOCOMPSYNTH_PASSWORD \
-  --network host --name algocompsynth --hostname algocompsynth \
-  $ALGOCOMPSYNTH_IMAGE
+  --env EDGYR_PASSWORD=$EDGYR_PASSWORD \
+  --network host --name edgyr --hostname edgyr \
+  --volume $HOME/.ssh:/home/edgyr/.ssh \
+  --volume $HOME/Projects:/home/edgyr/Projects \
+  $EDGYR_IMAGE

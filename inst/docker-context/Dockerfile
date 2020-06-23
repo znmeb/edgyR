@@ -12,12 +12,12 @@ ARG RSTUDIO_VERSION_PATCH
 ARG DEBIAN_FRONTEND=noninteractive
 ARG BUILDING_DOCKER_IMAGE=yes
 ARG SOURCE_DIR=/usr/local/src
-ARG ALGOCOMPSYNTH_HOME=/home/algocompsynth
+ARG EDGYR_HOME=/home/edgyr
 
 # environment variables on image
 ENV PAPERSIZE=letter
-ENV PROJECT_HOME=$ALGOCOMPSYNTH_HOME/Projects
-ENV WORKON_HOME=$ALGOCOMPSYNTH_HOME/.virtualenvs
+ENV PROJECT_HOME=$EDGYR_HOME/Projects
+ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
 
 # image building
 USER root
@@ -65,35 +65,35 @@ RUN useradd \
   --user-group \
   --groups sudo \
   --create-home \
-  --uid 1000 algocompsynth \
-  && echo "algocompsynth:algocompsynth" | chpasswd
+  --uid 1000 edgyr \
+  && echo "edgyr:edgyr" | chpasswd
 
-# populate 'algocompsynth' home
-COPY --chown=algocompsynth:algocompsynth bash_aliases $ALGOCOMPSYNTH_HOME/.bash_aliases
-COPY --chown=algocompsynth:algocompsynth Rprofile $ALGOCOMPSYNTH_HOME/.Rprofile
-COPY --chown=algocompsynth:algocompsynth Renviron $ALGOCOMPSYNTH_HOME/.Renviron
-COPY --chown=algocompsynth:algocompsynth Installers $ALGOCOMPSYNTH_HOME/Installers
+# populate 'edgyr' home
+COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
+COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
+COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
+COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
 
 # install dependencies for Python and R packages
-RUN $ALGOCOMPSYNTH_HOME/Installers/apt-packages > $ALGOCOMPSYNTH_HOME/Installers/apt-packages.log 2>&1 && \
-  gzip -9 $ALGOCOMPSYNTH_HOME/Installers/apt-packages.log
-RUN chown -R algocompsynth:algocompsynth $ALGOCOMPSYNTH_HOME/
+RUN $EDGYR_HOME/Installers/apt-packages > $EDGYR_HOME/Installers/apt-packages.log 2>&1 && \
+  gzip -9 $EDGYR_HOME/Installers/apt-packages.log
+RUN chown -R edgyr:edgyr $EDGYR_HOME/
 
-# run as 'algocompsynth'
-USER algocompsynth
-WORKDIR $ALGOCOMPSYNTH_HOME/
+# run as 'edgyr'
+USER edgyr
+WORKDIR $EDGYR_HOME/
 
 # set up Python virtulaenv and R library
-RUN $ALGOCOMPSYNTH_HOME/Installers/create-venvs > $ALGOCOMPSYNTH_HOME/Installers/create-venvs.log 2>&1 && \
-  gzip -9 $ALGOCOMPSYNTH_HOME/Installers/create-venvs.log
+RUN $EDGYR_HOME/Installers/create-venvs > $EDGYR_HOME/Installers/create-venvs.log 2>&1 && \
+  gzip -9 $EDGYR_HOME/Installers/create-venvs.log
 
 # install Python packages
-RUN $ALGOCOMPSYNTH_HOME/Installers/pip-installs > $ALGOCOMPSYNTH_HOME/Installers/pip-installs.log 2>&1 && \
-  gzip -9 $ALGOCOMPSYNTH_HOME/Installers/pip-installs.log
+RUN $EDGYR_HOME/Installers/pip-installs > $EDGYR_HOME/Installers/pip-installs.log 2>&1 && \
+  gzip -9 $EDGYR_HOME/Installers/pip-installs.log
 
 # install R packages
-RUN $ALGOCOMPSYNTH_HOME/Installers/R-installs > $ALGOCOMPSYNTH_HOME/Installers/R-installs.log 2>&1 && \
-  gzip -9 $ALGOCOMPSYNTH_HOME/Installers/R-installs.log
+RUN $EDGYR_HOME/Installers/R-installs > $EDGYR_HOME/Installers/R-installs.log 2>&1 && \
+  gzip -9 $EDGYR_HOME/Installers/R-installs.log
 
 # switch back to root
 USER root
@@ -104,4 +104,4 @@ COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
 
 # copy test scripts to image
-COPY --chown=algocompsynth:algocompsynth TestScripts $ALGOCOMPSYNTH_HOME/TestScripts
+COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts

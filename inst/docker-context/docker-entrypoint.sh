@@ -2,12 +2,12 @@
 
 set -e
 
-if [ ${#ALGOCOMPSYNTH_PASSWORD} -ge 12 ]
+if [ ${#EDGYR_PASSWORD} -ge 12 ]
 then
-  echo "Resetting 'algocompsynth' password"
-  echo "algocompsynth:${ALGOCOMPSYNTH_PASSWORD}" | chpasswd
+  echo "Resetting 'edgyr' password"
+  echo "edgyr:${EDGYR_PASSWORD}" | chpasswd
 else
-  echo "New 'algocompsynth' password must be at least 12 bytes!"
+  echo "New 'edgyr' password must be at least 12 bytes!"
   echo "Exiting!"
   exit -255
 fi

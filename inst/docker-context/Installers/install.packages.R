@@ -2,8 +2,7 @@
 
 to_install <- c(
   "renv",
-  "reticulate",
-  "testthat"
+  "reticulate"
 )
 install.packages(to_install, quiet = TRUE)
 warnings()
