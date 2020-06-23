@@ -5,7 +5,7 @@ Authors@R:
     person(given = "M. Edward (Ed)",
            family = "Borasky",
            role = c("aut", "cre"),
-           email = "znmebt@znmeb.net")
+           email = "znmeb@znmeb.net")
 Description: `edgyR` is a collection of utilities
     for using R on NVIDIA Jetson development kits.
 License: AGPL-3 + file LICENSE
