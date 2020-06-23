@@ -4,6 +4,4 @@ sudo docker rm -f edgyr
 sudo docker run --detach \
   --env EDGYR_PASSWORD=$EDGYR_PASSWORD \
   --network host --name edgyr --hostname edgyr \
-  --volume $HOME/.ssh:/home/edgyr/.ssh \
-  --volume $HOME/Projects:/home/edgyr/Projects \
   $EDGYR_IMAGE
