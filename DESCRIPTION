@@ -1,0 +1,24 @@
+Package: edgyR
+Title: R on the Edge: NVIDIAⓇ Jetson™ Developer Utilities
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "M. Edward (Ed)",
+           family = "Borasky",
+           role = c("aut", "cre"),
+           email = "znmebt@znmeb.net")
+Description: `edgyR` is a collection of utilities
+    for using R on NVIDIA Jetson development kits.
+License: AGPL3 + file LICENSE
+Suggests:
+    devtools,
+    miniUI,
+    pkgdown
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+URL: https://github.com/znmeb/edgyR/
+BugReports: https://github.com/znmeb/edgyR/issues
+
+
+

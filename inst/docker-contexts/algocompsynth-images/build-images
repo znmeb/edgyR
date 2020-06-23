@@ -1,0 +1,33 @@
+#! /bin/bash
+
+set -e
+
+function build_image () {
+
+/usr/bin/time sudo docker build \
+  --build-arg R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz" \
+  --build-arg RSTUDIO_VERSION_MAJOR=1 \
+  --build-arg RSTUDIO_VERSION_MINOR=3 \
+  --build-arg RSTUDIO_VERSION_PATCH=959 \
+  --build-arg BASE_IMAGE="$1" \
+  --tag="$2" \
+  --file=Dockerfile .
+}
+
+# always build Bionic image
+build_image "ubuntu:bionic" "znmeb/algocompsynth-`uname -m`-bionic:latest" 
+
+# build L4T image only on Tegra host
+if [ `uname -r | grep tegra | wc -l` -gt "0" ]
+then
+  build_image "nvcr.io/nvidia/l4t-base:r32.4.2" "znmeb/algocompsynth-jetson-l4t:latest"
+fi
+
+# build "cuda" image only on x86_64 host with CUDA
+if [ `uname -m` == "x86_64" -a -x `which nvcc` ]
+then
+  build_image "nvcr.io/nvidia/cuda:10.2-base-ubuntu18.04" "znmeb/algocompsynth-`uname -m`-cuda:latest"
+fi
+
+docker system prune
+sudo docker images

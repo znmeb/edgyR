@@ -1,0 +1,57 @@
+#! /bin/bash
+
+set -e
+
+echo "Installing tools for building from source"
+apt-get install -qqy --no-install-recommends \
+  build-essential \
+  gfortran \
+  libbz2-dev \
+  libcairo2-dev \
+  libcurl4-openssl-dev \
+  libicu-dev \
+  libjpeg-dev \
+  libjpeg-turbo8-dev \
+  liblzma-dev \
+  libopenblas-dev \
+  libopenmpi-dev \
+  libpcre2-dev \
+  libpng-dev \
+  libreadline-dev \
+  libtiff-dev \
+  texinfo \
+  tk-dev \
+  zlib1g-dev
+apt-get autoremove --purge -y
+
+echo "Creating / entering source directory"
+mkdir -p $SOURCE_DIR && cd $SOURCE_DIR
+
+echo "Removing old R source directories"
+rm -fr R-*
+
+echo "Downloading $R_SOURCE_TARBALL"
+curl -Ls $R_SOURCE_TARBALL | tar xzf -
+export R_LATEST=`ls -1 | grep -e "^R-"`
+echo "Using $R_LATEST"
+
+echo "Configuring"
+mkdir --parents build_dir
+cd build_dir
+../$R_LATEST/configure --enable-R-shlib
+
+echo "Compiling"
+make --jobs=`nproc`
+
+echo "Installing"
+make install
+cp ../R.conf /etc/ld.so.conf.d/
+/sbin/ldconfig
+cd ..
+
+if [ $BUILDING_DOCKER_IMAGE == "yes" ]
+then
+  echo "Removing source and build directories"
+  rm -fr $R_LATEST build_dir
+  apt-get clean
+fi

@@ -1,0 +1,7 @@
+#! /bin/bash
+
+sudo docker rm -f algocompsynth
+sudo docker run --detach \
+  --env ALGOCOMPSYNTH_PASSWORD=$ALGOCOMPSYNTH_PASSWORD \
+  --network host --name algocompsynth --hostname algocompsynth \
+  $ALGOCOMPSYNTH_IMAGE

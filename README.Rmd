@@ -1,0 +1,35 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# edgyR
+
+The goal of `edgyR` is to provide utilities for using R on NVIDIA Jetson
+development kits. The current `edgyR` provides `bash` scripts that create a
+Docker image for using R and RStudio Server. Later releases will include
+functions for accessing the Jetson GPUs, including both TensorFlow and
+PyTorch.
+
+## Installation
+
+You can install `edgyR` from
+[GitHub](https://github.com/znmeb/edgyR) with:
+
+``` r
+remotes::install_packages_github("znmeb/edgyR")
+```
+
+Note that this software only runs on Jetson Nano and Xavier developer kits. It
+will not run on a "convetional" `x86_64` machine. The Docker image this
+package creates is currently available on Docker hub.

@@ -1,0 +1,30 @@
+#! /bin/bash
+
+set -e
+
+echo "Installing Linux dependencies"
+apt-get install -qqy --no-install-recommends \
+  libfftw3-dev \
+  libsndfile1-dev \
+  libsox-dev \
+  libsox-fmt-all \
+  libsoxr-dev \
+  libssh2-1-dev \
+  libssl-dev \
+  libxml2-dev \
+  python-dev \
+  python3-dev \
+  python-pip \
+  python3-pip \
+  python-virtualenv \
+  python3-virtualenv \
+  sndfile-tools \
+  sox \
+  virtualenv \
+  virtualenvwrapper
+apt-get autoremove --purge -y
+
+if [ $BUILDING_DOCKER_IMAGE == "yes" ]
+then
+  apt-get clean
+fi

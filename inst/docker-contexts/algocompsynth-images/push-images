@@ -1,0 +1,21 @@
+#! /bin/bash
+
+set -e
+
+sudo docker login
+sudo docker images
+
+# push Bionic image
+/usr/bin/time sudo docker push "znmeb/algocompsynth-`uname -m`-bionic:latest"
+
+# push L4T image only on Tegra host
+if [ `uname -r | grep tegra | wc -l` -gt "0" ]
+then
+  /usr/bin/time sudo docker push "znmeb/algocompsynth-jetson-l4t:latest"
+fi
+
+# push "cuda" image only on x86_64 host with CUDA
+if [ `uname -m` == "x86_64" -a -x `which nvcc` ]
+then
+  /usr/bin/time sudo docker push "znmeb/algocompsynth-`uname -m`-cuda:latest"
+fi

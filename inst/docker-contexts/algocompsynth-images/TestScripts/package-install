@@ -1,0 +1,9 @@
+#! /bin/bash
+
+set -e
+
+cd $PROJECT_HOME
+git clone https://github.com/znmeb/algocompsynth.git
+cd algocompsynth
+Rscript -e "install.packages('devtools')"
+Rscript -e "devtools::install(dependencies = TRUE)"

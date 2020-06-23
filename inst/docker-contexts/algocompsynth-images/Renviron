@@ -1,0 +1,3 @@
+R_PAPERSIZE='letter'
+R_PAPERSIZE_USER='letter'
+TZ="UTC"

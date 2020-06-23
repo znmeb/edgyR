@@ -1,0 +1,11 @@
+#! /bin/bash
+
+set -e
+
+source $WORKON_HOME/r-reticulate/bin/activate
+alias make="make --jobs=`nproc`"
+
+echo "Installing 'numpy'"
+/usr/bin/time pip install --upgrade numpy
+
+pip list
