@@ -1,19 +1,11 @@
 ---
+title: "R on the Edge: NVIDIAⓇ Jetson™ Developer Utilities"
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
-
-# R on the Edge: NVIDIAⓇ Jetson™ Developer Utilities
 
 ## Overview
 
