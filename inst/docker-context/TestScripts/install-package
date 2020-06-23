@@ -12,6 +12,6 @@ fi
 
 cd edgyR
 echo "Installing 'devtools'"
-Rscript -e "install.packages('devtools')"
+Rscript -e "install.packages('devtools', quiet = TRUE)"
 echo "Installing 'edgyR' and its suggested dependencies"
-Rscript -e "devtools::install(dependencies = TRUE)"
+Rscript -e "devtools::install(dependencies = TRUE, quiet = TRUE)"
