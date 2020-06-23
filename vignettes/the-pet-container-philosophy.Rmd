@@ -1,0 +1,19 @@
+---
+title: "The Pet Container Philosophy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The Pet Container Philosophy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edgyR)
+```
