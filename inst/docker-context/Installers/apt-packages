@@ -18,6 +18,7 @@ apt-get install -qqy --no-install-recommends \
   python3-pip \
   python-virtualenv \
   python3-virtualenv \
+  qpdf \
   sndfile-tools \
   sox \
   virtualenv \
