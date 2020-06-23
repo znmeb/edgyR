@@ -1,6 +1,7 @@
 #! /usr/bin/env Rscript
 
 to_install <- c(
+  "remotes",
   "renv",
   "reticulate"
 )
