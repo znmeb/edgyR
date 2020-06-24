@@ -13,26 +13,20 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(knitcitations)
-cleanbib()
-options("citation_format" = "pandoc")
 ```
 
 ## What to buy
 
 1. A Jetson Nano: You can buy kits with power supplies, enclosures and such, 
 and even robot kits with a Nano. Or you can just buy a Nano directly, which is
-what I did. If you want to go that route, start here: 
-`r citep("https://developer.nvidia.com/embedded/jetson-nano-developer-kit")`
+what I did. If you want to go that route, start here: [@NVIDIA2019a]
 
 2. Networking: The Nano has an Ethernet jack, so if you have wired
-internet you'll just need a cable. If you want wireless, the adapter in the "Prepare for Setup" tab of
-`r citep("https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit")`
-is fine.
+internet you'll just need a cable. If you want wireless, the adapter in the "Prepare for Setup" tab of [@NVIDIA2019b] is fine.
 
 3. Power supply: There are two ways to power the Nano, micro USB port or barrel
-jack. I highly recommend the barrel jack option. See
-`r citep("https://developer.download.nvidia.com/assets/embedded/secure/jetson/Nano/docs/NVIDIA_Jetson_Nano_Developer_Kit_User_Guide.pdf?odrsCm4blhmjAnAUlewgrRJfPquCoBhX4ix54BxCkPIEyrzt-SU8OmtFCPBSjrLDRLUyS65DGMTW5e2TR7IlhE9coQE5bLvNjaud2zdntK3sr9I2DfhUopX5nsy3TRpZHSCV3woTFdKD6lrIPOguhk79mwmHLuB-Z_UBFNio6xxKC9_bHhhaPtd8uULODeiLqMorA9oy")`, "Other Power Supply Options", for the details.
+jack. I highly recommend the barrel jack option. See [@Zensius2019], "Other
+Power Supply Options", for the details.
 
     If you're going with a kit, check the power supply that comes with it
     before you order. Make sure it's a barrel jack model, not a micro USB one.
@@ -71,26 +65,19 @@ the wired ones. I like keyboard / trackpad and keyboard / trackball combos with
 a single USB wireless plug; the one I have is a Logitech K400+. Make sure you
 get one that's wireless and not Bluetooth; the Nano doesn't have Bluetooth.
 
-```{r echo=FALSE, message=FALSE}
-write.bibtex(file="setup.bib")
-```
-
 ## Flashing and initialization
 
-The instructions in the "Write Image to the microSD Card" tab of
-`r citep("https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit")`
+The instructions in the "Write Image to the microSD Card" tab of [@NVIDIA2019b]
 work well.
 
 ## Setup and first boot
-The instructions in the "Setup and First Boot" tab of 
-`r citep("https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit")`
+The instructions in the "Setup and First Boot" tab of [@NVIDIA2019b]
 are fine. I would advise reading the licensing part carefully. The NVIDIA
 offerings are a mix of proprietary and open source with various licenses, and
 if you have plans beyond just enjoying and exploring, I'd recommend engaging
 an attorney.
 
 One final recommendation: if you want to do things with the Jetson hardware, I
-highly recommend
-`r citet("https://www.jetsonhacks.com/")`.
+highly recommend [JetsonHacks](https://www.jetsonhacks.com) [@JetsonHacks2020].
 
 ## References
