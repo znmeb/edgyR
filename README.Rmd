@@ -9,6 +9,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
+> And though she be but little, she is fierce. - Shakespeare, on receiving
+> an NVIDIA Jetson Nano for his birthday
+
 The goal of `edgyR` is to provide utilities for using R on NVIDIA
 Jetson development kits. The Jetson kits include a complete NVIDIA
 Docker runtime, so `edgyR` provides `bash` scripts that create a
