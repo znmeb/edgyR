@@ -5,6 +5,14 @@ set -e
 sudo docker login
 sudo docker images
 
+# check the repository definition
+if [ "$DOCKER_REPO" == "" ]
+then
+  echo "You need to define the 'DOCKER_REPO' environment variable"
+  echo "to tag the built image for pushing!"
+  exit -1
+fi
+
 # push L4T image only on Tegra host
 if [ `uname -r | grep tegra | wc -l` -gt "0" -a `uname -m` == "aarch64" ]
 then
