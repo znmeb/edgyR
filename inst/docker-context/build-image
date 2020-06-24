@@ -14,6 +14,14 @@ function build_image () {
   --file=Dockerfile .
 }
 
+# check the repository definition
+if [ "$DOCKER_REPO" == "" ]
+then
+  echo "You need to define the 'DOCKER_REPO' environment variable"
+  echo "to tag the built image for pushing!"
+  exit -1
+fi
+
 # build L4T images only on Tegra host
 if [ `uname -r | grep tegra | wc -l` -gt "0" -a `uname -m` == "aarch64" ]
 then
