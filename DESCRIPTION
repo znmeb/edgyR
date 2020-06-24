@@ -13,6 +13,7 @@ Suggests:
     devtools,
     miniUI,
     pkgdown,
+    knitcitations,
     knitr,
     rmarkdown
 Encoding: UTF-8
