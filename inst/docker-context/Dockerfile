@@ -46,16 +46,19 @@ RUN locale-gen en_US.UTF-8 \
   && cat /etc/default/locale
 
 # install R
+# see https://cloud.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
 COPY install-r R.conf $SOURCE_DIR/
 RUN $SOURCE_DIR/install-r > install-r.log 2>&1 && \
   gzip -9 install-r.log
 
 # install RStudio Server
+# see https://rstudio.com/products/rstudio/download-server/other-platforms/
 COPY install-rstudio-server $SOURCE_DIR/
 RUN $SOURCE_DIR/install-rstudio-server > install-rstudio-server.log 2>&1 && \
   gzip -9 install-rstudio-server.log
 
 # configure RStudio Server
+# see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
 COPY rstudio-configure rserver.conf $SOURCE_DIR/
 RUN $SOURCE_DIR/rstudio-configure
 
