@@ -14,21 +14,23 @@ function build_image () {
   --file=Dockerfile .
 }
 
+# build L4T images only on Tegra host
+if [ `uname -r | grep tegra | wc -l` -le "0" -o `uname -m` != "aarch64" ]
+then
+  echo "Cannot build - you need to be on an L4T / Tegra host!"
+  exit -1
+fi
+
 # check the repository definition
 if [ "$DOCKER_REPO" == "" ]
 then
   echo "You need to define the 'DOCKER_REPO' environment variable"
-  echo "to tag the built image for pushing!"
-  exit -1
+  echo "to fully tag the image to build!"
+  exit -2
 fi
 
-# build L4T images only on Tegra host
-if [ `uname -r | grep tegra | wc -l` -gt "0" -a `uname -m` == "aarch64" ]
-then
-  build_image "nvcr.io/nvidia/l4t-base:r32.4.2" "$DOCKER_REPO/edgyr-jetson-base:latest"
-else
-  echo "Cannot build - you need to be on an L4T / Tegra host!"
-fi
+echo "Building the image"
+build_image "nvcr.io/nvidia/l4t-base:r32.4.2" "$DOCKER_REPO/edgyr-jetson-base:latest"
 
 docker system prune
 sudo docker images
