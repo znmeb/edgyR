@@ -91,16 +91,16 @@
 <blockquote>
 <p>And though she be but little, she is fierce. - Shakespeare, on receiving an NVIDIA Jetson Nano for his birthday</p>
 </blockquote>
-<p>The goal of <code>edgyR</code> is to provide utilities for using R on NVIDIA Jetson development kits. The Jetson kits include a complete NVIDIA Docker runtime, so <code>edgyR</code> provides <code>bash</code> scripts that create a Docker image with R and RStudio Server built from source. The image takes a fair amount of time to build, even on an 8-core Xavier AGX. So a copy of it is pushed to Docker Hub for downloading at the end of the build process.</p>
+<p>The goal of <code>edgyR</code> is to provide utilities for using R on NVIDIA Jetson development kits. The Jetson kits include a complete NVIDIA Docker runtime, and <code>edgyR</code> provides <code>bash</code> scripts that create a Docker image with R and RStudio Server built from source. The image takes a fair amount of time to build, even on an 8-core Xavier AGX. So a copy of it is pushed to Docker Hub for downloading at the end of the build process.</p>
 <p>The base image for the build is <a href="https://ngc.nvidia.com/catalog/containers/nvidia:l4t-base" class="uri">https://ngc.nvidia.com/catalog/containers/nvidia:l4t-base</a>. The operating system in the Jetson kits and on the image is <a href="https://docs.nvidia.com/jetson/l4t/index.html">L4T</a>, Ubuntu <code>Bionic</code> for the <code>arm64</code> processor with numerous NVIDIA packages added, including CUDA 10.2 and libraries to use the GPU on a Jetson development kit.</p>
-<p>Future versions of <code>edgyR</code> will have functions for installing and accessing more GPU functionality, including both TensorFlow and PyTorch. The target market for the Jetson product line is autonomous vehicles, and NVIDIA provides a wealth of computer vision / deep learning inference software for the boards.</p>
+<p>Future versions of <code>edgyR</code> will have functions for installing and accessing more GPU functionality, including both TensorFlow and PyTorch. The target market for the Jetson product line is autonomous vehicles, and NVIDIA provides a wealth of computer vision / deep learning inference software for the boards. See <a href="https://ngc.nvidia.com/catalog/containers?orderBy=modifiedDESC&amp;pageNumber=0&amp;query=l4t&amp;quickFilter=containers&amp;filters=">NVIDIA NGC L4T containers</a> for a catalog of Docker images that will run on the Jetson.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install <code>edgyR</code> from <a href="https://github.com/znmeb/edgyR">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu">install_packages_github</span>(<span class="st">"znmeb/edgyR@default"</span>)</pre></div>
-<p>Note that the default branch is called <code>default</code>, <em>not</em> <code>master</code>. This software only runs on Jetson Nano and Xavier developer kits. It will not run on a “conventional” <code>x86_64</code> machine.</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu">install_packages_github</span>(<span class="st">"znmeb/edgyR"</span>)</pre></div>
+<p>You can install this package on any system but the image build, run and push scripts will only run on a Jetson L4T Tegra platform. I regularly test on a Jetson Nano and a Jetson Xavier AGX and I expect they will also run on the new Jetson Xavier NX.</p>
 </div>
 </div>
   </div>

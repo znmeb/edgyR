@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The goal of `edgyR` is to provide utilities for using R on NVIDIA
 Jetson development kits. The Jetson kits include a complete NVIDIA
-Docker runtime, so `edgyR` provides `bash` scripts that create a
+Docker runtime, and `edgyR` provides `bash` scripts that create a
 Docker image with R and RStudio Server built from source. The image
 takes a fair amount of time to build, even on an 8-core Xavier AGX. So
 a copy of it is pushed to Docker Hub for downloading at the end of
@@ -31,7 +31,9 @@ Future versions of `edgyR` will have functions for installing and
 accessing more GPU functionality, including both TensorFlow and PyTorch.
 The target market for the Jetson product line is autonomous vehicles,
 and NVIDIA provides a wealth of computer vision / deep learning
-inference software for the boards.
+inference software for the boards. See
+[NVIDIA NGC L4T containers](https://ngc.nvidia.com/catalog/containers?orderBy=modifiedDESC&pageNumber=0&query=l4t&quickFilter=containers&filters=)
+for a catalog of Docker images that will run on the Jetson.
 
 ## Installation
 
@@ -39,9 +41,10 @@ You can install `edgyR` from
 [GitHub](https://github.com/znmeb/edgyR) with:
 
 ``` r
-remotes::install_packages_github("znmeb/edgyR@default")
+remotes::install_packages_github("znmeb/edgyR")
 ```
 
-Note that the default branch is called `default`, *not* `master`.
-This software only runs on Jetson Nano and Xavier developer kits. It
-will not run on a "conventional" `x86_64` machine.
+You can install this package on any system but the image build, run and push
+scripts will only run on a Jetson L4T Tegra platform. I regularly test on a
+Jetson Nano and a Jetson Xavier AGX and I expect they will also run on the
+new Jetson Xavier NX.
