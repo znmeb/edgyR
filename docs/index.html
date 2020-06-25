@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>R on the Edge: NVIDIAⓇ Jetson™ Developer Utilities • edgyR</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/darkly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -89,18 +89,22 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <blockquote>
-<p>And though she be but little, she is fierce. - Shakespeare, on receiving an NVIDIA Jetson Nano for his birthday</p>
+<p>“And though she be but little, she is fierce.” – Shakespeare, on receiving an NVIDIA Jetson Nano for his birthday</p>
 </blockquote>
-<p>The goal of <code>edgyR</code> is to provide utilities for using R on NVIDIA Jetson development kits. The Jetson kits include a complete NVIDIA Docker runtime, and <code>edgyR</code> provides <code>bash</code> scripts that create a Docker image with R and RStudio Server built from source. The image takes a fair amount of time to build, even on an 8-core Xavier AGX. So a copy of it is pushed to Docker Hub for downloading at the end of the build process.</p>
-<p>The base image for the build is <a href="https://ngc.nvidia.com/catalog/containers/nvidia:l4t-base" class="uri">https://ngc.nvidia.com/catalog/containers/nvidia:l4t-base</a>. The operating system in the Jetson kits and on the image is <a href="https://docs.nvidia.com/jetson/l4t/index.html">L4T</a>, Ubuntu <code>Bionic</code> for the <code>arm64</code> processor with numerous NVIDIA packages added, including CUDA 10.2 and libraries to use the GPU on a Jetson development kit.</p>
-<p>Future versions of <code>edgyR</code> will have functions for installing and accessing more GPU functionality, including both TensorFlow and PyTorch. The target market for the Jetson product line is autonomous vehicles, and NVIDIA provides a wealth of computer vision / deep learning inference software for the boards. See <a href="https://ngc.nvidia.com/catalog/containers?orderBy=modifiedDESC&amp;pageNumber=0&amp;query=l4t&amp;quickFilter=containers&amp;filters=">NVIDIA NGC L4T containers</a> for a catalog of Docker images that will run on the Jetson.</p>
+<p>The goal of <code>edgyR</code> is to give R users access to <a href="https://developer.nvidia.com/embedded/develop/hardware">NVIDIA Jetson development kits</a>. The Jetson software includes a full Ubuntu 18.04LTS “Bionic Beaver” desktop, NVIDIA GPU development software and a complete NVIDIA Docker runtime.</p>
+<p>The first release of <code>edgyR</code> provides <code>bash</code> scripts to create a Docker image with R and RStudio Server built from source. The completed image is posted on Docker Hub at <a href="https://hub.docker.com/repository/docker/znmeb/edgyr-jetson-base" class="uri">https://hub.docker.com/repository/docker/znmeb/edgyr-jetson-base</a>. The base image for the build is <a href="https://ngc.nvidia.com/catalog/containers/nvidia:l4t-base" class="uri">https://ngc.nvidia.com/catalog/containers/nvidia:l4t-base</a>.</p>
+<p>Future versions of <code>edgyR</code> will have R functions for installing and accessing Jetson GPU functionality, including both TensorFlow and PyTorch. The target market for the Jetson product line is autonomous vehicles, and NVIDIA provides a wealth of computer vision / deep learning inference software for the boards. See <a href="https://ngc.nvidia.com/catalog/containers?orderBy=modifiedDESC&amp;pageNumber=0&amp;query=l4t&amp;quickFilter=containers&amp;filters=">NVIDIA NGC L4T containers</a> for a catalog of Docker images that will run on the Jetson.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
+<p>You will need a Jetson development kit to run the Docker image build scripts or to run the built image. See <code><a href="articles/setting-up-the-jetson-nano.html">vignette("setting-up-the-jetson-nano")</a></code> if you don’t have the hardware yet.</p>
 <p>You can install <code>edgyR</code> from <a href="https://github.com/znmeb/edgyR">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu">install_packages_github</span>(<span class="st">"znmeb/edgyR"</span>)</pre></div>
-<p>You can install this package on any system but the image build, run and push scripts will only run on a Jetson L4T Tegra platform. I regularly test on a Jetson Nano and a Jetson Xavier AGX and I expect they will also run on the new Jetson Xavier NX.</p>
+<p>or you can clone the repository:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">git</span> clone https://github.com/znmeb/edgyR.git</span></code></pre></div>
+<p>There’s not much point for end users to install this package yet unless you want the documentation in your RStudio environment rather than having to go to <a href="https://znmeb.github.io/edgyR/" class="uri">https://znmeb.github.io/edgyR/</a>. But I welcome people with the hardware to open issues at <a href="https://github.com/znmeb/edgyR/issues" class="uri">https://github.com/znmeb/edgyR/issues</a> if you want to go through the image build process.</p>
+<p>I regularly test on a Jetson Nano and a Jetson Xavier AGX and I expect everything will also run on the new Jetson Xavier NX. I do not plan to support the older Jetson “TX” series devices.</p>
 </div>
 </div>
   </div>
