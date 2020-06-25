@@ -1,6 +1,6 @@
 Package: edgyR
-Title: R on the Edge: NVIDIAⓇ Jetson™ Developer Utilities
-Version: 0.0.0.9000
+Title: R on the Edge: NVIDIAⓇ Jetson™ tools for R developers
+Version: 0.4.9.9000
 Authors@R: 
     person(given = "M. Edward (Ed)",
            family = "Borasky",

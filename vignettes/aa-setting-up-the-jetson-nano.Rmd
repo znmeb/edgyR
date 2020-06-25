@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 ## What to buy
 
-1. A Jetson Nano: You can buy kits with power supplies, enclosures and such, 
+1. A Jetson Nano: You can buy kits with power supplies, enclosures and such,
 and even robot kits with a Nano. Or you can just buy a Nano directly, which is
 what I did. If you want to go that route, start here: [@NVIDIA2019a]
 
@@ -31,15 +31,17 @@ Power Supply Options", for the details.
     If you're going with a kit, check the power supply that comes with it
     before you order. Make sure it's a barrel jack model, not a micro USB one.
 
-    The barrel jack option requires a jumper on the board to work. It's a little
-    tricky to find. It's on the top of the board between `8` and `9` in the
-    diagram.
-    
+    The barrel jack option requires a jumper on the board to work. It's a
+    little tricky to find. It's on the top of the board between `8` and `9`
+    in the diagram.
+
     ```{r echo=FALSE, out.width='100%'}
     knitr::include_graphics('./jumper.jpg')
     ```
 
-4. microSD card: The 16 GB minimum specified is not enough! The operating 
+--------------------
+
+4. microSD card: The 16 GB minimum specified is not enough! The operating
 system after flashing takes up 12 GB, which leaves you only 4 GB. I recommend
 at least 128 GB and I'm currently running on a 256 GB one.
 
@@ -48,12 +50,14 @@ at least 128 GB and I'm currently running on a 256 GB one.
     power barrel jack. You'll have to pick up the Nano (unplugged, of course)
     by the heat sink and look closely in a bright light to find it. It's on the
     board just under the heat sink about a third of the way from the edge with
-    the power barrel jack. Insert the card with the contacts in first and facing
-    the board.
+    the power barrel jack. Insert the card with the contact end first and the
+    contacts facing the board.
 
     ```{r echo=FALSE, out.width='100%'}
     knitr::include_graphics('./micro_sd.jpg')
     ```
+
+--------------------
 
 5. Display: any HDMI or DisplayPort display will work. I have two; a 23-inch
 Dell monitor and one of those little 7" touch-sensitive ones that people use
@@ -76,6 +80,21 @@ are fine. I would advise reading the licensing part carefully. The NVIDIA
 offerings are a mix of proprietary and open source with various licenses, and
 if you have plans beyond just enjoying and exploring, I'd recommend engaging
 an attorney.
+
+If you have a wired internet connection, the setup process will find it and
+configure it automatically. If you have a wireless adapter, the setup process
+will find it and give you a dialog to connect to the wireless. It will also
+set up your keyboard and time zone and let you define a user name, user ID,
+computer name and password. The usual warnings about passwords apply here.
+
+The last step in the setup process is expanding the microSD card capacity.
+When you flashed the card, the flash program copied a binary image onto the
+first part of the card, leaving the rest unused.
+
+The binary image is about 12 gigabytes. That means if you have a 256 GB micro
+SD card, about 244 GB of it would be unused. This step grows the 12 GB
+existing filesystem into the entire card. Just accept the default size and
+press "Continue".
 
 One final recommendation: if you want to do things with the Jetson hardware, I
 highly recommend [JetsonHacks](https://www.jetsonhacks.com) [@JetsonHacks2020].

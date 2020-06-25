@@ -2,7 +2,10 @@ pandoc: 2.9.2.1
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
-  setting-up-the-jetson-nano: setting-up-the-jetson-nano.html
-  the-pet-container-philosophy: the-pet-container-philosophy.html
-last_built: 2020-06-25T00:51Z
+  aa-setting-up-the-jetson-nano: aa-setting-up-the-jetson-nano.html
+  cc-l4t-first-steps: cc-l4t-first-steps.html
+  ee-running-an-edgyr-container: ee-running-an-edgyr-container.html
+  mm-building-the-edgyr-base-image: mm-building-the-edgyr-base-image.html
+  ww-the-pet-container-philosophy: ww-the-pet-container-philosophy.html
+last_built: 2020-06-25T07:56Z
 

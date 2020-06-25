@@ -1,0 +1,15 @@
+---
+title: "Running an `edgyR` Container"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Running an `edgyR` Container}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```

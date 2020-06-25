@@ -30,7 +30,7 @@ then
 fi
 
 echo "Building the image"
-build_image "nvcr.io/nvidia/l4t-base:r32.4.2" "$DOCKER_REPO/edgyr-jetson-base:latest"
+build_image "nvcr.io/nvidia/l4t-base:r32.4.2" "$DOCKER_REPO/edgyr-base:latest"
 
 docker system prune
 sudo docker images

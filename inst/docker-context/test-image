@@ -30,7 +30,7 @@ sudo docker run --detach \
   --env EDGYR_PASSWORD=$EDGYR_PASSWORD \
   --network host --name edgyr --hostname edgyr \
   --runtime nvidia \
-  "$DOCKER_REPO/edgyr-jetson-base:latest"
+  "$DOCKER_REPO/edgyr-base:latest"
 
 echo "Container startup logs"
 sleep 5
