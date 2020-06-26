@@ -50,7 +50,6 @@ COPY --from=znmeb/edgyr-builder:latest /usr/local/bin /usr/local/bin
 COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
 
 COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
-COPY --from=znmeb/edgyr-builder:latest /opt/rstudio-tools /opt/rstudio-tools
 COPY R.conf ld.so.conf.d/
 RUN /sbin/ldconfig
 
@@ -73,30 +72,9 @@ COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
 COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
 COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
 COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
-
-# run as 'edgyr'
-USER edgyr
-WORKDIR $EDGYR_HOME
-
-# set up Python virtulaenv and R library
-RUN Installers/create-venvs > Installers/create-venvs.log 2>&1 \
-  && gzip -9 Installers/create-venvs.log
-
-# install Python packages
-RUN Installers/pip-installs > Installers/pip-installs.log 2>&1 \
-  && gzip -9 Installers/pip-installs.log
-
-# install R packages
-RUN Installers/R-installs > Installers/R-installs.log 2>&1 \
-  && gzip -9 Installers/R-installs.log
-
-# switch back to root
-USER root
-WORKDIR $SOURCE_DIR/
+COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts
+RUN mkdir --parents $WORKON_HOME $PROJECT_HOME; chown -R edgyr:edgyr $EDGYR_HOME
 
 # set up entry point
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
-
-# copy test scripts to image
-COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts

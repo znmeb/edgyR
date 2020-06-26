@@ -3,15 +3,11 @@
 set -e
 
 cd $PROJECT_HOME
-
-if [ ! -d edgyR ]
-then
-  echo "Cloning 'https://github.com/znmeb/edgyR.git'"
-  git clone https://github.com/znmeb/edgyR.git
-fi
-
+rm -fr edgyR
+echo "Cloning 'https://github.com/znmeb/edgyR.git'"
+git clone https://github.com/znmeb/edgyR.git
 cd edgyR
 echo "Installing 'devtools'"
-Rscript -e "install.packages('devtools', quiet = TRUE)"
+$HOME/Installers.devtools.R
 echo "Installing 'edgyR' and its suggested dependencies"
 Rscript -e "devtools::install(dependencies = TRUE, quiet = TRUE)"

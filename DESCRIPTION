@@ -12,9 +12,7 @@ License: AGPL-3 + file LICENSE
 Suggests:
     devtools,
     miniUI,
-    pkgdown,
-    knitr,
-    rmarkdown
+    pkgdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

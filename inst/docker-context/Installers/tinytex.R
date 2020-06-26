@@ -1,12 +1,13 @@
 #! /usr/bin/env Rscript
 
 to_install <- c(
-  "renv",
-  "reticulate"
+  "tinytex"
 )
 install.packages(to_install, quiet = TRUE)
 warnings()
-reticulate::py_discover_config()
 
-print("Missing")
+print("Missing?")
 print(setdiff(to_install, as.data.frame(installed.packages())$Package))
+
+print("You can ignore errors in the following TinyTeX install")
+try(tinytex::install_tinytex())

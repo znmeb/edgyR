@@ -1,0 +1,18 @@
+#! /bin/bash
+
+set -e
+
+echo "Creating virtualenv 'r-reticulate'"
+virtualenv --system-site-packages --python=/usr/bin/python3 $WORKON_HOME/r-reticulate
+
+source $WORKON_HOME/r-reticulate/bin/activate
+alias make="make --jobs=`nproc`"
+
+echo "Installing 'numpy'"
+/usr/bin/time pip install --upgrade numpy
+
+pip list
+
+echo "Installing 'reticulate'"
+Rscript -e "install.packages('reticulate', quiet = TRUE)"
+Rscript -e "reticulate::py_discover_config()"
