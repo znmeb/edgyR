@@ -1,6 +1,0 @@
-#! /bin/bash
-
-set -e
-
-echo "Building the 'bionic-rstats' image"
-./build-image.bash "ubuntu:bionic" "edgyr-bionic-rstats" "Dockerfile.bionic-rstats"

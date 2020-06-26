@@ -1,0 +1,4 @@
+#! /bin/bash
+
+
+./check-image.bash edgyr-rstats:latest "$EDGYR_PASSWORD"
