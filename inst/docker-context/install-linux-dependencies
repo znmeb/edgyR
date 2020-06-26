@@ -9,6 +9,7 @@ apt-get install -qqy --no-install-recommends \
   bzip2 \
   ca-certificates \
   curl \
+  file \
   gfortran \
   git \
   git-lfs \

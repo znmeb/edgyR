@@ -1,0 +1,4 @@
+#! /bin/bash
+
+
+./check-image.bash edgyr-bionic-rstats:latest "$EDGYR_PASSWORD"

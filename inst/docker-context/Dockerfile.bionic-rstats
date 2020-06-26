@@ -1,4 +1,5 @@
-FROM ubuntu:bionic
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # externally-defined arguments
@@ -10,9 +11,12 @@ ARG RSTUDIO_VERSION_PATCH
 # internal arguments
 ARG DEBIAN_FRONTEND=noninteractive
 ARG SOURCE_DIR=/usr/local/src
+ARG EDGYR_HOME=/home/edgyr
 
 # environment variables on image
 ENV PAPERSIZE=letter
+ENV PROJECT_HOME=$EDGYR_HOME/Projects
+ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
 
 # image building
 USER root
@@ -56,3 +60,29 @@ RUN $SOURCE_DIR/install-r > install-r.log 2>&1 \
 COPY install-rstudio-server $SOURCE_DIR/
 RUN $SOURCE_DIR/install-rstudio-server > install-rstudio-server.log 2>&1 \
   && gzip -9 install-rstudio-server.log
+
+# configure RStudio Server
+# see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
+COPY rstudio-configure rserver.conf $SOURCE_DIR/
+RUN $SOURCE_DIR/rstudio-configure
+
+# create non-root user with 'sudo' privilege
+RUN useradd \
+  --shell /bin/bash \
+  --user-group \
+  --groups sudo \
+  --create-home \
+  --uid 1000 edgyr \
+  && echo "edgyr:edgyr" | chpasswd
+
+# populate 'edgyr' home
+COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
+COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
+COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
+COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
+COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts
+RUN mkdir --parents $WORKON_HOME $PROJECT_HOME; chown -R edgyr:edgyr $EDGYR_HOME
+
+# set up entry point
+COPY docker-entrypoint.sh /
+CMD [ "/docker-entrypoint.sh" ]
