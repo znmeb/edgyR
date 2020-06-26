@@ -20,11 +20,13 @@ WORKDIR $SOURCE_DIR/
 
 # upgrade the OS
 COPY apt-upgrade $SOURCE_DIR/
-RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1
+RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1 \
+  && gzip -9 apt-upgrade.log
 
 # install linux dependencies
 COPY install-linux-dependencies $SOURCE_DIR/
-RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1
+RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 \
+  && gzip -9 install-linux-dependencies.log
 
 RUN locale-gen en_US.UTF-8 \
   && update-locale \
@@ -46,9 +48,11 @@ RUN locale-gen en_US.UTF-8 \
 # install R
 # see https://cloud.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
 COPY install-r R.conf $SOURCE_DIR/
-RUN $SOURCE_DIR/install-r > install-r.log 2>&1
+RUN $SOURCE_DIR/install-r > install-r.log 2>&1 \
+  && gzip -9 install-r.log
 
 # install RStudio Server
 # see https://rstudio.com/products/rstudio/download-server/other-platforms/
 COPY install-rstudio-server $SOURCE_DIR/
-RUN $SOURCE_DIR/install-rstudio-server > install-rstudio-server.log 2>&1
+RUN $SOURCE_DIR/install-rstudio-server > install-rstudio-server.log 2>&1 \
+  && gzip -9 install-studio-server.log
