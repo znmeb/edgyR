@@ -18,11 +18,13 @@ WORKDIR $SOURCE_DIR/
 
 # upgrade the OS
 COPY apt-upgrade $SOURCE_DIR/
-RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1 && gzip -9 apt-upgrade.log
+RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1 \
+  && gzip -9 apt-upgrade.log
 
 # install linux dependencies
 COPY install-linux-dependencies $SOURCE_DIR/
-RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 && gzip -9 install-linux-dependencies.log
+RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 \
+  && gzip -9 install-linux-dependencies.log
 
 RUN locale-gen en_US.UTF-8 \
   && update-locale \
@@ -46,6 +48,7 @@ COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/R /usr/local/lib/R
 COPY --from=znmeb/edgyr-builder:latest /usr/local/share/man/man1 /usr/local/share/man/man1
 COPY --from=znmeb/edgyr-builder:latest /usr/local/bin /usr/local/bin
 COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
+
 COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
 COPY --from=znmeb/edgyr-builder:latest /opt/rstudio-tools /opt/rstudio-tools
 COPY R.conf ld.so.conf.d/
@@ -76,13 +79,16 @@ USER edgyr
 WORKDIR $EDGYR_HOME
 
 # set up Python virtulaenv and R library
-RUN Installers/create-venvs > Installers/create-venvs.log 2>&1 && gzip -9 Installers/create-venvs.log
+RUN Installers/create-venvs > Installers/create-venvs.log 2>&1 \
+  && gzip -9 Installers/create-venvs.log
 
 # install Python packages
-RUN Installers/pip-installs > Installers/pip-installs.log 2>&1 && gzip -9 Installers/pip-installs.log
+RUN Installers/pip-installs > Installers/pip-installs.log 2>&1 \
+  && gzip -9 Installers/pip-installs.log
 
 # install R packages
-RUN Installers/R-installs > Installers/R-installs.log 2>&1 && gzip -9 Installers/R-installs.log
+RUN Installers/R-installs > Installers/R-installs.log 2>&1 \
+  && gzip -9 Installers/R-installs.log
 
 # switch back to root
 USER root
