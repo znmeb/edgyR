@@ -24,6 +24,7 @@ then
 fi
 
 echo "Force-removing old 'edgyr' container"
+echo "You can ignore errors if it doesn't exist"
 sudo docker rm -f edgyr
 echo "Running image detached"
 sudo docker run --detach \

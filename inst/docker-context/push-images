@@ -20,4 +20,5 @@ then
 fi
 
 sudo docker login
+/usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-builder:latest"
 /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-base:latest"

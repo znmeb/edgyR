@@ -18,13 +18,11 @@ WORKDIR $SOURCE_DIR/
 
 # upgrade the OS
 COPY apt-upgrade $SOURCE_DIR/
-RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1; \
-  gzip -9 apt-upgrade.log
+RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1 && gzip -9 apt-upgrade.log
 
 # install linux dependencies
 COPY install-linux-dependencies $SOURCE_DIR/
-RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 && \
-  gzip -9 install-linux-dependencies.log
+RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 && gzip -9 install-linux-dependencies.log
 
 RUN locale-gen en_US.UTF-8 \
   && update-locale \
@@ -75,16 +73,16 @@ COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
 
 # run as 'edgyr'
 USER edgyr
-WORKDIR $EDGYR_HOME/
+WORKDIR $EDGYR_HOME
 
 # set up Python virtulaenv and R library
-RUN $EDGYR_HOME/Installers/create-venvs > $EDGYR_HOME/Installers/create-venvs.log 2>&1
+RUN Installers/create-venvs > Installers/create-venvs.log 2>&1 && gzip -9 Installers/create-venvs.log
 
 # install Python packages
-RUN $EDGYR_HOME/Installers/pip-installs > $EDGYR_HOME/Installers/pip-installs.log 2>&1
+RUN Installers/pip-installs > Installers/pip-installs.log 2>&1 && gzip -9 Installers/pip-installs.log
 
 # install R packages
-RUN $EDGYR_HOME/Installers/R-installs > $EDGYR_HOME/Installers/R-installs.log 2>&1
+RUN Installers/R-installs > Installers/R-installs.log 2>&1 && gzip -9 Installers/R-installs.log
 
 # switch back to root
 USER root
