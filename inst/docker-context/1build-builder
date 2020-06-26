@@ -2,18 +2,6 @@
 
 set -e
 
-function build_image () {
-
-/usr/bin/time sudo docker build \
-  --build-arg R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz" \
-  --build-arg RSTUDIO_VERSION_MAJOR=1 \
-  --build-arg RSTUDIO_VERSION_MINOR=3 \
-  --build-arg RSTUDIO_VERSION_PATCH=959 \
-  --build-arg BASE_IMAGE="$1" \
-  --tag="$2" \
-  --file=Dockerfile .
-}
-
 # build L4T images only on Tegra host
 if [ `uname -r | grep tegra | wc -l` -le "0" -o `uname -m` != "aarch64" ]
 then
@@ -30,7 +18,14 @@ then
 fi
 
 echo "Building the image"
-build_image "nvcr.io/nvidia/l4t-base:r32.4.2" "$DOCKER_REPO/edgyr-base:latest"
+/usr/bin/time sudo docker build \
+  --build-arg R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz" \
+  --build-arg RSTUDIO_VERSION_MAJOR=1 \
+  --build-arg RSTUDIO_VERSION_MINOR=3 \
+  --build-arg RSTUDIO_VERSION_PATCH=959 \
+  --tag="$DOCKER_REPO/edgyr-builder:latest" \
+  --file=Dockerfile.builder \
+.
 
-docker system prune
+sudo docker system prune
 sudo docker images

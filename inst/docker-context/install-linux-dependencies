@@ -1,0 +1,62 @@
+#! /bin/bash
+
+set -e
+
+echo "Installing Linux dependencies"
+apt-get install -qqy --no-install-recommends \
+  bash-completion \
+  build-essential \
+  bzip2 \
+  ca-certificates \
+  curl \
+  gfortran \
+  git \
+  git-lfs \
+  gzip \
+  libbz2-dev \
+  libcairo2-dev \
+  libcurl4-openssl-dev \
+  libicu-dev \
+  libjpeg-dev \
+  libjpeg-turbo8-dev \
+  liblzma-dev \
+  libopenblas-dev \
+  libopenmpi-dev \
+  libpam0g-dev \
+  libpcre2-dev \
+  libpng-dev \
+  libreadline-dev \
+  libssh2-1-dev \
+  libssl-dev \
+  libtiff-dev \
+  libxml2-dev \
+  locales \
+  lynx \
+  pandoc \
+  pandoc-citeproc \
+  pandoc-citeproc-preamble \
+  pandoc-data \
+  pkg-config \
+  python-dev \
+  python3-dev \
+  python-pip \
+  python3-pip \
+  python-virtualenv \
+  python3-virtualenv \
+  qpdf \
+  sudo \
+  tar \
+  texinfo \
+  time \
+  tk-dev \
+  tree \
+  tzdata \
+  unzip \
+  uuid-dev \
+  vim \
+  virtualenv \
+  virtualenvwrapper \
+  wget \
+  xorg-dev \
+  zip \
+  zlib1g-dev

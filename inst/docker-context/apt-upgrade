@@ -2,34 +2,7 @@
 
 set -e
 
-apt-get update
-
-echo "Installing command line basics"
-apt-get install -qqy --no-install-recommends \
-  bash-completion \
-  bzip2 \
-  ca-certificates \
-  curl \
-  git \
-  git-lfs \
-  gzip \
-  locales \
-  sudo \
-  tar \
-  time \
-  tree \
-  tzdata \
-  unzip \
-  vim \
-  wget \
-  zip
-
 echo "Upgrading base"
+apt-get update
 /usr/bin/time apt-get upgrade -y
 apt-get autoremove --purge -y
-
-if [ $BUILDING_DOCKER_IMAGE == "yes" ]
-then
-  echo "Cleanup"
-  apt-get clean
-fi

@@ -2,15 +2,8 @@ ARG BASE_IMAGE
 FROM $BASE_IMAGE
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# externally-defined arguments
-ARG R_SOURCE_TARBALL
-ARG RSTUDIO_VERSION_MAJOR
-ARG RSTUDIO_VERSION_MINOR
-ARG RSTUDIO_VERSION_PATCH
-
 # internal arguments
 ARG DEBIAN_FRONTEND=noninteractive
-ARG BUILDING_DOCKER_IMAGE=yes
 ARG SOURCE_DIR=/usr/local/src
 ARG EDGYR_HOME=/home/edgyr
 
@@ -27,6 +20,11 @@ WORKDIR $SOURCE_DIR/
 COPY apt-upgrade $SOURCE_DIR/
 RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1; \
   gzip -9 apt-upgrade.log
+
+# install linux dependencies
+COPY install-linux-dependencies $SOURCE_DIR/
+RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 && \
+  gzip -9 install-linux-dependencies.log
 
 RUN locale-gen en_US.UTF-8 \
   && update-locale \
@@ -45,17 +43,15 @@ RUN locale-gen en_US.UTF-8 \
     LC_IDENTIFICATION=en_US.UTF-8 \
   && cat /etc/default/locale
 
-# install R
-# see https://cloud.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
-COPY install-r R.conf $SOURCE_DIR/
-RUN $SOURCE_DIR/install-r > install-r.log 2>&1 && \
-  gzip -9 install-r.log
-
-# install RStudio Server
-# see https://rstudio.com/products/rstudio/download-server/other-platforms/
-COPY install-rstudio-server $SOURCE_DIR/
-RUN $SOURCE_DIR/install-rstudio-server > install-rstudio-server.log 2>&1 && \
-  gzip -9 install-rstudio-server.log
+# copy R and RStudio Server files from builder image
+COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/R /usr/local/lib/R
+COPY --from=znmeb/edgyr-builder:latest /usr/local/share/man/man1 /usr/local/share/man/man1
+COPY --from=znmeb/edgyr-builder:latest /usr/local/bin /usr/local/bin
+COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
+COPY --from=znmeb/edgyr-builder:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
+COPY --from=znmeb/edgyr-builder:latest /opt/rstudio-tools /opt/rstudio-tools
+COPY R.conf ld.so.conf.d/
+RUN /sbin/ldconfig
 
 # configure RStudio Server
 # see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
@@ -77,26 +73,18 @@ COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
 COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
 COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
 
-# install dependencies for Python and R packages
-RUN $EDGYR_HOME/Installers/apt-packages > $EDGYR_HOME/Installers/apt-packages.log 2>&1 && \
-  gzip -9 $EDGYR_HOME/Installers/apt-packages.log
-RUN chown -R edgyr:edgyr $EDGYR_HOME/
-
 # run as 'edgyr'
 USER edgyr
 WORKDIR $EDGYR_HOME/
 
 # set up Python virtulaenv and R library
-RUN $EDGYR_HOME/Installers/create-venvs > $EDGYR_HOME/Installers/create-venvs.log 2>&1 && \
-  gzip -9 $EDGYR_HOME/Installers/create-venvs.log
+RUN $EDGYR_HOME/Installers/create-venvs > $EDGYR_HOME/Installers/create-venvs.log 2>&1
 
 # install Python packages
-RUN $EDGYR_HOME/Installers/pip-installs > $EDGYR_HOME/Installers/pip-installs.log 2>&1 && \
-  gzip -9 $EDGYR_HOME/Installers/pip-installs.log
+RUN $EDGYR_HOME/Installers/pip-installs > $EDGYR_HOME/Installers/pip-installs.log 2>&1
 
 # install R packages
-RUN $EDGYR_HOME/Installers/R-installs > $EDGYR_HOME/Installers/R-installs.log 2>&1 && \
-  gzip -9 $EDGYR_HOME/Installers/R-installs.log
+RUN $EDGYR_HOME/Installers/R-installs > $EDGYR_HOME/Installers/R-installs.log 2>&1
 
 # switch back to root
 USER root

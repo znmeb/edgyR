@@ -3,18 +3,11 @@
 set -e
 
 echo "Installing RStudio Server build dependencies"
-apt-get update
 apt-get install -qqy --no-install-recommends \
   ant \
   cmake \
-  libpam0g-dev \
-  libssl-dev \
   openjdk-8-jdk \
-  openjdk-8-jre \
-  pandoc \
-  pandoc-citeproc \
-  pandoc-citeproc-preamble \
-  uuid-dev
+  openjdk-8-jre
 update-alternatives --get-selections
 
 rm -fr rstudio*
@@ -31,7 +24,6 @@ echo "PANDOC_VERSION=$PANDOC_VERSION"
 pushd dependencies/common
 echo "Installing RStudio boost from source - may take a while"
 /usr/bin/time ./install-boost > $SOURCE_DIR/install-boost.log 2>&1
-gzip -9 $SOURCE_DIR/install-boost.log
 echo "Installing dictionaries"
 ./install-dictionaries > /dev/null 2>&1
 echo "Installing MathJax" 
@@ -74,21 +66,3 @@ else
 fi
 echo "RAM_KILOBYTES = $RAM_KILOBYTES; 'make' will use $JOBS jobs."
 /usr/bin/time make --jobs=$JOBS install
-
-echo "Cleanup"
-apt-get autoremove --purge -y \
-  ant \
-  cmake \
-  openjdk-8-jdk \
-  openjdk-8-jre
-apt-get install -qqy --no-install-recommends \
-  default-jdk \
-  default-jre
-update-alternatives --get-selections
-R CMD javareconf
-
-if [ $BUILDING_DOCKER_IMAGE == "yes" ]
-then
-  rm -fr rstudio
-  apt-get clean
-fi
