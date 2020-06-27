@@ -8,7 +8,7 @@ sudo docker images
 if [ `uname -r | grep tegra | wc -l` -le "0" -o `uname -m` != "aarch64" ]
 then
   echo "Cannot push - you need to be on an L4T / Tegra host!"
-  exit -1
+  exit -10
 fi
 
 # check the repository definition
@@ -16,9 +16,13 @@ if [ "$DOCKER_REPO" == "" ]
 then
   echo "You need to define the 'DOCKER_REPO' environment variable"
   echo "to fully tag the image to push!"
-  exit -2
+  exit -20
 fi
 
 sudo docker login
-/usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-builder:latest"
+sudo docker tag "edgyr-rstats:latest" "$DOCKER_REPO/edgyr-rstats:latest"
+sudo docker tag "edgyr-base:latest" "$DOCKER_REPO/edgyr-base:latest"
+sudo docker tag "edgyr-ml:latest" "$DOCKER_REPO/edgyr-ml:latest"
+/usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-rstats:latest"
 /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-base:latest"
+/usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-ml:latest"

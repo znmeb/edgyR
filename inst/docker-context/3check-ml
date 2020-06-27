@@ -1,0 +1,3 @@
+#! /bin/bash
+
+./check-image.bash edgyr-ml:latest "$EDGYR_PASSWORD"

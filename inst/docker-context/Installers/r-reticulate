@@ -10,8 +10,5 @@ alias make="make --jobs=`nproc`"
 
 pip list
 
-echo "Installing 'reticulate', 'rTorch' and 'keras'"
-Rscript -e "install.packages(c('reticulate', 'rTorch', 'keras'), quiet = TRUE)"
-Rscript -e "reticulate::py_discover_config()"
-Rscript -e "keras::is_keras_available()"
-
+echo "Installing R Python interface packages"
+$HOME/Installers/python-interface.R
