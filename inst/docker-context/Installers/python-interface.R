@@ -1,7 +1,6 @@
 #! /usr/bin/env Rscript
 
 to_install <- c(
-  "IRkernel",
   "keras",
   "reticulate",
   "rTorch"
