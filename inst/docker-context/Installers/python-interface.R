@@ -1,6 +1,7 @@
 #! /usr/bin/env Rscript
 
 to_install <- c(
+  "caracas",
   "keras",
   "reticulate",
   "rTorch"

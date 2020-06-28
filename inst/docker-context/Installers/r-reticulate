@@ -8,6 +8,7 @@ virtualenv --system-site-packages --python=/usr/bin/python3 $WORKON_HOME/r-retic
 source $WORKON_HOME/r-reticulate/bin/activate
 alias make="make --jobs=`nproc`"
 
+pip install --upgrade numpy SymPy
 pip list
 
 echo "Installing R Python interface packages"
