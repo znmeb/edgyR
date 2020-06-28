@@ -38,3 +38,5 @@ sudo docker run --detach \
 echo "Container startup logs"
 sleep 5
 sudo docker logs edgyr
+sleep 5
+sudo docker ps
