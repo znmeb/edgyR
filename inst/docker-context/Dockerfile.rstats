@@ -83,6 +83,15 @@ COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
 COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts
 RUN mkdir --parents $WORKON_HOME $PROJECT_HOME; chown -R edgyr:edgyr $EDGYR_HOME
 
-# set up entry point
+# shift to 'edgyr' account to install 'r-reticulate' virtual environment
+# and R Python interface packages
+USER edgyr
+WORKDIR $EDGYR_HOME
+RUN Installers/r-reticulate > Installers/r-reticulate.log 2>&1 \
+  && gzip -9 Installers/r-reticulate.log
+
+# go back to 'root' and set up entry point
+USER root
+WORKDIR $SOURCE_DIR
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]

@@ -2,14 +2,23 @@
 
 set -e
 
+echo ""
+echo "Installed Linux packages"
+dpkg-query --list
+
+echo ""
 echo "Creating virtualenv 'r-reticulate'"
 virtualenv --system-site-packages --python=/usr/bin/python3 $WORKON_HOME/r-reticulate
 
 source $WORKON_HOME/r-reticulate/bin/activate
+
 alias make="make --jobs=`nproc`"
 
 pip install --upgrade numpy SymPy
+echo ""
+echo "Python packages in 'r-reticulate'"
 pip list
 
+echo ""
 echo "Installing R Python interface packages"
 $HOME/Installers/python-interface.R
