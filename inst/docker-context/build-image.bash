@@ -47,5 +47,4 @@ echo "Building the image"
   --file="$3" \
 .
 
-sudo docker system prune
 sudo docker images
