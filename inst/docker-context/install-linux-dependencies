@@ -58,6 +58,9 @@ apt-get install -qqy --no-install-recommends \
   virtualenv \
   virtualenvwrapper \
   wget \
+  xauth \
+  xfonts-base \
   xorg-dev \
+  xvfb \
   zip \
   zlib1g-dev
