@@ -79,7 +79,6 @@ COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
 COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
 COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
 COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
-COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts
 RUN mkdir --parents $WORKON_HOME $PROJECT_HOME; chown -R edgyr:edgyr $EDGYR_HOME
 
 # shift to 'edgyr' account to install 'r-reticulate' virtual environment
@@ -94,3 +93,4 @@ USER root
 WORKDIR $SOURCE_DIR
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
+COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts
