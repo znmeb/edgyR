@@ -33,3 +33,13 @@ pip list
 echo ""
 echo "Installing R Python interface packages"
 $HOME/Installers/python-interface.R
+
+echo ""
+echo "Testing for Jupyter"
+if [ `pip list | grep -i jupyter | wc -l` -gt "0" ]
+then
+  echo "Jupyter found - enabling R kernel!"
+  Rscript -e "install.packages('IRkernel'); IRkernel::installspec()"
+else
+  echo "No Jupyter for you :-("
+fi
