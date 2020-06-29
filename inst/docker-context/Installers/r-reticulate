@@ -14,7 +14,18 @@ source $WORKON_HOME/r-reticulate/bin/activate
 
 alias make="make --jobs=`nproc`"
 
-pip install --upgrade numpy SymPy
+echo ""
+if [ `pip list | grep -i numpy | wc -l` -gt "0" ]
+then
+  echo "'numpy' is already installed - won't upgrade"
+else
+  echo "Installing latest 'numpy'"
+  pip install --upgrade numpy
+fi
+
+echo ""
+echo "Installing 'SymPy'"
+pip install --upgrade SymPy
 echo ""
 echo "Python packages in 'r-reticulate'"
 pip list
