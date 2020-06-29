@@ -5,6 +5,6 @@ sudo docker pull "ubuntu:bionic"
 sudo docker pull "nvcr.io/nvidia/l4t-base:r32.4.2"
 sudo docker pull "nvcr.io/nvidia/l4t-ml:r32.4.2-py3"
 echo "Building images"
-/usr/bin/time ./1build-rstats > ../rstats.log 2>&1
-/usr/bin/time ./2build-base > ../base.log 2>&1
-/usr/bin/time ./3build-ml > ../ml.log 2>&1
+/usr/bin/time ./1build-rstats > /tmp/rstats.log 2>&1
+/usr/bin/time ./2build-base > /tmp/base.log 2>&1
+/usr/bin/time ./3build-ml > /tmp/ml.log 2>&1
