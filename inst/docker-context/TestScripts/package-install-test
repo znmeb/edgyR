@@ -2,17 +2,6 @@
 
 set -e
 
-echo "Testing R X11 Device"
-if [ `Rscript -e "grDevices::X11()" 2>&1 | wc -l` -eq "0" ]
-then
-  echo "R X11 device is working!"
-else
-  echo "R X11 device is not working -"
-  echo "starting a virtual framebuffer on 'DISPLAY=:77'"
-  Xvfb ":77" -ac -screen 0 1920x1080x24 &
-  export DISPLAY=":77"
-fi
-
 cd $PROJECT_HOME
 rm -fr edgyR
 echo "Cloning 'https://github.com/znmeb/edgyR.git'"
