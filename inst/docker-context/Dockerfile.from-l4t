@@ -93,4 +93,4 @@ USER root
 WORKDIR $SOURCE_DIR
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
-COPY --chown=edgyr:edgyr TestScripts $EDGYR_HOME/TestScripts
+COPY --chown=edgyr:edgyr Scripts $EDGYR_HOME/Scripts
