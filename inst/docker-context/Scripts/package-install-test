@@ -21,17 +21,5 @@ echo "Installing 'edgyR' and its suggested dependencies"
 echo "with 'devtools::install'"
 Rscript -e "devtools::install(dependencies = TRUE, quiet = TRUE)"
 
-echo ""
-echo "Testing R X11 Device"
-if [ `Rscript -e "grDevices::X11()" 2>&1 | wc -l` -eq "0" ]
-then
-  echo "R X11 device is working!"
-else
-  echo "R X11 device is not working -"
-  echo "starting a virtual framebuffer on 'DISPLAY=:77'"
-  Xvfb ":77" -ac -screen 0 1920x1080x24 &
-  export DISPLAY=":77"
-fi
-
 echo "Building the 'pkgdown' site for 'edgyR'"
 Rscript -e "pkgdown::build_site()"
