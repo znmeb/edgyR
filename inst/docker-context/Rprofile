@@ -29,3 +29,4 @@ options(warn=2)
 
 # Get rid of png X11 errors when headless
 options(bitmapType='cairo')
+X11.options(type='cairo')
