@@ -4,8 +4,6 @@ set -e
 
 # This script checks a fair amount of the 'edgyR'
 # infrastructure. It takes a bit of time to run.
-echo "Installing 'tidyverse'"
-$HOME/Installers/tidyverse.R
 echo "Installing 'devtools'"
 $HOME/Installers/devtools.R
 
