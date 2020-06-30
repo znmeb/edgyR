@@ -24,6 +24,7 @@ apt-get install -qqy --no-install-recommends \
   libopenblas-dev \
   libopenmpi-dev \
   libpam0g-dev \
+  libpango1.0-dev \
   libpcre2-dev \
   libpng-dev \
   libreadline-dev \
@@ -33,6 +34,7 @@ apt-get install -qqy --no-install-recommends \
   libxml2-dev \
   locales \
   lynx \
+  openjdk-8-jdk-headless \
   pandoc \
   pandoc-citeproc \
   pandoc-citeproc-preamble \
@@ -48,6 +50,12 @@ apt-get install -qqy --no-install-recommends \
   sudo \
   tar \
   texinfo \
+  texlive-binaries \
+  texlive-fonts-extra \
+  texlive-fonts-recommended \
+  texlive-latex-base \
+  texlive-latex-extra \
+  texlive-latex-recommended \
   time \
   tk-dev \
   tree \
