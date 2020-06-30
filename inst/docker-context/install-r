@@ -1,7 +1,5 @@
 #! /bin/bash
 
-set -e
-
 echo "Creating / entering source directory"
 mkdir -p $SOURCE_DIR && cd $SOURCE_DIR
 
@@ -16,10 +14,13 @@ echo "Using $R_LATEST"
 echo "Configuring"
 mkdir --parents build_dir
 cd build_dir
-../$R_LATEST/configure --with-blas --enable-R-shlib
+../$R_LATEST/configure --with-blas --enable-R-shlib --enable-memory-profiling
 
 echo "Compiling"
 make --jobs=`nproc`
+
+echo "Checking"
+make check
 
 echo "Installing"
 make install
