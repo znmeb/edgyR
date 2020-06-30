@@ -1,7 +1,9 @@
 #! /usr/bin/env Rscript
 
 to_install <- c(
-  "devtools"
+  "devtools",
+  "miniUI",
+  "pkgdown"
 )
 install.packages(to_install, quiet = TRUE)
 warnings()
