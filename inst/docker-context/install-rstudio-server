@@ -5,10 +5,7 @@ set -e
 echo "Installing RStudio Server build dependencies"
 apt-get install -qqy --no-install-recommends \
   ant \
-  cmake \
-  openjdk-8-jdk \
-  openjdk-8-jre
-update-alternatives --get-selections
+  cmake
 
 rm -fr rstudio*
 curl -Ls \
