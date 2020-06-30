@@ -41,5 +41,6 @@ then
   echo "Jupyter found - enabling R kernel!"
   Rscript -e "install.packages('IRkernel'); IRkernel::installspec()"
 else
+  echo "Sorry - Jupyter is only on the 'edgyr-ml' image"
   echo "No Jupyter for you :-("
 fi
