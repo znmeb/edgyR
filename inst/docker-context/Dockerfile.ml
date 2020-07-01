@@ -49,17 +49,16 @@ RUN locale-gen en_US.UTF-8 \
     LC_IDENTIFICATION=en_US.UTF-8 \
   && cat /etc/default/locale
 
-# install R
-# see https://cloud.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
-COPY install-r R.conf $SOURCE_DIR/
-RUN $SOURCE_DIR/install-r > install-r.log 2>&1 \
-  && gzip -9 install-r.log
+# copy R files from rstats image
+COPY --from=edgyr-rstats:latest /usr/local/lib/R /usr/local/lib/R
+COPY --from=edgyr-rstats:latest /usr/local/share/man/man1 /usr/local/share/man/man1
+COPY --from=edgyr-rstats:latest /usr/local/bin /usr/local/bin
+COPY --from=edgyr-rstats:latest /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
+COPY R.conf ld.so.conf.d/
+RUN /sbin/ldconfig
 
-# install RStudio Server
-# see https://rstudio.com/products/rstudio/download-server/other-platforms/
-COPY install-rstudio-server $SOURCE_DIR/
-RUN $SOURCE_DIR/install-rstudio-server > install-rstudio-server.log 2>&1 \
-  && gzip -9 install-rstudio-server.log
+# copy RStudio Server files from rstats image
+COPY --from=edgyr-rstats:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
 
 # configure RStudio Server
 # see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
@@ -90,6 +89,8 @@ RUN Installers/r-reticulate > Installers/r-reticulate.log 2>&1 \
   && gzip -9 Installers/r-reticulate.log
 RUN Installers/rmarkdown.R > Installers/rmarkdown.R.log 2>&1 \
   && gzip -9 Installers/rmarkdown.R.log
+RUN Installers/devtools.R > Installers/devtools.R.log 2>&1 \
+  && gzip -9 Installers/devtools.R.log
 
 # go back to 'root' and set up entry point
 USER root

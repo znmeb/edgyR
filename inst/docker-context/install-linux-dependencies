@@ -50,12 +50,6 @@ apt-get install -qqy --no-install-recommends \
   sudo \
   tar \
   texinfo \
-  texlive-binaries \
-  texlive-fonts-extra \
-  texlive-fonts-recommended \
-  texlive-latex-base \
-  texlive-latex-extra \
-  texlive-latex-recommended \
   time \
   tk-dev \
   tree \

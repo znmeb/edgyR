@@ -87,6 +87,8 @@ USER edgyr
 WORKDIR $EDGYR_HOME
 RUN Installers/r-reticulate > Installers/r-reticulate.log 2>&1 \
   && gzip -9 Installers/r-reticulate.log
+RUN Installers/rmarkdown.R > Installers/rmarkdown.R.log 2>&1 \
+  && gzip -9 Installers/rmarkdown.R.log
 
 # go back to 'root' and set up entry point
 USER root

@@ -1,0 +1,12 @@
+#! /bin/bash
+
+set -e
+
+echo "Installing TeXLive"
+apt-get install -qqy --no-install-recommends \
+  texlive-binaries \
+  texlive-fonts-extra \
+  texlive-fonts-recommended \
+  texlive-latex-base \
+  texlive-latex-extra \
+  texlive-latex-recommended

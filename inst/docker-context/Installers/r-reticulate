@@ -39,7 +39,9 @@ echo "Testing for Jupyter"
 if [ `pip list | grep -i jupyter | wc -l` -gt "0" ]
 then
   echo "Jupyter found - enabling R kernel!"
-  Rscript -e "install.packages('IRkernel'); IRkernel::installspec()"
+  echo "Also installing 'keras' and 'rTorch'"
+  Rscript -e "install.packages(c('keras', 'rTorch', 'IRkernel')); IRkernel::installspec()"
+  Rscript -e "keras::is_keras_available()"
 else
   echo "Sorry - Jupyter is only on the 'edgyr-ml' image"
   echo "No Jupyter for you :-("

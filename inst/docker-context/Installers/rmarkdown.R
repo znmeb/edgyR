@@ -1,6 +1,9 @@
 #! /usr/bin/env Rscript
 
 to_install <- c(
+  "knitr",
+  "rmarkdown",
+  "rprojroot",
   "tinytex"
 )
 install.packages(to_install, quiet = TRUE)
