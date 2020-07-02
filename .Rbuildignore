@@ -5,5 +5,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^screenshots$
+^docker-context$
 ^CODE_OF_CONDUCT.md$
 ^CONTRIBUTING.md$

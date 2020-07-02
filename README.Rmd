@@ -1,5 +1,5 @@
 ---
-title: "R on the Edge: NVIDIAⓇ Jetson™ tools for R developers"
+title: "edgyR: R on the Edge -- NVIDIAⓇ Jetson™ tools for R developers"
 output: github_document
 ---
 

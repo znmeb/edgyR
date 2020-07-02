@@ -48,7 +48,7 @@ restart if required.
 Here's what it looks like on a 7-inch 1024x600 screen:
 
 ```{r echo=FALSE, out.width='100%'}
-knitr::include_graphics('./software-updater-app.png')
+knitr::include_graphics('./software-updater-app.jpg')
 ```
 
 --------------------
@@ -135,7 +135,7 @@ it if you wish.
 On the dash at the lower left, there's a button labeled `L4T-README`:
 
 ```{r echo=FALSE, out.width='100%'}
-knitr::include_graphics('./l4t-readme.png')
+knitr::include_graphics('./l4t-readme.jpg')
 ```
 
 --------------------

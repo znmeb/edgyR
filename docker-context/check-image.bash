@@ -28,8 +28,8 @@ fi
 echo "Force-removing old 'edgyr' container"
 echo "You can ignore errors if it doesn't exist"
 sudo docker rm -f edgyr
-echo "Running image $1 detached"
-sudo docker run --detach \
+echo "Running image $1"
+sudo docker run --interactive --tty \
   --env EDGYR_PASSWORD=$2 \
   --network host --name edgyr --hostname edgyr \
   --runtime nvidia \

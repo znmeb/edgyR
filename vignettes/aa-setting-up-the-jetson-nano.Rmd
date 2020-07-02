@@ -36,7 +36,7 @@ Power Supply Options", for the details.
     in the diagram.
 
     ```{r echo=FALSE, out.width='100%'}
-    knitr::include_graphics('./jumper.jpg')
+    knitr::include_graphics('./jumper_c.jpg')
     ```
 
 --------------------
@@ -54,7 +54,7 @@ at least 128 GB and I'm currently running on a 256 GB one.
     contacts facing the board.
 
     ```{r echo=FALSE, out.width='100%'}
-    knitr::include_graphics('./micro_sd.jpg')
+    knitr::include_graphics('./micro_sd_c.jpg')
     ```
 
 --------------------
