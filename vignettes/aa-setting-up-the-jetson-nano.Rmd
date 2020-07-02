@@ -1,7 +1,7 @@
 ---
 title: "Setting up the Jetson Nano"
 output: rmarkdown::html_vignette
-bibliography: setup.bib
+bibliography: vignettes.bib
 vignette: >
   %\VignetteIndexEntry{Setting up the Jetson Nano}
   %\VignetteEngine{knitr::rmarkdown}
@@ -98,5 +98,9 @@ press "Continue".
 
 One final recommendation: if you want to do things with the Jetson hardware, I
 highly recommend [JetsonHacks](https://www.jetsonhacks.com) [@JetsonHacks2020].
+
+## Next: Linux for Tegra (L4T) First Steps
+
+`vignette("cc-l4t-first-steps")`
 
 ## References

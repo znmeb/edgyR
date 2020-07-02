@@ -13,7 +13,8 @@ Suggests:
     devtools,
     knitr,
     miniUI,
-    pkgdown
+    pkgdown,
+    tibble
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

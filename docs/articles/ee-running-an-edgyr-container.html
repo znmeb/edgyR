@@ -104,12 +104,43 @@
 
     
     
-
+<p>See <code><a href="../articles/dd-guide-to-the-edgyr-images.html">vignette("dd-guide-to-the-edgyr-images")</a></code> for the list of images. In the following, I’m going to describe using the largest image, <code>edgyr-ml</code>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Open a terminal on the Jetson host machine. You can either do this from a terminal window at the host console or logged in remotely via secure shell (SSH).</p></li>
+<li>
+<p>Download the image using <code>sudo docker pull</code>.</p>
+<p><code>sudo docker pull znmeb/edgyr-ml</code></p>
+</li>
+<li>
+<p>Define a new password for the <code>edgyr</code> account in the container. For security reasons, the container will exit if you do not do this. The new password must be at least 12 characters long. Set the new password in the environment variable <code>EDGYR_PASSWORD</code>. For exampe:</p>
+<p><code>export EDGYR_PASSWORD="12.angry%characters"</code></p>
+</li>
+<li>
+<p>Start the container with <code>sudo docker run</code>.</p>
+<p>sudo docker run –tty –interactive<br>
+–env EDGYR_PASSWORD=$EDGYR_PASSWORD<br>
+–nework host –runtime nvidia<br>
+znmeb/edgyr-ml</p>
+<p>RStudio Server will start, listening on IP address <code>0.0.0.0</code> port `8787.</p>
+</li>
+<li><p>Browse to the server and log in. On the Jetson console, browse to <code>localhost:8787</code>. On a remote system, browse to port <code>8787</code> on the IP address of the Jetson host. For example, my Jetson Nano has IP address <code>192.168.254.23</code>, so I browse to <code>http://192.168.254.23:8787</code>.</p></li>
+</ol>
+<p>The user name is <code>edgyr</code> and the password is the one you defined in step 3.</p>
+<div id="next" class="section level2">
+<h2 class="hasAnchor">
+<a href="#next" class="anchor"></a>Next:</h2>
+</div>
+<div id="references" class="section level2">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

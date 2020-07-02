@@ -1,7 +1,7 @@
 ---
 title: "Linux for Tegra (L4T) First Steps"
 output: rmarkdown::html_vignette
-bibliography: setup.bib
+bibliography: vignettes.bib
 vignette: >
   %\VignetteIndexEntry{Linux for Tegra (L4T) First Steps}
   %\VignetteEngine{knitr::rmarkdown}
@@ -155,5 +155,9 @@ knitr::include_graphics('./configuring-vnc.png')
 ```
 
 --------------------
+
+## Next: Guide to the `edgyR` Images
+
+`vignette("dd-guide-to-the-edgyr-images")`
 
 ## References

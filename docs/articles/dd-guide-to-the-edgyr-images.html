@@ -247,11 +247,22 @@
 <p>How to choose? If you have a non-NVIDIA <code>arm64</code> system, the only image that will work for you is <code>edgyr-rstats</code>. This is a full <code>arm64</code> Ubuntu 18.04 LTS “Bionic Beaver” system with R 4.0.2 and RStudio Server 1.3.959 built from source. So it should run on any <code>arm64</code> system, although I only test on NVIDIA Jetson hardware.</p>
 <p>If you have a Jetson and don’t mind installing packages when needed, <code>edgyr-base</code> is the smallest. It’s smaller than <code>edgyr-rstats</code> mostly because it doesn’t have the source and build directories left over from the R and RStudio Server installs.</p>
 <p>But if you have a Jetson and the free disk space I recommend going with <code>edgyr-ml</code>. It’s based on the NVIDIA <a href="https://ngc.nvidia.com/catalog/containers/nvidia:l4t-ml">L4T ML</a> image, which includes JupyterLab, PyTorch, TensorFlow and the lower-level Python machine learning stack as well. It also has the R <code>devtools</code>, <code>pkgdown</code> and <code>miniUI</code> packages; <code>miniUI</code> brings in <code>shiny</code>, so you’ll have that too.</p>
+<div id="next-running-an-edgyr-container" class="section level2">
+<h2 class="hasAnchor">
+<a href="#next-running-an-edgyr-container" class="anchor"></a>Next: Running an <code>edgyR</code> Container</h2>
+<p><code><a href="../articles/ee-running-an-edgyr-container.html">vignette("ee-running-an-edgyr-container")</a></code></p>
+</div>
+<div id="references" class="section level2">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

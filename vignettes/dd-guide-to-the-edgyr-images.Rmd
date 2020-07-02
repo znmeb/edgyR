@@ -1,6 +1,7 @@
 ---
 title: "Guide to the `edgyR` Images"
 output: rmarkdown::html_vignette
+bibliography: vignettes.bib
 vignette: >
   %\VignetteIndexEntry{Guide to the `edgyR` Images}
   %\VignetteEngine{knitr::rmarkdown}
@@ -66,3 +67,9 @@ image, which includes JupyterLab, PyTorch, TensorFlow and the lower-level
 Python machine learning stack as well. It also has the R `devtools`,
 `pkgdown` and `miniUI` packages; `miniUI` brings in `shiny`, so you'll have
 that too.
+
+## Next: Running an `edgyR` Container
+
+`vignette("ee-running-an-edgyr-container")`
+
+## References

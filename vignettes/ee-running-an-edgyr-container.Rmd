@@ -1,6 +1,7 @@
 ---
 title: "Running an `edgyR` Container"
 output: rmarkdown::html_vignette
+bibliography: vignettes.bib
 vignette: >
   %\VignetteIndexEntry{Running an `edgyR` Container}
   %\VignetteEngine{knitr::rmarkdown}
@@ -13,3 +14,40 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+See `vignette("dd-guide-to-the-edgyr-images")` for the list of images. In the
+following, I'm going to describe using the largest image, `edgyr-ml`.
+
+1. Open a terminal on the Jetson host machine. You can either do this from a
+terminal window at the host console or logged in remotely via secure shell
+(SSH).
+2. Download the image using `sudo docker pull`.
+
+    `sudo docker pull znmeb/edgyr-ml`
+
+3. Define a new password for the `edgyr` account in the container. For
+security reasons, the container will exit if you do not do this. The new
+password must be at least 12 characters long. Set the new password in the
+environment variable `EDGYR_PASSWORD`. For exampe:
+
+    `export EDGYR_PASSWORD="12.angry%characters"`
+    
+4. Start the container with `sudo docker run`.
+
+    sudo docker run --tty --interactive \
+    --env EDGYR_PASSWORD=$EDGYR_PASSWORD \
+    --nework host --runtime nvidia \
+    znmeb/edgyr-ml
+
+    RStudio Server will start, listening on IP address `0.0.0.0` port `8787.
+    
+5. Browse to the server and log in. On the Jetson console, browse to
+`localhost:8787`. On a remote system, browse to port `8787` on the IP address
+of the Jetson host. For example, my Jetson Nano has IP address `192.168.254.23`,
+so I browse to `http://192.168.254.23:8787`.
+
+The user name is `edgyr` and the password is the one you defined in step 3.
+
+## Next:
+
+## References
