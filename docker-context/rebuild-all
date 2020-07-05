@@ -13,3 +13,5 @@ echo "Building images"
 /usr/bin/time ./2build-base > /tmp/base.log 2>&1 &
 /usr/bin/time ./3build-ml > /tmp/ml.log 2>&1 &
 wait
+
+sudo docker images
