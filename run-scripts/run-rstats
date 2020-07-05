@@ -9,4 +9,4 @@ then
   exit -20
 fi
 
-./run-image.bash edgyr-rstats:latest "$EDGYR_PASSWORD"
+./run-image.bash znmeb/edgyr-rstats:latest "$EDGYR_PASSWORD"

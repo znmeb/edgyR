@@ -6,6 +6,7 @@
 ^docs$
 ^pkgdown$
 ^screenshots$
-^docker-context$
+^docker-build-context$
+^run-scripts$
 ^CODE_OF_CONDUCT.md$
 ^CONTRIBUTING.md$

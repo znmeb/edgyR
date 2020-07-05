@@ -9,4 +9,4 @@ then
   exit -20
 fi
 
-./run-image.bash edgyr-ml:latest "$EDGYR_PASSWORD"
+./run-image.bash znmeb/edgyr-ml:latest "$EDGYR_PASSWORD"

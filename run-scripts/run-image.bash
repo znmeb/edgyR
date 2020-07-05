@@ -35,10 +35,6 @@ sudo docker run --detach \
   --runtime nvidia \
   "$1"
 
-echo "Container startup logs in five seconds"
-sleep 5
-sudo docker logs edgyr
-echo "'sudo docker ps' in five seconds"
 sleep 5
 sudo docker ps
-echo "Browse to port 8787 on Docker host"
+sudo docker logs edgyr
