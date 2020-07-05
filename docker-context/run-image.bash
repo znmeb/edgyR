@@ -41,3 +41,4 @@ sudo docker logs edgyr
 echo "'sudo docker ps' in five seconds"
 sleep 5
 sudo docker ps
+echo "Browse to port 8787 on this system"
