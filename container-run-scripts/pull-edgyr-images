@@ -2,8 +2,7 @@
 
 set -e
 
-sudo docker pull "znmeb/edgyr-rstats:latest"
-sudo docker pull "znmeb/edgyr-base:latest"
+sudo docker pull "znmeb/edgyr-source:latest"
 sudo docker pull "znmeb/edgyr-ml:latest"
 
 sudo docker images
