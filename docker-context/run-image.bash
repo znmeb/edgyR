@@ -29,8 +29,15 @@ echo "Force-removing old 'edgyr' container"
 echo "You can ignore errors if it doesn't exist"
 sudo docker rm -f edgyr
 echo "Running image $1"
-sudo docker run --interactive --tty \
+sudo docker run --detach \
   --env EDGYR_PASSWORD=$2 \
   --network host --name edgyr --hostname edgyr \
   --runtime nvidia \
   "$1"
+
+echo "Container startup logs in five seconds"
+sleep 5
+sudo docker logs edgyr
+echo "'sudo docker ps' in five seconds"
+sleep 5
+sudo docker ps
