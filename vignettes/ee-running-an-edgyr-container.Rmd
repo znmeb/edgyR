@@ -62,10 +62,11 @@ password for `sudo` again.
     
 6. Browse to the server and log in. On the Jetson console, browse to
 `localhost:8787`. On a remote system, browse to port `8787` on the IP address
-of the Jetson host. For example, my Jetson Nano has IP address `192.168.254.23`,
-so I browse to `http://192.168.254.23:8787`.
+of the Jetson host. 
 
-The user name is `edgyr` and the password is the one you defined in step 3.
+    For example, my Jetson Nano has IP address `192.168.254.23`, so I browse
+    to `http://192.168.254.23:8787`. The user name is `edgyr` and the password
+    is the one you defined in step 3.
 
 ## Next:
 
