@@ -36,6 +36,14 @@ then
   exit -3
 fi
 
+# check the repository definition
+if [ "$DOCKER_REPO" == "" ]
+then
+  echo "You need to define the 'DOCKER_REPO' environment variable"
+  echo "to fully tag the image!"
+  exit -20
+fi
+
 echo "Building the image"
 /usr/bin/time sudo docker build \
   --build-arg BASE_IMAGE="$1" \
@@ -47,4 +55,5 @@ echo "Building the image"
   --file="$3" \
 .
 
+sudo docker tag "$2" "$DOCKER_REPO/$2"
 sudo docker images
