@@ -1,4 +1,4 @@
-R on the Edge: NVIDIAⓇ Jetson™ tools for R developers
+edgyR: R on the Edge – NVIDIAⓇ Jetson™ tools for R developers
 ================
 
 ## Overview
@@ -8,9 +8,17 @@ R on the Edge: NVIDIAⓇ Jetson™ tools for R developers
 
 The goal of `edgyR` is to give R users access to [NVIDIA Jetson
 development
-kits](https://developer.nvidia.com/embedded/develop/hardware). The
-Jetson software includes a full Ubuntu 18.04LTS “Bionic Beaver” desktop,
-NVIDIA GPU development software and a complete NVIDIA Docker runtime.
+kits](https://developer.nvidia.com/embedded/develop/hardware). Although
+the target market of the Jetson platform is autonomous vehicles and the
+focus of the software is image and video processing, the hardware and
+software are general enough for a wide variety of machine learning
+applications.
+
+The Jetson software is called JetPack.
+[JetPack](https://developer.nvidia.com/embedded/jetpack) includes a full
+Ubuntu 18.04 LTS “Bionic Beaver” desktop, NVIDIA drivers and GPU
+development software, Python libraries for accessing the GPU, and a
+complete NVIDIA Docker runtime.
 
 ## How is it pronounced?
 
@@ -24,6 +32,78 @@ There are (at least) five options:
 
 It is ***not*** pronounced like any brand of peanut butter. Otherwise,
 it’s your choice\!
+
+## Quick start
+
+1.  Buy a Jetson development kit and set it up -
+    `vignette("aa-setting-up-the-jetson-nano")`. Make note of your
+    password on the Jetson. You will need this later.
+
+2.  Update the OS with the latest packages and set up remote access if
+    desired - `vignette("cc-l4t-first-steps")`. Make note of the
+    Jetson’s IP address. You will need this later.
+
+3.  Open a terminal on the Jetson, either on the Jetson console or
+    remotely with secure shell (ssh).
+
+4.  `mkdir --parents Projects` in the home directory. This will help you
+    organize your desktop.
+
+5.  Clone this repository.
+    
+        cd Projects
+        git clone https://github.com/znmeb/edgyR.git
+
+6.  Pull the images from Docker Hub.
+    
+        cd edgyR/container-run-scripts
+        ./pull-znmeb-images
+
+7.  Define a new password for the `edgyr` account on the images. The
+    images are built with the Linux account `edgyr`, password `edgyr`.
+    But you need to change the password before you can run them.
+    
+    You define the password by setting an environment variable before
+    running the image. The new password must be at least 12 characters
+    long or you’ll get an error message. The environment variable is
+    `EDGYR_PASSWORD`.
+    
+    For example, if the new `edgyr` password is
+    “get\_me\_out\_of\_here\!”, you’d type
+    
+    ``` 
+     `export EDGYR_PASSWORD="get_me_out_of_here!"`
+    ```
+
+8.  Choose an image to run. Read
+    `vignette("dd-guide-to-the-edgyr-images")` for the details, but I
+    recommend using `znmeb/edgyr-ml`. Each image has a run script:
+    
+      - znmeb/edgyr-rstats: run-rstats
+      - znmeb/edgyr-base: run-base
+      - znmeb/edgyr-ml: run-ml
+    
+    So, to run `znmeb/edgyr-ml`, type `./run-ml`. You should see
+    
+        ./run-ml 
+        Force-removing old 'edgyr' container
+        You can ignore errors if it doesn't exist
+        [sudo] password for znmeb: 
+    
+    Instead of `znmeb` you’ll see the login ID you created when you set
+    up the Jetson. Enter the password for that account. Then you should
+    see
+    
+        Error: No such container: edgyr
+        Running image znmeb/edgyr-ml:latest
+        fc04e5d9edbff7d2a7282d9680bd4db41009675ad1983d9e762e2c7144f2990c
+        CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
+        fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds ago       Up 5 seconds                            edgyr
+        Resetting 'edgyr' password
+        Starting RStudio Server - browse to port 8787 on Docker host
+    
+    The long hexadecimal string will be different on your system, but
+    the rest should look like what’s above.
 
 ## Status / Roadmap
 

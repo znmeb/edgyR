@@ -21,27 +21,46 @@ following, I'm going to describe using the largest image, `edgyr-ml`.
 1. Open a terminal on the Jetson host machine. You can either do this from a
 terminal window at the host console or logged in remotely via secure shell
 (SSH).
-2. Download the image using `sudo docker pull`.
+2. Create a `Projects` directory and clone this repository into it.
 
-    `sudo docker pull znmeb/edgyr-ml`
+    ```
+    mkdir --parents Projects
+    cd Projects
+    git clone https://github.com/znmeb/edgyR.git
+    cd edgyR/container-run-scripts
+    ```
 
-3. Define a new password for the `edgyr` account in the container. For
+3. Download the images: `./pull-edgyr-images`. You will need to enter your
+Jetson password to run `sudo`.
+4. Define a new password for the `edgyr` account in the container. For
 security reasons, the container will exit if you do not do this. The new
 password must be at least 12 characters long. Set the new password in the
-environment variable `EDGYR_PASSWORD`. For exampe:
+environment variable `EDGYR_PASSWORD`. For example:
 
     `export EDGYR_PASSWORD="12.angry%characters"`
-    
-4. Start the container with `sudo docker run`.
-
-    sudo docker run --tty --interactive \
-    --env EDGYR_PASSWORD=$EDGYR_PASSWORD \
-    --nework host --runtime nvidia \
-    znmeb/edgyr-ml
+5. Start the container with `./run-ml`. You may have to enter your Jetson
+password for `sudo` again.
 
     RStudio Server will start, listening on IP address `0.0.0.0` port `8787.
+    You should see
     
-5. Browse to the server and log in. On the Jetson console, browse to
+    ```
+    ./run-ml 
+    Force-removing old 'edgyr' container
+    You can ignore errors if it doesn't exist
+    Error: No such container: edgyr
+    Running image znmeb/edgyr-ml:latest
+    fc04e5d9edbff7d2a7282d9680bd4db41009675ad1983d9e762e2c7144f2990c
+    CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
+    fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds ago       Up 5 seconds                            edgyr
+    Resetting 'edgyr' password
+    Starting RStudio Server - browse to port 8787 on Docker host
+    ```
+    
+    The long hexadecimal string will be different on your system, but the rest
+    should look like what's above.
+    
+6. Browse to the server and log in. On the Jetson console, browse to
 `localhost:8787`. On a remote system, browse to port `8787` on the IP address
 of the Jetson host. For example, my Jetson Nano has IP address `192.168.254.23`,
 so I browse to `http://192.168.254.23:8787`.
