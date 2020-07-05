@@ -20,9 +20,6 @@ then
 fi
 
 sudo docker login
-sudo docker tag "edgyr-rstats:latest" "$DOCKER_REPO/edgyr-rstats:latest"
-sudo docker tag "edgyr-base:latest" "$DOCKER_REPO/edgyr-base:latest"
-sudo docker tag "edgyr-ml:latest" "$DOCKER_REPO/edgyr-ml:latest"
 /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-rstats:latest"
 /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-base:latest"
 /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-ml:latest"
