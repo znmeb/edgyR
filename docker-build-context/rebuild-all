@@ -6,7 +6,8 @@ sudo docker pull "ubuntu:bionic" &
 sudo docker pull "nvcr.io/nvidia/l4t-ml:r32.4.2-py3" &
 wait
 echo "Building images"
+export DOCKER_REPO=znmeb
 /usr/bin/time ./build-source > /tmp/source.log 2>&1
-/usr/bin/time ./build-ml > /tmp/ml.log 2>&1 &
+/usr/bin/time ./build-ml > /tmp/ml.log 2>&1
 
 sudo docker images

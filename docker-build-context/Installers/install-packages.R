@@ -3,7 +3,15 @@
 to_install <- c(
   "caracas",
   "data.table",
-  "reticulate"
+  "devtools",
+  "keras",
+  "knitr",
+  "miniUI",
+  "pkgdown",
+  "rmarkdown",
+  "rprojroot",
+  "rTorch",
+  "tinytex"
 )
 install.packages(to_install, quiet = TRUE)
 warnings()
@@ -12,7 +20,17 @@ print("")
 print("Missing packages?")
 print(setdiff(to_install, as.data.frame(installed.packages())$Package))
 
+print("")
+print("You can ignore errors in the following TinyTeX install")
+try(tinytex::install_tinytex())
+print("You can ignore errors in the preceding TinyTeX install")
+print("")
+
+print("")
+print("Is 'keras' available?")
 reticulate::py_discover_config()
+keras::is_keras_available()
+
 print("")
 print("Installed R packages")
 print(
