@@ -49,16 +49,16 @@ RUN locale-gen en_US.UTF-8 \
     LC_IDENTIFICATION=en_US.UTF-8 \
   && cat /etc/default/locale
 
-# copy R files from rstats image
-COPY --from=edgyr-rstats:latest /usr/local/lib/R /usr/local/lib/R
-COPY --from=edgyr-rstats:latest /usr/local/share/man/man1 /usr/local/share/man/man1
-COPY --from=edgyr-rstats:latest /usr/local/bin /usr/local/bin
-COPY --from=edgyr-rstats:latest /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
+# copy R files from source image
+COPY --from=edgyr-source:latest /usr/local/lib/R /usr/local/lib/R
+COPY --from=edgyr-source:latest /usr/local/share/man/man1 /usr/local/share/man/man1
+COPY --from=edgyr-source:latest /usr/local/bin /usr/local/bin
+COPY --from=edgyr-source:latest /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
 COPY R.conf ld.so.conf.d/
 RUN /sbin/ldconfig
 
-# copy RStudio Server files from rstats image
-COPY --from=edgyr-rstats:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
+# copy RStudio Server files from source image
+COPY --from=edgyr-source:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
 
 # configure RStudio Server
 # see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started

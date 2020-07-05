@@ -1,6 +1,0 @@
-#! /bin/bash
-
-set -e
-
-echo "Building the 'edgyr-base' image"
-./build-image.bash "nvcr.io/nvidia/l4t-base:r32.4.2" "edgyr-base" "Dockerfile.base"
