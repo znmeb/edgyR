@@ -7,6 +7,7 @@ apt-get install -qqy --no-install-recommends \
   ant \
   cmake
 
+cd $SOURCE_DIR
 rm -fr rstudio*
 curl -Ls \
   https://github.com/rstudio/rstudio/tarball/v$RSTUDIO_VERSION_MAJOR.$RSTUDIO_VERSION_MINOR.$RSTUDIO_VERSION_PATCH \
