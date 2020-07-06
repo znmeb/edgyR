@@ -96,4 +96,3 @@ WORKDIR $SOURCE_DIR
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
 COPY --chown=edgyr:edgyr Scripts $EDGYR_HOME/Scripts
-COPY --chown=edgyr:edgyr Add-ons $EDGYR_HOME/Add-ons

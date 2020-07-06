@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 ## What is L4T?
 I'm going to assume you have a Jetson Nano and have completed
 `vignette("aa-setting-up-the-jetson-nano")` and are at the Jetson desktop as
-shown in "After Logging In" on the "Setup and First Boot" tab of [@NVIDIA2019b].
+shown in "After Logging In" on the "Setup and First Boot" tab of
+^[@NVIDIA2019b].
 
 When you flashed the microSD card, the software you installed was a collection
 of NVIDIA tools called
@@ -26,7 +27,7 @@ of NVIDIA tools called
 [@NVIDIA2019c]. JetPack SDK is a mature collection of utilities for developing
 edge computing applications on Jetson hardware. If you have time and are
 interested in the state of the NVIDIA art, there are a wealth of tutorials and
-examples, most of which will run on the Nano.
+examples, most of which will run on the Nano. See ^[@NVIDIA2019e] to get started.
 
 The operating system component of JetPack SDK is called Linux for Tegra (L4T).
 L4T is built on top of Ubuntu Linux 18.04 LTS "Bionic Beaver" running on the
@@ -158,8 +159,8 @@ knitr::include_graphics('./configuring-vnc.png')
 
 --------------------
 
-## Next: Guide to the `edgyr-ml` Images
+## Next: Running an `edgyR` Container
 
-`vignette("dd-guide-to-the-edgyr-ml-image")`
+`vignette("ee-running-an-edgyr-container")`
 
 ## References

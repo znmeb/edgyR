@@ -15,9 +15,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-See `vignette("dd-guide-to-the-edgyr-images")` for the list of images. In the
-following, I'm going to describe using the largest image, `edgyr-ml`.
-
 1. Open a terminal on the Jetson host machine. You can either do this from a
 terminal window at the host console or logged in remotely via secure shell
 (SSH).

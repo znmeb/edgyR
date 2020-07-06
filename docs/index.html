@@ -61,9 +61,6 @@
       <a href="articles/cc-l4t-first-steps.html">Linux for Tegra (L4T) First Steps</a>
     </li>
     <li>
-      <a href="articles/dd-guide-to-the-edgyr-images.html">Guide to the `edgyR` Images</a>
-    </li>
-    <li>
       <a href="articles/ee-running-an-edgyr-container.html">Running an `edgyR` Container</a>
     </li>
     <li>
@@ -103,8 +100,17 @@
 <blockquote>
 <p>“And though she be but little, she is fierce.” – Shakespeare, on receiving an NVIDIA Jetson Nano for his birthday</p>
 </blockquote>
-<p>The goal of <code>edgyR</code> is to give R users access to <a href="https://developer.nvidia.com/embedded/develop/hardware">NVIDIA Jetson development kits</a>. Although the target market of the Jetson platform is autonomous vehicles and the focus of the software is image and video processing, the hardware and software are general enough for a wide variety of machine learning applications.</p>
-<p>The Jetson software is called JetPack. <a href="https://developer.nvidia.com/embedded/jetpack">JetPack</a> includes a full Ubuntu 18.04 LTS “Bionic Beaver” desktop, NVIDIA drivers and GPU development software, Python libraries for accessing the GPU, and a complete NVIDIA Docker runtime.</p>
+<p>The goal of <code>edgyR</code> is to give R users access to <a href="https://developer.nvidia.com/embedded/develop/hardware">NVIDIA Jetson development kits</a>. Although the target market of the Jetson platform is autonomous vehicles, and the focus of the software is image and video processing, the hardware and software are general enough for a wide variety of machine learning applications.</p>
+<p>The Jetson hardware consists of a multi-core <code>arm64</code> CPU and a CUDA-compatible GPU. The smallest of the family, the Jetson Nano, has four CPU cores, 4 GB of RAM, and a GPU with 128 CUDA cores. The peak speed is 472 billion floating point operations per second (GFLOPS).</p>
+<p>The Jetson software is called <a href="https://developer.nvidia.com/embedded/jetpack">JetPack</a>. JetPack includes</p>
+<ul>
+<li>
+<a href="https://developer.nvidia.com/embedded/linux-tegra">Linux for Tegra (L4T)</a>, a full Ubuntu 18.04 LTS “Bionic Beaver” desktop,</li>
+<li>NVIDIA drivers,</li>
+<li>compilers, linkers and libraries to access the onboard GPU in C/C++ and Python, and</li>
+<li>a complete NVIDIA Docker runtime.</li>
+</ul>
+<p><code>edgyR</code> adds R 4.0.2 and RStudio Server 1.3.959 to JetPack, compiled for <code>arm64</code> from upstream source and packaged on a Docker image, <a href="https://hub.docker.com/r/znmeb/edgyr-ml"><code>edgyr-ml</code></a>. The image is based on <a href="https://ngc.nvidia.com/catalog/containers/nvidia:l4t-ml">Machine Learning for Jetson/L4T</a>. As a result, <code>edgyr-ml</code> includes numpy, scipy, matplotlib, pandas, scikit-learn, onnx, PyTorch 1.5.0, torchvision 0.6.0, TensorFlow 1.15, and JupyterLab 2.1.1.</p>
 </div>
 <div id="how-is-it-pronounced" class="section level2">
 <h2 class="hasAnchor">
@@ -119,9 +125,21 @@
 </ol>
 <p>It is <strong><em>not</em></strong> pronounced like any brand of peanut butter. Otherwise, it’s your choice!</p>
 </div>
+<div id="onward" class="section level2">
+<h2 class="hasAnchor">
+<a href="#onward" class="anchor"></a>Onward!</h2>
+<p><code><a href="articles/aa-setting-up-the-jetson-nano.html">vignette("aa-setting-up-the-jetson-nano")</a></code></p>
+</div>
 <div id="status--roadmap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#status--roadmap" class="anchor"></a>Status / Roadmap</h2>
+<div id="2020-07-05" class="section level3">
+<h3 class="hasAnchor">
+<a href="#2020-07-05" class="anchor"></a>2020-07-05:</h3>
+<p>Simplification time! There are now only two images and only one is meant for normal use. The <code>edgyr-rstats</code> image has been renamed <code>edgyr-source</code>, and is used only in the build process for R and RStudio Server.</p>
+<p>The main end-user image is <code>edgyr-ml</code>. It’s built on the NVIDIA L4T machine learning image and has JupyterLab, PyTorch 1.5 and TensorFlow 1.15.</p>
+<p>I hope at some point there will be upstream binaries for R and RStudio Server so I don’t need to build them from source and can eliminate the <code>edgyr-source</code> image and remove the time it takes to build it from my release process. The more users this project gets, the more likely that is. So if you’re using <code>edgyR</code>, tell your friends!</p>
+</div>
 <div id="2020-07-04" class="section level3">
 <h3 class="hasAnchor">
 <a href="#2020-07-04" class="anchor"></a>2020-07-04:</h3>

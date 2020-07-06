@@ -14,21 +14,31 @@ focus of the software is image and video processing, the hardware and
 software are general enough for a wide variety of machine learning
 applications.
 
+The Jetson hardware consists of a multi-core `arm64` CPU and a
+CUDA-compatible GPU. The smallest of the family, the Jetson Nano, has
+four CPU cores, 4 GB of RAM, and a GPU with 128 CUDA cores. The peak
+speed is 472 billion floating point operations per second (GFLOPS).
+
 The Jetson software is called
 [JetPack](https://developer.nvidia.com/embedded/jetpack). JetPack
-includes [Linux for Tegra
-(L4T)](https://developer.nvidia.com/embedded/linux-tegra), a full Ubuntu
-18.04 LTS “Bionic Beaver” desktop with NVIDIA drivers. JetPack also
-includes development software and libraries to access the onboard GPU in
-C/C++ and Python, and a complete NVIDIA Docker runtime.
+includes
+
+  - [Linux for Tegra
+    (L4T)](https://developer.nvidia.com/embedded/linux-tegra), a full
+    Ubuntu 18.04 LTS “Bionic Beaver” desktop,
+  - NVIDIA drivers,
+  - compilers, linkers and libraries to access the onboard GPU in C/C++
+    and Python, and
+  - a complete NVIDIA Docker runtime.
 
 `edgyR` adds R 4.0.2 and RStudio Server 1.3.959 to JetPack, compiled for
 `arm64` from upstream source and packaged on a Docker image,
 [`edgyr-ml`](https://hub.docker.com/r/znmeb/edgyr-ml). The image is
 based on [Machine Learning for
 Jetson/L4T](https://ngc.nvidia.com/catalog/containers/nvidia:l4t-ml). As
-a result, `edgyr-ml` includes PyTorch 1.5.0, TensorFlow 1.15, and
-JupyterLab 2.1.1.
+a result, `edgyr-ml` includes numpy, scipy, matplotlib, pandas,
+scikit-learn, onnx, PyTorch 1.5.0, torchvision 0.6.0, TensorFlow 1.15,
+and JupyterLab 2.1.1.
 
 ## How is it pronounced?
 
@@ -42,6 +52,10 @@ There are (at least) five options:
 
 It is ***not*** pronounced like any brand of peanut butter. Otherwise,
 it’s your choice\!
+
+## Onward\!
+
+`vignette("aa-setting-up-the-jetson-nano")`
 
 ## Status / Roadmap
 

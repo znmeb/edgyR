@@ -60,9 +60,6 @@
       <a href="../articles/cc-l4t-first-steps.html">Linux for Tegra (L4T) First Steps</a>
     </li>
     <li>
-      <a href="../articles/dd-guide-to-the-edgyr-images.html">Guide to the `edgyR` Images</a>
-    </li>
-    <li>
       <a href="../articles/ee-running-an-edgyr-container.html">Running an `edgyR` Container</a>
     </li>
     <li>
@@ -108,10 +105,10 @@
 <h2 class="hasAnchor">
 <a href="#what-to-buy" class="anchor"></a>What to buy</h2>
 <ol style="list-style-type: decimal">
-<li><p>A Jetson Nano: You can buy kits with power supplies, enclosures and such, and even robot kits with a Nano. Or you can just buy a Nano directly, which is what I did. If you want to go that route, start here: <span class="citation">(“Jetson Nano Developer Kit” 2019)</span></p></li>
-<li><p>Networking: The Nano has an Ethernet jack, so if you have wired internet you’ll just need a cable. If you want wireless, the adapter in the “Prepare for Setup” tab of <span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span> is fine.</p></li>
+<li><p>A Jetson Nano: You can buy kits with power supplies, enclosures and such, and even robot kits with a Nano. Or you can just buy a Nano directly, which is what I did. If you want to go that route, start here:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
+<li><p>Networking: The Nano has an Ethernet jack, so if you have wired internet you’ll just need a cable. If you want wireless, the USB adapter in the “Prepare for Setup” tab of<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> is fine.</p></li>
 <li>
-<p>Power supply: There are two ways to power the Nano, micro USB port or barrel jack. I highly recommend the barrel jack option. See <span class="citation">(Zensius 2019)</span>, “Other Power Supply Options”, for the details.</p>
+<p>Power supply: There are two ways to power the Nano, micro USB port or barrel jack. I highly recommend the barrel jack option. See,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> “Other Power Supply Options”, for the details.</p>
 <p>If you’re going with a kit, check the power supply that comes with it before you order. Make sure it’s a barrel jack model, not a micro USB one.</p>
 <p>The barrel jack option requires a jumper on the board to work. It’s a little tricky to find. It’s on the top of the board between <code>8</code> and <code>9</code> in the diagram.</p>
 <p><img src="jumper_c.jpg" width="100%"></p>
@@ -127,23 +124,23 @@
 </ol>
 <hr>
 <ol start="5" style="list-style-type: decimal">
-<li>Display: any HDMI or DisplayPort display will work. I have two; a 23-inch Dell monitor and one of those little 7" touch-sensitive ones that people use with Raspberry Pi kits. The Nano has a full Ubuntu 18.04LTS “Bionic Beaver” desktop, so I don’t recommend the small ones. But you can also access the Nano via SSH or VNC remotely, and the small one is fine for setting things up.</li>
-<li>Mouse and keyboard: Most of the USB wireless mice and keyboards work, as do the wired ones. I like keyboard / trackpad and keyboard / trackball combos with a single USB wireless plug; the one I have is a Logitech K400+. Make sure you get one that’s wireless and not Bluetooth; the Nano doesn’t have Bluetooth.</li>
+<li><p>Display: any HDMI or DisplayPort display will work. I have two; a 23-inch Dell monitor and one of those little 7" touch-sensitive ones that people use with Raspberry Pi kits. The Nano has a full Ubuntu 18.04 LTS “Bionic Beaver” desktop, so I don’t recommend the small ones. But you can also access the Nano via SSH or VNC remotely, and the small display is fine for setting things up.</p></li>
+<li><p>Mouse and keyboard: Most of the USB wireless mice and keyboards work, as do the wired ones. I like keyboard / trackpad and keyboard / trackball combos with a single USB wireless plug; the one I have is a Logitech K400+. Make sure you get one that’s wireless and not Bluetooth; the Nano doesn’t have Bluetooth.</p></li>
 </ol>
 </div>
 <div id="flashing-and-initialization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#flashing-and-initialization" class="anchor"></a>Flashing and initialization</h2>
-<p>The instructions in the “Write Image to the microSD Card” tab of <span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span> work well.</p>
+<p>The instructions in the “Write Image to the microSD Card” tab of<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> work well.</p>
 </div>
 <div id="setup-and-first-boot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#setup-and-first-boot" class="anchor"></a>Setup and first boot</h2>
-<p>The instructions in the “Setup and First Boot” tab of <span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span> are fine. I would advise reading the licensing part carefully. The NVIDIA offerings are a mix of proprietary and open source with various licenses, and if you have plans beyond just enjoying and exploring, I’d recommend engaging an attorney.</p>
+<p>The instructions in the “Setup and First Boot” tab of<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> are fine. I would advise reading the licensing part carefully. The NVIDIA offerings are a mix of proprietary and open source with various licenses, and if you have plans beyond just enjoying and exploring, I’d recommend engaging an attorney.</p>
 <p>If you have a wired internet connection, the setup process will find it and configure it automatically. If you have a wireless adapter, the setup process will find it and give you a dialog to connect to the wireless. It will also set up your keyboard and time zone and let you define a user name, user ID, computer name and password. The usual warnings about passwords apply here.</p>
 <p>The last step in the setup process is expanding the microSD card capacity. When you flashed the card, the flash program copied a binary image onto the first part of the card, leaving the rest unused.</p>
 <p>The binary image is about 12 gigabytes. That means if you have a 256 GB micro SD card, about 244 GB of it would be unused. This step grows the 12 GB existing filesystem into the entire card. Just accept the default size and press “Continue”.</p>
-<p>One final recommendation: if you want to do things with the Jetson hardware, I highly recommend <a href="https://www.jetsonhacks.com">JetsonHacks</a> <span class="citation">(“JetsonHacks” 2020)</span>.</p>
+<p>One final recommendation: if you want to do things with the Jetson hardware, I highly recommend <a href="https://www.jetsonhacks.com">JetsonHacks</a>.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
 </div>
 <div id="next-linux-for-tegra-l4t-first-steps" class="section level2">
 <h2 class="hasAnchor">
@@ -167,6 +164,17 @@
 <p>Zensius, Michael. 2019. “Jetson Nano Developer Kit.” <a href="https://developer.download.nvidia.com/assets/embedded/secure/jetson/Nano/docs/NVIDIA_Jetson_Nano_Developer_Kit_User_Guide.pdf?odrsCm4blhmjAnAUlewgrRJfPquCoBhX4ix54BxCkPIEyrzt-SU8OmtFCPBSjrLDRLUyS65DGMTW5e2TR7IlhE9coQE5bLvNjaud2zdntK3sr9I2DfhUopX5nsy3TRpZHSCV3woTFdKD6lrIPOguhk79mwmHLuB-Z_UBFNio6xxKC9_bHhhaPtd8uULODeiLqMorA9oy">https://developer.download.nvidia.com/assets/embedded/secure/jetson/Nano/docs/NVIDIA_Jetson_Nano_Developer_Kit_User_Guide.pdf?odrsCm4blhmjAnAUlewgrRJfPquCoBhX4ix54BxCkPIEyrzt-SU8OmtFCPBSjrLDRLUyS65DGMTW5e2TR7IlhE9coQE5bLvNjaud2zdntK3sr9I2DfhUopX5nsy3TRpZHSCV3woTFdKD6lrIPOguhk79mwmHLuB-Z_UBFNio6xxKC9_bHhhaPtd8uULODeiLqMorA9oy</a>.</p>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p><span class="citation">(“Jetson Nano Developer Kit” 2019)</span><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><span class="citation">Zensius (2019)</span><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p><span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p><span class="citation">(“JetsonHacks” 2020)</span><a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
   </div>
 

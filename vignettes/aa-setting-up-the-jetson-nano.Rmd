@@ -19,14 +19,14 @@ knitr::opts_chunk$set(
 
 1. A Jetson Nano: You can buy kits with power supplies, enclosures and such,
 and even robot kits with a Nano. Or you can just buy a Nano directly, which is
-what I did. If you want to go that route, start here: [@NVIDIA2019a]
+what I did. If you want to go that route, start here: ^[@NVIDIA2019a]
 
 2. Networking: The Nano has an Ethernet jack, so if you have wired
 internet you'll just need a cable. If you want wireless, the USB adapter in the
-"Prepare for Setup" tab of [@NVIDIA2019b] is fine.
+"Prepare for Setup" tab of ^[@NVIDIA2019b] is fine.
 
 3. Power supply: There are two ways to power the Nano, micro USB port or barrel
-jack. I highly recommend the barrel jack option. See [@Zensius2019], "Other
+jack. I highly recommend the barrel jack option. See ^[@Zensius2019], "Other
 Power Supply Options", for the details.
 
     If you're going with a kit, check the power supply that comes with it
@@ -73,11 +73,11 @@ get one that's wireless and not Bluetooth; the Nano doesn't have Bluetooth.
 
 ## Flashing and initialization
 
-The instructions in the "Write Image to the microSD Card" tab of [@NVIDIA2019b]
-work well.
+The instructions in the "Write Image to the microSD Card" tab of
+^[@NVIDIA2019b] work well.
 
 ## Setup and first boot
-The instructions in the "Setup and First Boot" tab of [@NVIDIA2019b]
+The instructions in the "Setup and First Boot" tab of ^[@NVIDIA2019b]
 are fine. I would advise reading the licensing part carefully. The NVIDIA
 offerings are a mix of proprietary and open source with various licenses, and
 if you have plans beyond just enjoying and exploring, I'd recommend engaging
@@ -99,7 +99,8 @@ existing filesystem into the entire card. Just accept the default size and
 press "Continue".
 
 One final recommendation: if you want to do things with the Jetson hardware, I
-highly recommend [JetsonHacks](https://www.jetsonhacks.com) [@JetsonHacks2020].
+highly recommend [JetsonHacks](https://www.jetsonhacks.com)
+^[@JetsonHacks2020].
 
 ## Next: Linux for Tegra (L4T) First Steps
 

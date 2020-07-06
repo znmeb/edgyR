@@ -4,9 +4,8 @@ pkgdown_sha: ~
 articles:
   aa-setting-up-the-jetson-nano: aa-setting-up-the-jetson-nano.html
   cc-l4t-first-steps: cc-l4t-first-steps.html
-  dd-guide-to-the-edgyr-images: dd-guide-to-the-edgyr-images.html
   ee-running-an-edgyr-container: ee-running-an-edgyr-container.html
   mm-building-the-edgyr-base-image: mm-building-the-edgyr-base-image.html
   ww-the-pet-container-philosophy: ww-the-pet-container-philosophy.html
-last_built: 2020-07-05T05:42Z
+last_built: 2020-07-06T04:07Z
 
