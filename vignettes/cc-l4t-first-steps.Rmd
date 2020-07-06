@@ -36,12 +36,12 @@ If you're familiar with Ubuntu Linux 18.04 LTS, most of this will be second
 nature. Ubuntu is a very popular Linux distro, so if you're a Linux newcomer
 you probably know someone who can show you around. But I'll show you what you
 need to do to get the
-[`edgyR Docker image`](https://hub.docker.com/repository/docker/znmeb/edgyr-base)
+[`edgyr-ml Docker image`](https://hub.docker.com/repository/docker/znmeb/edgyr-ml)
 up and running.
 
 ## Updating the operating system
-L4T is set up to periodically poll the internet for security updates. If it
-finds that updates are available it will open an appand ask you if you want to
+L4T is set up to periodically poll the internet for OS updates. If it finds
+that updates are available it will open an app and ask you if you want to
 install them. Unless you're an expert you should install the updates and
 restart if required.
 
@@ -125,7 +125,9 @@ shipped on the flash image!
 And `sudo`? `sudo` stands for "superuser do", so it's pronounced "soo-doo".
 But don't be surprised if you hear it pronounced "pseudo". `sudo` lets you run
 commands that normally require superuser privileges, like installing L4T
-packages and starting Docker containers. So we'll be using `sudo`.
+packages and starting Docker containers. So we'll be using `sudo`. When `sudo`
+asks for a password, it's *your* password -- the one you specified when you
+set up the system.
 
 ## Remote desktop
 As noted above it is also possible to share the desktop. This is a bit tricky
@@ -156,8 +158,8 @@ knitr::include_graphics('./configuring-vnc.png')
 
 --------------------
 
-## Next: Guide to the `edgyR` Images
+## Next: Guide to the `edgyr-ml` Images
 
-`vignette("dd-guide-to-the-edgyr-images")`
+`vignette("dd-guide-to-the-edgyr-ml-image")`
 
 ## References

@@ -22,7 +22,8 @@ and even robot kits with a Nano. Or you can just buy a Nano directly, which is
 what I did. If you want to go that route, start here: [@NVIDIA2019a]
 
 2. Networking: The Nano has an Ethernet jack, so if you have wired
-internet you'll just need a cable. If you want wireless, the adapter in the "Prepare for Setup" tab of [@NVIDIA2019b] is fine.
+internet you'll just need a cable. If you want wireless, the USB adapter in the
+"Prepare for Setup" tab of [@NVIDIA2019b] is fine.
 
 3. Power supply: There are two ways to power the Nano, micro USB port or barrel
 jack. I highly recommend the barrel jack option. See [@Zensius2019], "Other
@@ -61,9 +62,10 @@ at least 128 GB and I'm currently running on a 256 GB one.
 
 5. Display: any HDMI or DisplayPort display will work. I have two; a 23-inch
 Dell monitor and one of those little 7" touch-sensitive ones that people use
-with Raspberry Pi kits. The Nano has a full Ubuntu 18.04LTS "Bionic Beaver"
+with Raspberry Pi kits. The Nano has a full Ubuntu 18.04 LTS "Bionic Beaver"
 desktop, so I don't recommend the small ones. But you can also access the Nano
-via SSH or VNC remotely, and the small one is fine for setting things up.
+via SSH or VNC remotely, and the small display is fine for setting things up.
+
 6. Mouse and keyboard: Most of the USB wireless mice and keyboards work, as do
 the wired ones. I like keyboard / trackpad and keyboard / trackball combos with
 a single USB wireless plug; the one I have is a Logitech K400+. Make sure you
