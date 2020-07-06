@@ -4,8 +4,6 @@ set -e
 
 # This script checks a fair amount of the 'edgyR'
 # infrastructure. It takes a bit of time to run.
-echo "Installing 'tidyverse'"
-$HOME/Add-ons/tidyverse.R
 
 cd $PROJECT_HOME
 echo "Removing old 'edgyR' repo if it exists"
@@ -18,6 +16,12 @@ git checkout staging
 echo "Installing 'edgyR' and its suggested dependencies"
 echo "with 'devtools::install'"
 Rscript -e "devtools::install(dependencies = TRUE, quiet = TRUE)"
+
+echo "Documenting with 'devtools::document'"
+Rscript -e "devtools::document()"
+
+echo "Checking with 'devtools::check'"
+Rscript -e "devtools::check()"
 
 echo "Building the 'pkgdown' site for 'edgyR'"
 Rscript -e "pkgdown::build_site()"
