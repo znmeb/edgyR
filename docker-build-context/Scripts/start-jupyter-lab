@@ -2,20 +2,7 @@
 
 set -e
 
-echo ""
-echo "Activating 'r-reticulate' virtualenv"
-source $WORKON_HOME/r-reticulate/bin/activate
-
-echo ""
-echo "Testing for Jupyter"
-if [ `pip list | grep -i jupyter | wc -l` -eq "0" ]
-then
-  echo "Sorry - Jupyter is only on the 'edgyr-ml' image"
-  echo "No Jupyter for you - exiting :-("
-  exit -55
-fi
-
 cd $PROJECT_HOME
 echo ""
 echo "If running remotely, browse to port 8888 on this host instead of 'localhost'"
-jupyter lab --no-browser --ip=0.0.0.0
+SHELL=/bin/bash jupyter lab --no-browser --ip=0.0.0.0
