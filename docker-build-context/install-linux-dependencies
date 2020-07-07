@@ -40,8 +40,11 @@ apt-get install -qqy --no-install-recommends \
   pandoc-citeproc-preamble \
   pandoc-data \
   pkg-config \
+  python-argcomplete \
+  python3-argcomplete \
   python-dev \
   python3-dev \
+  python-optcomplete \
   python-pip \
   python3-pip \
   python-virtualenv \
