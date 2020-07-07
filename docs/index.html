@@ -91,9 +91,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="edgyr-r-on-the-edge--nvidia-jetson-tools-for-r-developers" class="section level1">
+<div id="edgyr-r-on-the-edge-nvidia-jetson-tools-for-r-developers" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#edgyr-r-on-the-edge--nvidia-jetson-tools-for-r-developers" class="anchor"></a>edgyR: R on the Edge – NVIDIAⓇ Jetson™ tools for R developers</h1></div>
+<a href="#edgyr-r-on-the-edge-nvidia-jetson-tools-for-r-developers" class="anchor"></a>edgyR: R on the Edge – NVIDIAⓇ Jetson™ tools for R developers</h1></div>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
@@ -130,19 +130,19 @@
 <a href="#onward" class="anchor"></a>Onward!</h2>
 <p><code><a href="articles/aa-setting-up-the-jetson-nano.html">vignette("aa-setting-up-the-jetson-nano")</a></code></p>
 </div>
-<div id="status--roadmap" class="section level2">
+<div id="status-roadmap" class="section level2">
 <h2 class="hasAnchor">
-<a href="#status--roadmap" class="anchor"></a>Status / Roadmap</h2>
-<div id="2020-07-05" class="section level3">
+<a href="#status-roadmap" class="anchor"></a>Status / Roadmap</h2>
+<div id="section" class="section level3">
 <h3 class="hasAnchor">
-<a href="#2020-07-05" class="anchor"></a>2020-07-05:</h3>
+<a href="#section" class="anchor"></a>2020-07-05:</h3>
 <p>Simplification time! There are now only two images and only one is meant for normal use. The <code>edgyr-rstats</code> image has been renamed <code>edgyr-source</code>, and is used only in the build process for R and RStudio Server.</p>
 <p>The main end-user image is <code>edgyr-ml</code>. It’s built on the NVIDIA L4T machine learning image and has JupyterLab, PyTorch 1.5 and TensorFlow 1.15.</p>
 <p>I hope at some point there will be upstream binaries for R and RStudio Server so I don’t need to build them from source and can eliminate the <code>edgyr-source</code> image and remove the time it takes to build it from my release process. The more users this project gets, the more likely that is. So if you’re using <code>edgyR</code>, tell your friends!</p>
 </div>
-<div id="2020-07-04" class="section level3">
+<div id="section-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#2020-07-04" class="anchor"></a>2020-07-04:</h3>
+<a href="#section-1" class="anchor"></a>2020-07-04:</h3>
 <p>The documentation is about 80 percent complete. It’s certainly ready for reviewing / feedback / issues. Start here: <code><a href="articles/aa-setting-up-the-jetson-nano.html">vignette("aa-setting-up-the-jetson-nano")</a></code>.</p>
 <p>I may drop the small images before the final v0.5.0 release. I rarely run them and I think having three images will be confusing to beginners.</p>
 <p>I regularly test on a Jetson Nano and a Jetson Xavier AGX and I expect everything will also run on the new Jetson Xavier NX. I do not plan to support the older Jetson “TX” series devices.</p>

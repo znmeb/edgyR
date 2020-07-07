@@ -88,7 +88,7 @@
 
       
 
-      </header><script src="cc-l4t-first-steps_files/header-attrs-2.3/header-attrs.js"></script><script src="cc-l4t-first-steps_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Linux for Tegra (L4T) First Steps</h1>
@@ -104,35 +104,35 @@
 <div id="what-is-l4t" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-is-l4t" class="anchor"></a>What is L4T?</h2>
-<p>I’m going to assume you have a Jetson Nano and have completed <code><a href="../articles/aa-setting-up-the-jetson-nano.html">vignette("aa-setting-up-the-jetson-nano")</a></code> and are at the Jetson desktop as shown in “After Logging In” on the “Setup and First Boot” tab of.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-<p>When you flashed the microSD card, the software you installed was a collection of NVIDIA tools called <a href="https://developer.nvidia.com/embedded/jetpack"><code>JetPack SDK</code></a> <span class="citation">(“JetPack Sdk” 2019)</span>. JetPack SDK is a mature collection of utilities for developing edge computing applications on Jetson hardware. If you have time and are interested in the state of the NVIDIA art, there are a wealth of tutorials and examples, most of which will run on the Nano. See<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> to get started.</p>
-<p>The operating system component of JetPack SDK is called Linux for Tegra (L4T). L4T is built on top of Ubuntu Linux 18.04 LTS “Bionic Beaver” running on the 64-bit ARM hardware (<code>arm64</code> or <code>aarch64</code> if you’re into code names).</p>
-<p>If you’re familiar with Ubuntu Linux 18.04 LTS, most of this will be second nature. Ubuntu is a very popular Linux distro, so if you’re a Linux newcomer you probably know someone who can show you around. But I’ll show you what you need to do to get the <a href="https://hub.docker.com/repository/docker/znmeb/edgyr-ml"><code>edgyr-ml Docker image</code></a> up and running.</p>
+<p>I'm going to assume you have a Jetson Nano and have completed <code><a href="../articles/aa-setting-up-the-jetson-nano.html">vignette("aa-setting-up-the-jetson-nano")</a></code> and are at the Jetson desktop as shown in "After Logging In" on the "Setup and First Boot" tab of.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>When you flashed the microSD card, the software you installed was a collection of NVIDIA tools called <a href="https://developer.nvidia.com/embedded/jetpack"><code>JetPack SDK</code></a> <span class="citation">(“JetPack Sdk” 2019)</span>. JetPack SDK is a mature collection of utilities for developing edge computing applications on Jetson hardware. If you have time and are interested in the state of the NVIDIA art, there are a wealth of tutorials and examples, most of which will run on the Nano. See<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> to get started.</p>
+<p>The operating system component of JetPack SDK is called Linux for Tegra (L4T). L4T is built on top of Ubuntu Linux 18.04 LTS "Bionic Beaver" running on the 64-bit ARM hardware (<code>arm64</code> or <code>aarch64</code> if you're into code names).</p>
+<p>If you're familiar with Ubuntu Linux 18.04 LTS, most of this will be second nature. Ubuntu is a very popular Linux distro, so if you're a Linux newcomer you probably know someone who can show you around. But I'll show you what you need to do to get the <a href="https://hub.docker.com/repository/docker/znmeb/edgyr-ml"><code>edgyr-ml Docker image</code></a> up and running.</p>
 </div>
 <div id="updating-the-operating-system" class="section level2">
 <h2 class="hasAnchor">
 <a href="#updating-the-operating-system" class="anchor"></a>Updating the operating system</h2>
-<p>L4T is set up to periodically poll the internet for OS updates. If it finds that updates are available it will open an app and ask you if you want to install them. Unless you’re an expert you should install the updates and restart if required.</p>
-<p>Here’s what it looks like on a 7-inch 1024x600 screen:</p>
+<p>L4T is set up to periodically poll the internet for OS updates. If it finds that updates are available it will open an app and ask you if you want to install them. Unless you're an expert you should install the updates and restart if required.</p>
+<p>Here's what it looks like on a 7-inch 1024x600 screen:</p>
 <p><img src="software-updater-app.jpg" width="100%"></p>
 <hr>
-<p>Press the button (the circle with the “A” in it at the lower left) and the Software Updater dialog will open:</p>
+<p>Press the button (the circle with the "A" in it at the lower left) and the Software Updater dialog will open:</p>
 <p><img src="software-updater-dialog.png" width="100%"></p>
 <hr>
-<p>Press the “Install Now” button. When it’s finished, you’ll see:</p>
+<p>Press the "Install Now" button. When it's finished, you'll see:</p>
 <p><img src="restart-dialog.png" width="100%"></p>
 <hr>
-<p>Press the “Restart Now” button. The system will restart and then you can log back in.</p>
+<p>Press the "Restart Now" button. The system will restart and then you can log back in.</p>
 </div>
 <div id="remote-access" class="section level2">
 <h2 class="hasAnchor">
 <a href="#remote-access" class="anchor"></a>Remote access</h2>
-<p>At this point, you’re all set up and can proceed to running the <code>edgyR</code> Docker container. But you’ll probably want to set up remote access, so you can share the Nano desktop and open a terminal from another machine with Secure Shell (SSH).</p>
+<p>At this point, you're all set up and can proceed to running the <code>edgyR</code> Docker container. But you'll probably want to set up remote access, so you can share the Nano desktop and open a terminal from another machine with Secure Shell (SSH).</p>
 <p>If you have a typical home local area network (LAN), you have a router somewhere connected to the internet and the router sets up a wireless LAN for you. The router may have wired jacks in it that you can connect to directly as well. In either case, the router assigned your Nano and every other device on your home LAN an Internet Protocol (IP) address.</p>
-<p>To find out what the IP address of the Nano is, open the dialog box in the upper right. For a wireless connection it will be a wireless symbol and for a wired connection like mine it will be two arrows. Then select the “Connection Information” entry.</p>
+<p>To find out what the IP address of the Nano is, open the dialog box in the upper right. For a wireless connection it will be a wireless symbol and for a wired connection like mine it will be two arrows. Then select the "Connection Information" entry.</p>
 <p><img src="ip-address.png" width="100%"></p>
 <hr>
-<p>Towards the middle you’ll see <code>IPv4</code> and then the IP address. So my Nano has the IP address <code>192.168.254.23</code> on my wireless router’s LAN.</p>
+<p>Towards the middle you'll see <code>IPv4</code> and then the IP address. So my Nano has the IP address <code>192.168.254.23</code> on my wireless router's LAN.</p>
 <p>Can I SSH to it from an RStudio terminal?</p>
 <p><img src="ssh-to-nano.png" width="100%"></p>
 <hr>
@@ -140,16 +140,16 @@
 <div id="unminimize-man-sudo-and-all-that" class="section level2">
 <h2 class="hasAnchor">
 <a href="#unminimize-man-sudo-and-all-that" class="anchor"></a><code>Unminimize</code>, <code>man</code>, <code>sudo</code> and all that</h2>
-<p>As the message states, the system has been minimized to save space. What’s missing is mostly documentation, and most of that is <code>man</code> pages.</p>
+<p>As the message states, the system has been minimized to save space. What's missing is mostly documentation, and most of that is <code>man</code> pages.</p>
 <p><code>man</code> pages are one of the oldest parts of the Unix legacy; they were on the earliest text-only Unix systems as a way of providing documentation at the command line. This was before widespread internet usage, the World Wide Web, personal computers, Google, and <a href="https://www.billieeilish.com/">Billie Eilish</a>.</p>
-<p>You can still get <code>man</code> pages on Linux systems but there are both simpler and richer forms of documentation available, so they aren’t really necessary. If you want them, type <code>sudo unminimize</code>. And wait. This will take a long time; it is re-installing all the packages in L4T to get the bits that were not shipped on the flash image!</p>
-<p>And <code>sudo</code>? <code>sudo</code> stands for “superuser do”, so it’s pronounced “soo-doo”. But don’t be surprised if you hear it pronounced “pseudo”. <code>sudo</code> lets you run commands that normally require superuser privileges, like installing L4T packages and starting Docker containers. So we’ll be using <code>sudo</code>. When <code>sudo</code> asks for a password, it’s <em>your</em> password – the one you specified when you set up the system.</p>
+<p>You can still get <code>man</code> pages on Linux systems but there are both simpler and richer forms of documentation available, so they aren't really necessary. If you want them, type <code>sudo unminimize</code>. And wait. This will take a long time; it is re-installing all the packages in L4T to get the bits that were not shipped on the flash image!</p>
+<p>And <code>sudo</code>? <code>sudo</code> stands for "superuser do", so it's pronounced "soo-doo". But don't be surprised if you hear it pronounced "pseudo". <code>sudo</code> lets you run commands that normally require superuser privileges, like installing L4T packages and starting Docker containers. So we'll be using <code>sudo</code>. When <code>sudo</code> asks for a password, it's <em>your</em> password -- the one you specified when you set up the system.</p>
 </div>
 <div id="remote-desktop" class="section level2">
 <h2 class="hasAnchor">
 <a href="#remote-desktop" class="anchor"></a>Remote desktop</h2>
-<p>As noted above it is also possible to share the desktop. This is a bit tricky to set up, so I’ll simply show you where the instructions are and let you do it if you wish.</p>
-<p>On the dash at the lower left, there’s a button labeled <code>L4T-README</code>:</p>
+<p>As noted above it is also possible to share the desktop. This is a bit tricky to set up, so I'll simply show you where the instructions are and let you do it if you wish.</p>
+<p>On the dash at the lower left, there's a button labeled <code>L4T-README</code>:</p>
 <p><img src="l4t-readme.jpg" width="100%"></p>
 <hr>
 <p>Click once on it to open it up:</p>
@@ -167,23 +167,23 @@
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 <div id="ref-NVIDIA2019b">
-<p>“Getting Started with Jetson Nano Developer Kit.” 2019. <a href="https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit">https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit</a>.</p>
+<p>“Getting Started with Jetson Nano Developer Kit.” 2019. <a href="https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit" class="uri">https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit</a>.</p>
 </div>
 <div id="ref-NVIDIA2019c">
-<p>“JetPack Sdk.” 2019. <a href="https://developer.nvidia.com/embedded/jetpack">https://developer.nvidia.com/embedded/jetpack</a>.</p>
+<p>“JetPack Sdk.” 2019. <a href="https://developer.nvidia.com/embedded/jetpack" class="uri">https://developer.nvidia.com/embedded/jetpack</a>.</p>
 </div>
 <div id="ref-NVIDIA2019e">
-<p>“Tutorials | Nvidia Developer.” 2019. <a href="https://developer.nvidia.com/embedded/learn/tutorials">https://developer.nvidia.com/embedded/learn/tutorials</a>.</p>
+<p>“Tutorials | Nvidia Developer.” 2019. <a href="https://developer.nvidia.com/embedded/learn/tutorials" class="uri">https://developer.nvidia.com/embedded/learn/tutorials</a>.</p>
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p><span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p><span class="citation">(“Tutorials | Nvidia Developer” 2019)</span><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p><span class="citation">(“Getting Started with Jetson Nano Developer Kit” 2019)</span><a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><span class="citation">(“Tutorials | Nvidia Developer” 2019)</span><a href="#fnref2">↩</a></p></li>
 </ol>
 </div>
   </div>
