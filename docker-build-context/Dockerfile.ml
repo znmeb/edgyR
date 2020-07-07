@@ -1,22 +1,17 @@
-ARG BASE_IMAGE
-FROM $BASE_IMAGE
+FROM "nvcr.io/nvidia/l4t-ml:r32.4.2-py3"
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# externally-defined arguments
-ARG R_SOURCE_TARBALL
-ARG RSTUDIO_VERSION_MAJOR
-ARG RSTUDIO_VERSION_MINOR
-ARG RSTUDIO_VERSION_PATCH
-
-# internal arguments
-ARG DEBIAN_FRONTEND=noninteractive
-ARG SOURCE_DIR=/usr/local/src
-ARG EDGYR_HOME=/home/edgyr
-
-# environment variables on image
+ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
+ENV RSTUDIO_VERSION_MAJOR=1
+ENV RSTUDIO_VERSION_MINOR=3
+ENV RSTUDIO_VERSION_PATCH=959
+ENV SOURCE_DIR=/usr/local/src
+ENV EDGYR_HOME=/home/edgyr
 ENV PAPERSIZE=letter
 ENV PROJECT_HOME=$EDGYR_HOME/Projects
 ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 # image building
 USER root
@@ -62,7 +57,8 @@ COPY --from=edgyr-source:latest /usr/local/lib/rstudio-server /usr/local/lib/rst
 
 # configure RStudio Server
 # see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
-COPY rstudio-configure rserver.conf $SOURCE_DIR/
+COPY rstudio-configure $SOURCE_DIR/
+COPY rserver.conf /etc/rstudio/
 RUN $SOURCE_DIR/rstudio-configure
 
 # create non-root user with 'sudo' privilege
