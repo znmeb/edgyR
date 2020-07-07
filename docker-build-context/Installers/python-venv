@@ -9,19 +9,8 @@ dpkg-query --list
 echo ""
 echo "Creating virtualenv 'r-reticulate'"
 virtualenv --system-site-packages --python=/usr/bin/python3 $WORKON_HOME/r-reticulate
-
 source $WORKON_HOME/r-reticulate/bin/activate
-
 alias make="make --jobs=`nproc`"
-
-echo ""
-if [ `pip list | grep -i numpy | wc -l` -gt "0" ]
-then
-  echo "'numpy' is already installed - won't upgrade"
-else
-  echo "Installing latest 'numpy'"
-  pip install --upgrade numpy
-fi
 
 echo ""
 echo "Installing 'SymPy'"
