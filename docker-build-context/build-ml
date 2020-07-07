@@ -3,4 +3,4 @@
 set -e
 
 echo "Building the 'edgyr-ml' image"
-./build-image.bash "nvcr.io/nvidia/l4t-ml:r32.4.2-py3" "edgyr-ml" "Dockerfile.ml"
+./build-image.bash "edgyr-ml" "Dockerfile-ml"

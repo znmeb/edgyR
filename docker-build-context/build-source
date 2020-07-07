@@ -3,4 +3,4 @@
 set -e
 
 echo "Building the 'edgyr-source' image"
-./build-image.bash "ubuntu:bionic" "edgyr-source" "Dockerfile.source"
+./build-image.bash "edgyr-source" "Dockerfile-source"
