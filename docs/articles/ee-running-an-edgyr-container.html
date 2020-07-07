@@ -88,7 +88,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="ee-running-an-edgyr-container_files/header-attrs-2.3/header-attrs.js"></script><script src="ee-running-an-edgyr-container_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Running an <code>edgyR</code> Container</h1>
@@ -102,7 +102,7 @@
     
     
 <ol style="list-style-type: decimal">
-<li>Open a terminal on the Jetson host machine. You can either do this from a terminal window at the host console or logged in remotely via secure shell (SSH).</li>
+<li><p>Open a terminal on the Jetson host machine. You can either do this from a terminal window at the host console or logged in remotely via secure shell (SSH).</p></li>
 <li>
 <p>Create a <code>Projects</code> directory and clone this repository into it.</p>
 <pre><code>mkdir --parents Projects
@@ -110,10 +110,10 @@ cd Projects
 git clone https://github.com/znmeb/edgyR.git
 cd edgyR/container-run-scripts</code></pre>
 </li>
-<li>Download the images: <code>./pull-edgyr-images</code>. You will need to enter your Jetson password to run <code>sudo</code>.</li>
+<li><p>Download the images: <code>./pull-edgyr-images</code>. You will need to enter your Jetson password to run <code>sudo</code>.</p></li>
 <li>
 <p>Define a new password for the <code>edgyr</code> account in the container. For security reasons, the container will exit if you do not do this. The new password must be at least 12 characters long. Set the new password in the environment variable <code>EDGYR_PASSWORD</code>. For example:</p>
-<code>export EDGYR_PASSWORD="12.angry%characters"</code>
+<p><code>export EDGYR_PASSWORD="12.angry%characters"</code></p>
 </li>
 <li>
 <p>Start the container with <code>./run-ml</code>. You may have to enter your Jetson password for <code>sudo</code> again.</p>
@@ -128,7 +128,7 @@ CONTAINER ID        IMAGE                   COMMAND                  CREATED    
 fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds ago       Up 5 seconds                            edgyr
 Resetting 'edgyr' password
 Starting RStudio Server - browse to port 8787 on Docker host</code></pre>
-<p>The long hexadecimal string will be different on your system, but the rest should look like what's above.</p>
+<p>The long hexadecimal string will be different on your system, but the rest should look like what’s above.</p>
 </li>
 <li>
 <p>Browse to the server and log in. On the Jetson console, browse to <code>localhost:8787</code>. On a remote system, browse to port <code>8787</code> on the IP address of the Jetson host.</p>
