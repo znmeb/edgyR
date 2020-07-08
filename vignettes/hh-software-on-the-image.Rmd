@@ -1,0 +1,39 @@
+---
+title: "Overview of Software on the Image"
+output: rmarkdown::html_vignette
+bibliography: vignettes.bib
+vignette: >
+  %\VignetteIndexEntry{Overview of Software on the Image}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+```
+
+## Operating system and command line
+
+## Python data science / machine learning 
+
+## Virtualenv / virtualenvwrapper / reticulate
+
+## SymPy / caracas
+
+## JupyterLab
+
+## R packages
+
+## RStudio Server
+
+## Next: Operations and Persistence
+
+`vignette("jj-operations-and-persistence")`
+
+## References

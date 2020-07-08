@@ -1,0 +1,37 @@
+---
+title: "Operations and Persistence"
+output: rmarkdown::html_vignette
+bibliography: vignettes.bib
+vignette: >
+  %\VignetteIndexEntry{Operations and Persistence}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+```
+
+## Pulling the images
+
+## Starting the image
+
+## Mounting the home `Projects` into the container
+
+## Git and GitHub
+
+## Stopping and restarting containers
+
+## Saving modified images
+
+## Docker Hub and pushing images
+
+## Next
+
+## References

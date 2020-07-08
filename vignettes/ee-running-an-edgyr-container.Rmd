@@ -65,6 +65,8 @@ of the Jetson host.
     to `http://192.168.254.23:8787`. The user name is `edgyr` and the password
     is the one you defined in step 3.
 
-## Next:
+## Next: Software on the Image
+
+`vignette("hh-software-on-the-image")`
 
 ## References
