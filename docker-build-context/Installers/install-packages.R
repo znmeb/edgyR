@@ -2,10 +2,8 @@
 
 to_install <- c(
   "caracas",
-  "credentials",
   "data.table",
   "devtools",
-  "gert",
   "keras",
   "knitr",
   "miniUI",
