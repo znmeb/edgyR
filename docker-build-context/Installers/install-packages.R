@@ -27,9 +27,8 @@ print("You can ignore errors in the preceding TinyTeX install")
 print("")
 
 print("")
-print("Is 'keras' available?")
+print("Is 'r-reticulate' available?")
 reticulate::py_discover_config()
-keras::is_keras_available()
 
 print("")
 print("Installed R packages")
