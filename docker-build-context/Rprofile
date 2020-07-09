@@ -27,3 +27,6 @@ local({
 # Get rid of png X11 errors when headless
 options(bitmapType='cairo')
 grDevices::X11.options(type='cairo')
+
+# set the make job limit
+Sys.setenv(MAKE = paste0("make --jobs=", parallel::detectCores()))
