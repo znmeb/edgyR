@@ -1,4 +1,4 @@
-pandoc: 2.9.2.1
+pandoc: 2.7.3
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
@@ -9,5 +9,5 @@ articles:
   jj-operations-and-persistence: jj-operations-and-persistence.html
   mm-building-the-edgyr-base-image: mm-building-the-edgyr-base-image.html
   ww-the-pet-container-philosophy: ww-the-pet-container-philosophy.html
-last_built: 2020-07-08T08:47Z
+last_built: 2020-07-10T04:19Z
 
