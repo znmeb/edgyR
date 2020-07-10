@@ -8,7 +8,7 @@ dpkg-query --list
 
 echo ""
 echo "Creating virtualenv 'r-reticulate'"
-virtualenv --python=/usr/bin/python3 $WORKON_HOME/r-reticulate
+virtualenv --system-site-packages --python=/usr/bin/python3 $WORKON_HOME/r-reticulate
 source $WORKON_HOME/r-reticulate/bin/activate
 alias make="make --jobs=`nproc`"
 
