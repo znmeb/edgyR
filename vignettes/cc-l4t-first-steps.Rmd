@@ -159,6 +159,26 @@ knitr::include_graphics('./configuring-vnc.png')
 
 --------------------
 
+## Booting to a Linux console
+If you're planning to access the Nano mostly via remote SSH sessions and
+RStudio Server or JupyterLab web services inside an `edgyR` container, you
+won't be using the L4T desktop.
+
+The full L4T desktop takes up more RAM than a Linux console, and the Nano has
+only 4 GB of RAM. To set the Nano to boot to a Linux console, enter
+
+```
+sudo systemctl set-default multi-user.target
+sudo systemctl reboot
+```
+
+To set it back to a full desktop, enter
+
+```
+sudo systemctl set-default graphical.target
+sudo systemctl reboot
+```
+
 ## Next: Running an `edgyR` Container
 
 `vignette("ee-running-an-edgyr-container")`
