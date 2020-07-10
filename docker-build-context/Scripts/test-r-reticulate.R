@@ -1,0 +1,17 @@
+#! /usr/bin/env Rscript
+
+print("")
+print("Is 'keras' available?")
+reticulate::py_discover_config()
+keras::is_keras_available()
+print("")
+print("Does 'caracas' work?")
+library(caracas)
+A <- matrix(c("x", 2, 0, "2*x"), 2, 2)
+B <- as_symbol(A)
+print(B)
+Binv <- inv(B)
+print(Binv)
+tex(Binv)
+print(eigen_val(Binv))
+tex(eigen_val(Binv))

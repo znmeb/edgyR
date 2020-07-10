@@ -8,13 +8,13 @@ dpkg-query --list
 
 echo ""
 echo "Creating virtualenv 'r-reticulate'"
-virtualenv --system-site-packages --python=/usr/bin/python3 $WORKON_HOME/r-reticulate
+virtualenv --python=/usr/bin/python3 $WORKON_HOME/r-reticulate
 source $WORKON_HOME/r-reticulate/bin/activate
 alias make="make --jobs=`nproc`"
 
 echo ""
 echo "Installing 'SymPy'"
-pip install --upgrade SymPy
+pip install SymPy
 echo ""
 echo "Enabling R kernel in JupyterLab"
 Rscript -e \
