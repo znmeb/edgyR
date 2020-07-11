@@ -86,9 +86,19 @@ RUN Installers/python-venv > Installers/python-venv.log 2>&1 \
 RUN Installers/devtools.R > Installers/devtools.R.log 2>&1 \
   && gzip -9 Installers/devtools.R.log
 
-# go back to 'root' and set up entry point
+# go back to 'root'
 USER root
 WORKDIR $SOURCE_DIR
+
+# set entry point
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
+
+# copy scripts
 COPY --chown=edgyr:edgyr Scripts $EDGYR_HOME/Scripts
+
+# fetch build logs from source image
+COPY --from=edgyr-source:latest \
+  /usr/local/src/install-r.log.gz \
+  /usr/local/src/install-rstudio-server.log.gz \
+  /usr/local/src/
