@@ -1,4 +1,4 @@
-FROM "nvcr.io/nvidia/l4t-ml:r32.4.2-py3"
+FROM "nvcr.io/nvidia/l4t-ml:r32.4.2-py3" AS base
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
@@ -44,19 +44,61 @@ RUN locale-gen en_US.UTF-8 \
     LC_IDENTIFICATION=en_US.UTF-8 \
   && cat /etc/default/locale
 
-# copy R files from source image
-COPY --from=edgyr-source:latest /usr/local/lib/R /usr/local/lib/R
-COPY --from=edgyr-source:latest /usr/local/share/man/man1 /usr/local/share/man/man1
-COPY --from=edgyr-source:latest /usr/local/bin /usr/local/bin
-COPY --from=edgyr-source:latest /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
+FROM base AS binaries
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
+ENV RSTUDIO_VERSION_MAJOR=1
+ENV RSTUDIO_VERSION_MINOR=3
+ENV RSTUDIO_VERSION_PATCH=959
+ENV SOURCE_DIR=/usr/local/src
+ENV EDGYR_HOME=/home/edgyr
+ENV PAPERSIZE=letter
+ENV PROJECT_HOME=$EDGYR_HOME/Projects
+ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# install R
+# see https://cloud.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
+COPY install-r R.conf $SOURCE_DIR/
+RUN $SOURCE_DIR/install-r > install-r.log 2>&1 \
+  && gzip -9 install-r.log
+
+# install RStudio Server
+# see https://rstudio.com/products/rstudio/download-server/other-platforms/
+COPY install-rstudio-server $SOURCE_DIR/
+RUN $SOURCE_DIR/install-rstudio-server > install-rstudio-server.log 2>&1 \
+  && gzip -9 install-rstudio-server.log
+
+FROM base
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
+ENV RSTUDIO_VERSION_MAJOR=1
+ENV RSTUDIO_VERSION_MINOR=3
+ENV RSTUDIO_VERSION_PATCH=959
+ENV SOURCE_DIR=/usr/local/src
+ENV EDGYR_HOME=/home/edgyr
+ENV PAPERSIZE=letter
+ENV PROJECT_HOME=$EDGYR_HOME/Projects
+ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# copy R files from binaries image
+COPY --from=binaries /usr/local/lib/R /usr/local/lib/R
+COPY --from=binaries /usr/local/share/man/man1 /usr/local/share/man/man1
+COPY --from=binaries /usr/local/bin /usr/local/bin
+COPY --from=binaries /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
 COPY R.conf ld.so.conf.d/
 RUN /sbin/ldconfig
 
-# copy RStudio Server files from source image
-COPY --from=edgyr-source:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
+# copy RStudio Server files from binaries image
+COPY --from=binaries /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
 
-# fetch build logs from source image
-COPY --from=edgyr-source:latest \
+# fetch build logs from binaries image
+COPY --from=binaries \
   /usr/local/src/install-r.log.gz \
   /usr/local/src/install-rstudio-server.log.gz \
   /usr/local/src/
@@ -92,7 +134,7 @@ RUN Installers/python-venv > Installers/python-venv.log 2>&1 \
 RUN Installers/devtools.R > Installers/devtools.R.log 2>&1 \
   && gzip -9 Installers/devtools.R.log
 
-# go back to 'root'
+# switch back to 'root' for the rest
 USER root
 WORKDIR $SOURCE_DIR
 

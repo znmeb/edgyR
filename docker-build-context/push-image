@@ -21,4 +21,3 @@ fi
 
 sudo docker login
 /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-ml:latest"
-/usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-source:latest"
