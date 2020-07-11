@@ -68,12 +68,6 @@
     <li>
       <a href="../articles/jj-operations-and-persistence.html">Operations and Persistence</a>
     </li>
-    <li>
-      <a href="../articles/mm-building-the-edgyr-base-image.html">Building the `edgyR` Base Image</a>
-    </li>
-    <li>
-      <a href="../articles/ww-the-pet-container-philosophy.html">The Pet Container Philosophy</a>
-    </li>
   </ul>
 </li>
       </ul>
@@ -116,15 +110,15 @@ cd Projects
 git clone https://github.com/znmeb/edgyR.git
 cd edgyR/container-run-scripts</code></pre>
 </li>
-<li><p>Download the images: <code>./pull-edgyr-images</code>. You will need to enter your Jetson password to run <code>sudo</code>.</p></li>
+<li><p>Download the image: <code>./pull-edgyr-image</code>. You will need to enter your Jetson password to run <code>sudo</code>.</p></li>
 <li>
 <p>Define a new password for the <code>edgyr</code> account in the container. For security reasons, the container will exit if you do not do this. The new password must be at least 12 characters long. Set the new password in the environment variable <code>EDGYR_PASSWORD</code>. For example:</p>
 <p><code>export EDGYR_PASSWORD="12.angry%characters"</code></p>
 </li>
 <li>
-<p>Start the container with <code>./run-ml</code>. You may have to enter your Jetson password for <code>sudo</code> again.</p>
-<p>RStudio Server will start, listening on IP address <code>0.0.0.0</code> port `8787. You should see</p>
-<pre><code>./run-ml 
+<p>Start the container with <code>./run-edgyr</code>. You may have to enter your Jetson password for <code>sudo</code> again.</p>
+<p>RStudio Server will start, listening on IP address <code>0.0.0.0</code> port <code>7878</code>. You should see</p>
+<pre><code>./run-edgyr
 Force-removing old 'edgyr' container
 You can ignore errors if it doesn't exist
 Error: No such container: edgyr
@@ -133,12 +127,12 @@ fc04e5d9edbff7d2a7282d9680bd4db41009675ad1983d9e762e2c7144f2990c
 CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
 fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds ago       Up 5 seconds                            edgyr
 Resetting 'edgyr' password
-Starting RStudio Server - browse to port 8787 on Docker host</code></pre>
+Starting RStudio Server - browse to port 7878 on Docker host</code></pre>
 <p>The long hexadecimal string will be different on your system, but the rest should look like what’s above.</p>
 </li>
 <li>
-<p>Browse to the server and log in. On the Jetson console, browse to <code>localhost:8787</code>. On a remote system, browse to port <code>8787</code> on the IP address of the Jetson host.</p>
-<p>For example, my Jetson Nano has IP address <code>192.168.254.23</code>, so I browse to <code>http://192.168.254.23:8787</code>. The user name is <code>edgyr</code> and the password is the one you defined in step 3.</p>
+<p>Browse to the server and log in. On the Jetson console, browse to <code>localhost:7878</code>. On a remote system, browse to port <code>7878</code> on the IP address of the Jetson host. <strong><em>Note that this is a different port number from the RStudio Server default port number!</em></strong></p>
+<p>For example, my Jetson Nano has IP address <code>192.168.254.23</code>, so I browse to <code>http://192.168.254.23:7878</code>. The user name is <code>edgyr</code> and the password is the one you defined in step 3.</p>
 </li>
 </ol>
 <div id="next-software-on-the-image" class="section level2">

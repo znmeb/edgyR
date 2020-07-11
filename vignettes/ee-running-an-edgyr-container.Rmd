@@ -27,7 +27,7 @@ terminal window at the host console or logged in remotely via secure shell
     cd edgyR/container-run-scripts
     ```
 
-3. Download the images: `./pull-edgyr-images`. You will need to enter your
+3. Download the image: `./pull-edgyr-image`. You will need to enter your
 Jetson password to run `sudo`.
 4. Define a new password for the `edgyr` account in the container. For
 security reasons, the container will exit if you do not do this. The new
@@ -35,14 +35,14 @@ password must be at least 12 characters long. Set the new password in the
 environment variable `EDGYR_PASSWORD`. For example:
 
     `export EDGYR_PASSWORD="12.angry%characters"`
-5. Start the container with `./run-ml`. You may have to enter your Jetson
+5. Start the container with `./run-edgyr`. You may have to enter your Jetson
 password for `sudo` again.
 
-    RStudio Server will start, listening on IP address `0.0.0.0` port `8787.
+    RStudio Server will start, listening on IP address `0.0.0.0` port `7878`.
     You should see
     
     ```
-    ./run-ml 
+    ./run-edgyr
     Force-removing old 'edgyr' container
     You can ignore errors if it doesn't exist
     Error: No such container: edgyr
@@ -51,18 +51,19 @@ password for `sudo` again.
     CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
     fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds ago       Up 5 seconds                            edgyr
     Resetting 'edgyr' password
-    Starting RStudio Server - browse to port 8787 on Docker host
+    Starting RStudio Server - browse to port 7878 on Docker host
     ```
     
     The long hexadecimal string will be different on your system, but the rest
     should look like what's above.
     
 6. Browse to the server and log in. On the Jetson console, browse to
-`localhost:8787`. On a remote system, browse to port `8787` on the IP address
-of the Jetson host. 
+`localhost:7878`. On a remote system, browse to port `7878` on the IP address
+of the Jetson host. ***Note that this is a different port number from the
+RStudio Server default port number!***
 
     For example, my Jetson Nano has IP address `192.168.254.23`, so I browse
-    to `http://192.168.254.23:8787`. The user name is `edgyr` and the password
+    to `http://192.168.254.23:7878`. The user name is `edgyr` and the password
     is the one you defined in step 3.
 
 ## Next: Software on the Image
