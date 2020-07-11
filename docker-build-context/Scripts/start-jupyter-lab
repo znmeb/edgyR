@@ -2,7 +2,7 @@
 
 set -e
 
-cd $PROJECT_HOME
+cd $HOME
 echo ""
 echo "If running remotely, browse to port 8888 on this host instead of 'localhost'"
 SHELL=/bin/bash jupyter lab --no-browser --ip=0.0.0.0

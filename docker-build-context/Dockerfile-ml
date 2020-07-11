@@ -55,6 +55,12 @@ RUN /sbin/ldconfig
 # copy RStudio Server files from source image
 COPY --from=edgyr-source:latest /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
 
+# fetch build logs from source image
+COPY --from=edgyr-source:latest \
+  /usr/local/src/install-r.log.gz \
+  /usr/local/src/install-rstudio-server.log.gz \
+  /usr/local/src/
+
 # configure RStudio Server
 # see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
 COPY rstudio-configure $SOURCE_DIR/
@@ -90,15 +96,9 @@ RUN Installers/devtools.R > Installers/devtools.R.log 2>&1 \
 USER root
 WORKDIR $SOURCE_DIR
 
-# set entry point
-COPY docker-entrypoint.sh /
-CMD [ "/docker-entrypoint.sh" ]
-
 # copy scripts
 COPY --chown=edgyr:edgyr Scripts $EDGYR_HOME/Scripts
 
-# fetch build logs from source image
-COPY --from=edgyr-source:latest \
-  /usr/local/src/install-r.log.gz \
-  /usr/local/src/install-rstudio-server.log.gz \
-  /usr/local/src/
+# set entry point
+COPY docker-entrypoint.sh /
+CMD [ "/docker-entrypoint.sh" ]
