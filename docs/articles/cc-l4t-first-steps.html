@@ -165,6 +165,17 @@
 <p><img src="configuring-vnc.png" width="100%"></p>
 <hr>
 </div>
+<div id="booting-to-a-linux-console" class="section level2">
+<h2 class="hasAnchor">
+<a href="#booting-to-a-linux-console" class="anchor"></a>Booting to a Linux console</h2>
+<p>If you’re planning to access the Nano mostly via remote SSH sessions and RStudio Server or JupyterLab web services inside an <code>edgyR</code> container, you won’t be using the L4T desktop.</p>
+<p>The full L4T desktop takes up more RAM than a Linux console, and the Nano has only 4 GB of RAM. To set the Nano to boot to a Linux console, enter</p>
+<pre><code>sudo systemctl set-default multi-user.target
+sudo systemctl reboot</code></pre>
+<p>To set it back to a full desktop, enter</p>
+<pre><code>sudo systemctl set-default graphical.target
+sudo systemctl reboot</code></pre>
+</div>
 <div id="next-running-an-edgyr-container" class="section level2">
 <h2 class="hasAnchor">
 <a href="#next-running-an-edgyr-container" class="anchor"></a>Next: Running an <code>edgyR</code> Container</h2>
