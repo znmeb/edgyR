@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Getting the repository
+
 1. Open a terminal on the Jetson host machine. You can either do this from a
 terminal window at the host console or logged in remotely via secure shell
 (SSH).
@@ -27,15 +29,17 @@ terminal window at the host console or logged in remotely via secure shell
     cd edgyR/container-run-scripts
     ```
 
-3. Download the image: `./pull-edgyr-image`. You will need to enter your
+## Starting the `edgyr` container
+
+1. Download the image: `./pull-edgyr-image`. You will need to enter your
 Jetson password to run `sudo`.
-4. Define a new password for the `edgyr` account in the container. For
+2. Define a new password for the `edgyr` account in the container. For
 security reasons, the container will exit if you do not do this. The new
 password must be at least 12 characters long. Set the new password in the
 environment variable `EDGYR_PASSWORD`. For example:
 
     `export EDGYR_PASSWORD="12.angry%characters"`
-5. Start the container with `./run-edgyr`. You may have to enter your Jetson
+3. Start the container with `./run-edgyr`. You may have to enter your Jetson
 password for `sudo` again.
 
     RStudio Server will start, listening on IP address `0.0.0.0` port `7878`.
@@ -57,7 +61,63 @@ password for `sudo` again.
     The long hexadecimal string will be different on your system, but the rest
     should look like what's above.
     
-6. Browse to the server and log in. On the Jetson console, browse to
+    This script runs the `edgyr` container in detached mode. The processes in
+    the container are running in the background, and you can use the terminal
+    for other operations.
+
+## Using the container
+You can use the container two ways - you can either log in to the command line
+from the terminal or browse to the RStudio Server.
+
+### Log in to the command line
+There are two scripts to log in to the command line of the container: 
+`login-as-edgyr` and `login-as-root`. Neither one requires a password. Normally
+you'll want to log in as the non-root user `edgyr`. When you do, it will look
+like this:
+
+```
+$ ./login-as-edgyr 
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+edgyr@edgyr:~$ 
+```
+
+Note that you will need the `edgyr` password if you use `sudo` when logged in as
+`edgyr`.
+
+What can you do at the command line? Pretty much anything you can do with `bash`
+and `R` from the command line on any Linux system. There's a `Scripts`
+directory with some examples:
+
+```
+edgyr@edgyr:~$ tree Scripts
+Scripts
+├── edit-me-then-run-4-git-config.bash
+├── start-jupyter-lab
+├── test-package-install
+└── test-r-reticulate.R
+
+0 directories, 4 files
+edgyr@edgyr:~$ 
+```
+
+If you're going to use `git`, you'll need to edit and then run
+`Scripts/edit-me-then-run-4-git-config.bash`. I'll be covering `JupyterLab` in
+a later vignette. 
+
+The two test scripts exercise the functionality on the image.
+`Scripts/test-package-install` clones the `egdyr` repository, runs a
+`devtools::document()` and `devtools::check()` on it, then installs the
+package and regenerates the `pkgdown` site.
+
+`Scripts/test-r-reticulate` tests that `keras` is available and that `SymPy`
+and its `R` wrapper `caracas` work. You can also run these scripts from the
+terminal in the RStudio Server browser tab.
+
+### Browsing to the RStudio Server
+
+1. Browse to the server and log in. On the Jetson console, browse to
 `localhost:7878`. On a remote system, browse to port `7878` on the IP address
 of the Jetson host. ***Note that this is a different port number from the
 RStudio Server default port number!***
@@ -65,6 +125,22 @@ RStudio Server default port number!***
     For example, my Jetson Nano has IP address `192.168.254.23`, so I browse
     to `http://192.168.254.23:7878`. The user name is `edgyr` and the password
     is the one you defined in step 3.
+
+    ```{r echo=FALSE, out.width='100%'}
+    knitr::include_graphics('./Screenshot_2020-07-11_RStudio_Sign_In.png')
+    ```
+
+--------------------
+
+
+2. Log in as `edgyr` with the password you set in the `EDGYR_PASSWORD` variable
+before you started the container.
+
+    ```{r echo=FALSE, out.width='100%'}
+    knitr::include_graphics('./Screenshot_2020-07-11_RStudio_Server.png')
+    ```
+
+--------------------
 
 ## Next: Software on the Image
 

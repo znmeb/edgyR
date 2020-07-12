@@ -101,6 +101,9 @@
 
     
     
+<div id="getting-the-repository" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-the-repository" class="anchor"></a>Getting the repository</h2>
 <ol style="list-style-type: decimal">
 <li><p>Open a terminal on the Jetson host machine. You can either do this from a terminal window at the host console or logged in remotely via secure shell (SSH).</p></li>
 <li>
@@ -110,6 +113,12 @@ cd Projects
 git clone https://github.com/znmeb/edgyR.git
 cd edgyR/container-run-scripts</code></pre>
 </li>
+</ol>
+</div>
+<div id="starting-the-edgyr-container" class="section level2">
+<h2 class="hasAnchor">
+<a href="#starting-the-edgyr-container" class="anchor"></a>Starting the <code>edgyr</code> container</h2>
+<ol style="list-style-type: decimal">
 <li><p>Download the image: <code>./pull-edgyr-image</code>. You will need to enter your Jetson password to run <code>sudo</code>.</p></li>
 <li>
 <p>Define a new password for the <code>edgyr</code> account in the container. For security reasons, the container will exit if you do not do this. The new password must be at least 12 characters long. Set the new password in the environment variable <code>EDGYR_PASSWORD</code>. For example:</p>
@@ -129,12 +138,58 @@ fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds
 Resetting 'edgyr' password
 Starting RStudio Server - browse to port 7878 on Docker host</code></pre>
 <p>The long hexadecimal string will be different on your system, but the rest should look like what’s above.</p>
+<p>This script runs the <code>edgyr</code> container in detached mode. The processes in the container are running in the background, and you can use the terminal for other operations.</p>
 </li>
+</ol>
+</div>
+<div id="using-the-container" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-the-container" class="anchor"></a>Using the container</h2>
+<p>You can use the container two ways - you can either log in to the command line from the terminal or browse to the RStudio Server.</p>
+<div id="log-in-to-the-command-line" class="section level3">
+<h3 class="hasAnchor">
+<a href="#log-in-to-the-command-line" class="anchor"></a>Log in to the command line</h3>
+<p>There are two scripts to log in to the command line of the container: <code>login-as-edgyr</code> and <code>login-as-root</code>. Neither one requires a password. Normally you’ll want to log in as the non-root user <code>edgyr</code>. When you do, it will look like this:</p>
+<pre><code>$ ./login-as-edgyr 
+To run a command as administrator (user "root"), use "sudo &lt;command&gt;".
+See "man sudo_root" for details.
+
+edgyr@edgyr:~$ </code></pre>
+<p>Note that you will need the <code>edgyr</code> password if you use <code>sudo</code> when logged in as <code>edgyr</code>.</p>
+<p>What can you do at the command line? Pretty much anything you can do with <code>bash</code> and <code>R</code> from the command line on any Linux system. There’s a <code>Scripts</code> directory with some examples:</p>
+<pre><code>edgyr@edgyr:~$ tree Scripts
+Scripts
+├── edit-me-then-run-4-git-config.bash
+├── start-jupyter-lab
+├── test-package-install
+└── test-r-reticulate.R
+
+0 directories, 4 files
+edgyr@edgyr:~$ </code></pre>
+<p>If you’re going to use <code>git</code>, you’ll need to edit and then run <code>Scripts/edit-me-then-run-4-git-config.bash</code>. I’ll be covering <code>JupyterLab</code> in a later vignette.</p>
+<p>The two test scripts exercise the functionality on the image. <code>Scripts/test-package-install</code> clones the <code>egdyr</code> repository, runs a <code><a href="https://devtools.r-lib.org//reference/document.html">devtools::document()</a></code> and <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check()</a></code> on it, then installs the package and regenerates the <code>pkgdown</code> site.</p>
+<p><code>Scripts/test-r-reticulate</code> tests that <code>keras</code> is available and that <code>SymPy</code> and its <code>R</code> wrapper <code>caracas</code> work. You can also run these scripts from the terminal in the RStudio Server browser tab.</p>
+</div>
+<div id="browsing-to-the-rstudio-server" class="section level3">
+<h3 class="hasAnchor">
+<a href="#browsing-to-the-rstudio-server" class="anchor"></a>Browsing to the RStudio Server</h3>
+<ol style="list-style-type: decimal">
 <li>
 <p>Browse to the server and log in. On the Jetson console, browse to <code>localhost:7878</code>. On a remote system, browse to port <code>7878</code> on the IP address of the Jetson host. <strong><em>Note that this is a different port number from the RStudio Server default port number!</em></strong></p>
 <p>For example, my Jetson Nano has IP address <code>192.168.254.23</code>, so I browse to <code>http://192.168.254.23:7878</code>. The user name is <code>edgyr</code> and the password is the one you defined in step 3.</p>
+<p><img src="Screenshot_2020-07-11_RStudio_Sign_In.png" width="100%"></p>
 </li>
 </ol>
+<hr>
+<ol start="2" style="list-style-type: decimal">
+<li>
+<p>Log in as <code>edgyr</code> with the password you set in the <code>EDGYR_PASSWORD</code> variable before you started the container.</p>
+<p><img src="Screenshot_2020-07-11_RStudio_Server.png" width="100%"></p>
+</li>
+</ol>
+<hr>
+</div>
+</div>
 <div id="next-software-on-the-image" class="section level2">
 <h2 class="hasAnchor">
 <a href="#next-software-on-the-image" class="anchor"></a>Next: Software on the Image</h2>
