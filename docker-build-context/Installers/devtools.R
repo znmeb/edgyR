@@ -13,6 +13,10 @@ to_install <- c(
   "rTorch",
   "tinytex"
 )
+
+# update old packages into user library
+install.packages(as.data.frame(old.packages())$Package)
+
 install.packages(to_install, quiet = TRUE)
 warnings()
 
