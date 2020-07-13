@@ -20,4 +20,5 @@ then
 fi
 
 sudo docker login
+sudo docker tag edgyr-ml:latest "$DOCKER_REPO/edgyr-ml:latest"
 /usr/bin/time sudo docker push "$DOCKER_REPO/edgyr-ml:latest"

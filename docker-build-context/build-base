@@ -1,0 +1,6 @@
+#! /bin/bash
+
+set -e
+
+echo "Building the 'base' image"
+./build-image.bash "base" "Dockerfile-base"
