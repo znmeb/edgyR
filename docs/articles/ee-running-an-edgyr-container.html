@@ -68,6 +68,9 @@
     <li>
       <a href="../articles/jj-operations-and-persistence.html">Operations and Persistence</a>
     </li>
+    <li>
+      <a href="../articles/kk-jupyter-lab.html">Using JupyterLab</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -145,18 +148,36 @@ Starting RStudio Server - browse to port 7878 on Docker host</code></pre>
 <div id="using-the-container" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-the-container" class="anchor"></a>Using the container</h2>
-<p>You can use the container two ways - you can either log in to the command line from the terminal or browse to the RStudio Server.</p>
-<div id="log-in-to-the-command-line" class="section level3">
+<p>You can use the container two ways - you can either browse to the RStudio Server or log in to the command line from the terminal. Most users will want to use RStudio, so we’ll cover that first.</p>
+<div id="browsing-to-the-rstudio-server" class="section level3">
 <h3 class="hasAnchor">
-<a href="#log-in-to-the-command-line" class="anchor"></a>Log in to the command line</h3>
-<p>There are two scripts to log in to the command line of the container: <code>login-as-edgyr</code> and <code>login-as-root</code>. Neither one requires a password. Normally you’ll want to log in as the non-root user <code>edgyr</code>. When you do, it will look like this:</p>
-<pre><code>$ ./login-as-edgyr 
-To run a command as administrator (user "root"), use "sudo &lt;command&gt;".
-See "man sudo_root" for details.
-
-edgyr@edgyr:~$ </code></pre>
-<p>Note that you will need the <code>edgyr</code> password if you use <code>sudo</code> when logged in as <code>edgyr</code>.</p>
-<p>What can you do at the command line? Pretty much anything you can do with <code>bash</code> and <code>R</code> from the command line on any Linux system. There’s a <code>Scripts</code> directory with some examples:</p>
+<a href="#browsing-to-the-rstudio-server" class="anchor"></a>Browsing to the RStudio Server</h3>
+<ol style="list-style-type: decimal">
+<li>
+<p>Browse to the server and log in. On the Jetson console, browse to <code>localhost:7878</code>. On a remote system, browse to port <code>7878</code> on the IP address of the Jetson host. <strong><em>Note that this is a different port number from the RStudio Server default port number!</em></strong></p>
+<p>For example, my Jetson Nano has IP address <code>192.168.254.23</code>, so I browse to <code>http://192.168.254.23:7878</code>. The user name is <code>edgyr</code> and the password is the one you defined when you ran the container in step 3 above – the value you set in the <code>EDGYR_PASSWORD</code> variable before you started the container.</p>
+<p><img src="Screenshot_2020-07-11_RStudio_Sign_In.png" width="100%"></p>
+</li>
+</ol>
+<hr>
+<ol start="2" style="list-style-type: decimal">
+<li>
+<p>After you log in, you’ll see the RStudio Server web application page.</p>
+<p><img src="Screenshot_2020-07-11_RStudio_Server.png" width="100%"></p>
+</li>
+</ol>
+<hr>
+</div>
+<div id="exploring-the-container" class="section level3">
+<h3 class="hasAnchor">
+<a href="#exploring-the-container" class="anchor"></a>Exploring the container</h3>
+<p>The RStudio Server web application page is the standard open source RStudio Server “desktop”. I find it useful to set the browser to full-screen mode when using it to minimize distractions.</p>
+<p>The <code>Files</code> pane shows some of the extras that are installed on the image and are available to you in the container.</p>
+<p><img src="Screenshot_2020-07-12_RStudio_Server_Files.png" width="100%"></p>
+<hr>
+<p><code>.Renviron</code> and <code>.Rprofile</code> are the standard environment setting files; remember to restart your <code>R</code> session if you change them. <code>bin</code> is the directory where <code>TinyTeX</code> installed its executables when the image build installed <code>TinyTeX</code>.</p>
+<p>The scripts that installed the <code>r-reticulate</code> Python virutal environment and the R packages on the image are in <code>Installers</code>. They’ve already been run; you don’t need to run them. The log files from those installs are there as well; <code>gunzip</code> them if you want to look at them.</p>
+<p><code>Projects</code> is an empty folder for you to store your projects. And <code>Scripts</code> has some scripts you can run and use as examples:</p>
 <pre><code>edgyr@edgyr:~$ tree Scripts
 Scripts
 ├── edit-me-then-run-4-git-config.bash
@@ -166,28 +187,21 @@ Scripts
 
 0 directories, 4 files
 edgyr@edgyr:~$ </code></pre>
-<p>If you’re going to use <code>git</code>, you’ll need to edit and then run <code>Scripts/edit-me-then-run-4-git-config.bash</code>. I’ll be covering <code>JupyterLab</code> in a later vignette.</p>
-<p>The two test scripts exercise the functionality on the image. <code>Scripts/test-package-install</code> clones the <code>egdyr</code> repository, runs a <code><a href="https://devtools.r-lib.org//reference/document.html">devtools::document()</a></code> and <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check()</a></code> on it, then installs the package and regenerates the <code>pkgdown</code> site.</p>
-<p><code>Scripts/test-r-reticulate</code> tests that <code>keras</code> is available and that <code>SymPy</code> and its <code>R</code> wrapper <code>caracas</code> work. You can also run these scripts from the terminal in the RStudio Server browser tab.</p>
+<p><code>edit-me-then-run-4-git-config.bash</code> is a script you can edit and run to set your <code>git</code> configuration. If you’re going to use <code>git</code>, you’ll need to edit and then run it. <code>start-jupyter-lab</code> starts a JupyterLab server; there is an entire vignette devoted to JupyterLab in <code><a href="../articles/kk-jupyter-lab.html">vignette("kk-jupyter-lab")</a></code>.</p>
+<p><code>test-package-install</code> clones the <code>edgyR</code> git repository into <code>Projects</code>, then installs the <code>edgyR</code> R package and its suggested dependencies with <code><a href="https://devtools.r-lib.org//reference/install.html">devtools::install</a></code>, documents it with <code><a href="https://devtools.r-lib.org//reference/document.html">devtools::document</a></code> and check it with <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check</a></code>. Then it rebuilds the <code>pkgdown</code> site. This exercises the main intended functionality of <code>edgyR</code>, providing an R package development environment for Jetson development kits.</p>
+<p><code>test-r-reticulate</code> tests that R can access the <code>r-reticulate</code> Python virtual environment, that <code>keras</code> is available, and that the <code>caracas</code> R package and its Python library <code>SymPy</code> work.</p>
 </div>
-<div id="browsing-to-the-rstudio-server" class="section level3">
+<div id="logging-in-to-the-command-line" class="section level3">
 <h3 class="hasAnchor">
-<a href="#browsing-to-the-rstudio-server" class="anchor"></a>Browsing to the RStudio Server</h3>
-<ol style="list-style-type: decimal">
-<li>
-<p>Browse to the server and log in. On the Jetson console, browse to <code>localhost:7878</code>. On a remote system, browse to port <code>7878</code> on the IP address of the Jetson host. <strong><em>Note that this is a different port number from the RStudio Server default port number!</em></strong></p>
-<p>For example, my Jetson Nano has IP address <code>192.168.254.23</code>, so I browse to <code>http://192.168.254.23:7878</code>. The user name is <code>edgyr</code> and the password is the one you defined in step 3.</p>
-<p><img src="Screenshot_2020-07-11_RStudio_Sign_In.png" width="100%"></p>
-</li>
-</ol>
-<hr>
-<ol start="2" style="list-style-type: decimal">
-<li>
-<p>Log in as <code>edgyr</code> with the password you set in the <code>EDGYR_PASSWORD</code> variable before you started the container.</p>
-<p><img src="Screenshot_2020-07-11_RStudio_Server.png" width="100%"></p>
-</li>
-</ol>
-<hr>
+<a href="#logging-in-to-the-command-line" class="anchor"></a>Logging in to the command line</h3>
+<p>There are two scripts to log in to the command line of the container: <code>login-as-edgyr</code> and <code>login-as-root</code>. Neither one requires a password. Normally you’ll want to log in as the non-root user <code>edgyr</code>. When you do, it will look like this:</p>
+<pre><code>$ ./login-as-edgyr 
+To run a command as administrator (user "root"), use "sudo &lt;command&gt;".
+See "man sudo_root" for details.
+
+edgyr@edgyr:~$ </code></pre>
+<p>Note that you will need the <code>edgyr</code> password if you use <code>sudo</code> when logged in as <code>edgyr</code>.</p>
+<p>What can you do at the command line? Pretty much anything you can do with <code>bash</code> and <code>R</code> from the command line on any Linux system.</p>
 </div>
 </div>
 <div id="next-software-on-the-image" class="section level2">

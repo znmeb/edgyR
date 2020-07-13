@@ -32,6 +32,8 @@ knitr::opts_chunk$set(
 
 ## Docker Hub and pushing images
 
-## Next
+## Next: Using JupyterLab
+
+`vignette("kk-jupyter-lab")`
 
 ## References

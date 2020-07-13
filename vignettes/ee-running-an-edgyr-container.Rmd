@@ -66,10 +66,94 @@ password for `sudo` again.
     for other operations.
 
 ## Using the container
-You can use the container two ways - you can either log in to the command line
-from the terminal or browse to the RStudio Server.
+You can use the container two ways - you can either browse to the RStudio
+Server or log in to the command line from the terminal. Most users will want to
+use RStudio, so we'll cover that first.
 
-### Log in to the command line
+### Browsing to the RStudio Server
+
+1. Browse to the server and log in. On the Jetson console, browse to
+`localhost:7878`. On a remote system, browse to port `7878` on the IP address
+of the Jetson host. ***Note that this is a different port number from the
+RStudio Server default port number!***
+
+    For example, my Jetson Nano has IP address `192.168.254.23`, so I browse
+    to `http://192.168.254.23:7878`. The user name is `edgyr` and the password
+    is the one you defined when you ran the container in step 3 above -- the
+    value you set in the `EDGYR_PASSWORD` variable before you started the
+    container.
+
+    ```{r echo=FALSE, out.width='100%'}
+    knitr::include_graphics('./Screenshot_2020-07-11_RStudio_Sign_In.png')
+    ```
+
+--------------------
+
+2. After you log in, you'll see the RStudio Server web application page.
+
+    ```{r echo=FALSE, out.width='100%'}
+    knitr::include_graphics('./Screenshot_2020-07-11_RStudio_Server.png')
+    ```
+
+--------------------
+
+### Exploring the container
+
+The RStudio Server web application page is the standard open source RStudio
+Server "desktop". I find it useful to set the browser to full-screen mode when
+using it to minimize distractions.
+
+The `Files` pane shows some of the extras that are installed on the image and
+are available to you in the container.
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('./Screenshot_2020-07-12_RStudio_Server_Files.png')
+```
+
+--------------------
+
+`.Renviron` and `.Rprofile` are the standard environment setting files;
+remember to restart your `R` session if you change them. `bin` is the directory
+where `TinyTeX` installed its executables when the image build installed
+`TinyTeX`. 
+
+The scripts that installed the `r-reticulate` Python virutal environment and the
+R packages on the image are in `Installers`. They've already been run; you don't
+need to run them. The log files from those installs are there as well; `gunzip`
+them if you want to look at them.
+
+`Projects` is an empty folder for you to store your projects. And `Scripts` has
+some scripts you can run and use as examples:
+
+```
+edgyr@edgyr:~$ tree Scripts
+Scripts
+├── edit-me-then-run-4-git-config.bash
+├── start-jupyter-lab
+├── test-package-install
+└── test-r-reticulate.R
+
+0 directories, 4 files
+edgyr@edgyr:~$ 
+```
+
+`edit-me-then-run-4-git-config.bash` is a script you can edit and run to set
+your `git` configuration. If you're going to use `git`, you'll need to edit and
+then run it. `start-jupyter-lab` starts a JupyterLab server; there is an entire
+vignette devoted to JupyterLab in `vignette("kk-jupyter-lab")`.
+
+`test-package-install` clones the `edgyR` git repository into `Projects`, then
+installs the `edgyR` R package and its suggested dependencies with
+`devtools::install`, documents it with `devtools::document` and check it with
+`devtools::check`. Then it rebuilds the `pkgdown` site. This exercises the main
+intended functionality of `edgyR`, providing an R package development
+environment for Jetson development kits.
+
+`test-r-reticulate` tests that R can access the `r-reticulate` Python virtual
+environment, that `keras` is available, and that the `caracas` R package and
+its Python library `SymPy` work.
+
+### Logging in to the command line
 There are two scripts to log in to the command line of the container: 
 `login-as-edgyr` and `login-as-root`. Neither one requires a password. Normally
 you'll want to log in as the non-root user `edgyr`. When you do, it will look
@@ -87,60 +171,7 @@ Note that you will need the `edgyr` password if you use `sudo` when logged in as
 `edgyr`.
 
 What can you do at the command line? Pretty much anything you can do with `bash`
-and `R` from the command line on any Linux system. There's a `Scripts`
-directory with some examples:
-
-```
-edgyr@edgyr:~$ tree Scripts
-Scripts
-├── edit-me-then-run-4-git-config.bash
-├── start-jupyter-lab
-├── test-package-install
-└── test-r-reticulate.R
-
-0 directories, 4 files
-edgyr@edgyr:~$ 
-```
-
-If you're going to use `git`, you'll need to edit and then run
-`Scripts/edit-me-then-run-4-git-config.bash`. I'll be covering `JupyterLab` in
-a later vignette. 
-
-The two test scripts exercise the functionality on the image.
-`Scripts/test-package-install` clones the `egdyr` repository, runs a
-`devtools::document()` and `devtools::check()` on it, then installs the
-package and regenerates the `pkgdown` site.
-
-`Scripts/test-r-reticulate` tests that `keras` is available and that `SymPy`
-and its `R` wrapper `caracas` work. You can also run these scripts from the
-terminal in the RStudio Server browser tab.
-
-### Browsing to the RStudio Server
-
-1. Browse to the server and log in. On the Jetson console, browse to
-`localhost:7878`. On a remote system, browse to port `7878` on the IP address
-of the Jetson host. ***Note that this is a different port number from the
-RStudio Server default port number!***
-
-    For example, my Jetson Nano has IP address `192.168.254.23`, so I browse
-    to `http://192.168.254.23:7878`. The user name is `edgyr` and the password
-    is the one you defined in step 3.
-
-    ```{r echo=FALSE, out.width='100%'}
-    knitr::include_graphics('./Screenshot_2020-07-11_RStudio_Sign_In.png')
-    ```
-
---------------------
-
-
-2. Log in as `edgyr` with the password you set in the `EDGYR_PASSWORD` variable
-before you started the container.
-
-    ```{r echo=FALSE, out.width='100%'}
-    knitr::include_graphics('./Screenshot_2020-07-11_RStudio_Server.png')
-    ```
-
---------------------
+and `R` from the command line on any Linux system.
 
 ## Next: Software on the Image
 

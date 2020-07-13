@@ -1,0 +1,18 @@
+---
+title: "Using JupyterLab"
+output: rmarkdown::html_vignette
+bibliography: vignettes.bib
+vignette: >
+  %\VignetteIndexEntry{Using JupyterLab}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## References
