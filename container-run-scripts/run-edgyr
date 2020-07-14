@@ -24,7 +24,7 @@ sudo docker run --detach \
   --env EDGYR_PASSWORD="$EDGYR_PASSWORD" \
   --network host --name edgyr --hostname edgyr \
   --runtime nvidia \
-  znmeb/edgyr-ml:latest
+  docker.io/znmeb/edgyr-ml:latest
 
 sleep 5
 sudo docker ps

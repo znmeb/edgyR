@@ -2,5 +2,5 @@
 
 set -e
 
-sudo docker pull "znmeb/edgyr-ml:latest"
+sudo docker pull "docker.io/znmeb/edgyr-ml:latest"
 sudo docker images
