@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -111,8 +111,8 @@
 <li><p>Open a terminal on the Jetson host machine. You can either do this from a terminal window at the host console or logged in remotely via secure shell (SSH).</p></li>
 <li>
 <p>Create a <code>Projects</code> directory and clone this repository into it.</p>
-<pre><code>mkdir --parents Projects
-cd Projects
+<pre><code>mkdir --parents ~/Projects
+cd ~/Projects
 git clone https://github.com/znmeb/edgyR.git
 cd edgyR/container-run-scripts</code></pre>
 </li>
@@ -122,7 +122,7 @@ cd edgyR/container-run-scripts</code></pre>
 <h2 class="hasAnchor">
 <a href="#starting-the-edgyr-container" class="anchor"></a>Starting the <code>edgyr</code> container</h2>
 <ol style="list-style-type: decimal">
-<li><p>Download the image: <code>./pull-edgyr-image</code>. You will need to enter your Jetson password to run <code>sudo</code>.</p></li>
+<li><p>Download the image: <code>./pull-image</code>. You will need to enter your Jetson password to run <code>sudo</code>.</p></li>
 <li>
 <p>Define a new password for the <code>edgyr</code> account in the container. For security reasons, the container will exit if you do not do this. The new password must be at least 12 characters long. Set the new password in the environment variable <code>EDGYR_PASSWORD</code>. For example:</p>
 <p><code>export EDGYR_PASSWORD="12.angry%characters"</code></p>
@@ -141,7 +141,7 @@ fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds
 Resetting 'edgyr' password
 Starting RStudio Server - browse to port 7878 on Docker host</code></pre>
 <p>The long hexadecimal string will be different on your system, but the rest should look like what’s above.</p>
-<p>This script runs the <code>edgyr</code> container in detached mode. The processes in the container are running in the background, and you can use the terminal for other operations.</p>
+<p>This script runs the <code>edgyr</code> container in <em>detached</em> mode. The processes in the container are running in the background, and you can use the terminal for other operations.</p>
 </li>
 </ol>
 </div>
@@ -188,7 +188,7 @@ Scripts
 0 directories, 4 files
 edgyr@edgyr:~$ </code></pre>
 <p><code>edit-me-then-run-4-git-config.bash</code> is a script you can edit and run to set your <code>git</code> configuration. If you’re going to use <code>git</code>, you’ll need to edit and then run it. <code>start-jupyter-lab</code> starts a JupyterLab server; there is an entire vignette devoted to JupyterLab in <code><a href="../articles/kk-jupyter-lab.html">vignette("kk-jupyter-lab")</a></code>.</p>
-<p><code>test-package-install</code> clones the <code>edgyR</code> git repository into <code>Projects</code>, then installs the <code>edgyR</code> R package and its suggested dependencies with <code><a href="https://rdrr.io/pkg/devtools/man/install.html">devtools::install</a></code>, documents it with <code><a href="https://rdrr.io/pkg/devtools/man/document.html">devtools::document</a></code> and check it with <code><a href="https://rdrr.io/pkg/devtools/man/check.html">devtools::check</a></code>. Then it rebuilds the <code>pkgdown</code> site. This exercises the main intended functionality of <code>edgyR</code>, providing an R package development environment for Jetson development kits.</p>
+<p><code>test-package-install</code> clones the <code>edgyR</code> git repository into <code>Projects</code>, then installs the <code>edgyR</code> R package and its suggested dependencies with <code><a href="https://devtools.r-lib.org//reference/install.html">devtools::install</a></code>, documents it with <code><a href="https://devtools.r-lib.org//reference/document.html">devtools::document</a></code> and check it with <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check</a></code>. Then it rebuilds the <code>pkgdown</code> site. This exercises the main intended functionality of <code>edgyR</code>, which is providing an R package development environment for Jetson development kits.</p>
 <p><code>test-r-reticulate</code> tests that R can access the <code>r-reticulate</code> Python virtual environment, that <code>keras</code> is available, and that the <code>caracas</code> R package and its Python library <code>SymPy</code> work.</p>
 </div>
 <div id="logging-in-to-the-command-line" class="section level3">
@@ -200,7 +200,7 @@ To run a command as administrator (user "root"), use "sudo &lt;command&gt;".
 See "man sudo_root" for details.
 
 edgyr@edgyr:~$ </code></pre>
-<p>Note that you will need the <code>edgyr</code> password if you use <code>sudo</code> when logged in as <code>edgyr</code>.</p>
+<p>Note that you <em>will</em> need the <code>edgyr</code> password if you use <code>sudo</code> when logged in as <code>edgyr</code>.</p>
 <p>What can you do at the command line? Pretty much anything you can do with <code>bash</code> and <code>R</code> from the command line on any Linux system.</p>
 </div>
 </div>

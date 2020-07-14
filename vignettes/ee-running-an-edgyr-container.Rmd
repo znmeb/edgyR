@@ -23,15 +23,15 @@ terminal window at the host console or logged in remotely via secure shell
 2. Create a `Projects` directory and clone this repository into it.
 
     ```
-    mkdir --parents Projects
-    cd Projects
+    mkdir --parents ~/Projects
+    cd ~/Projects
     git clone https://github.com/znmeb/edgyR.git
     cd edgyR/container-run-scripts
     ```
 
 ## Starting the `edgyr` container
 
-1. Download the image: `./pull-edgyr-image`. You will need to enter your
+1. Download the image: `./pull-image`. You will need to enter your
 Jetson password to run `sudo`.
 2. Define a new password for the `edgyr` account in the container. For
 security reasons, the container will exit if you do not do this. The new
@@ -61,11 +61,12 @@ password for `sudo` again.
     The long hexadecimal string will be different on your system, but the rest
     should look like what's above.
     
-    This script runs the `edgyr` container in detached mode. The processes in
+    This script runs the `edgyr` container in *detached* mode. The processes in
     the container are running in the background, and you can use the terminal
     for other operations.
 
 ## Using the container
+
 You can use the container two ways - you can either browse to the RStudio
 Server or log in to the command line from the terminal. Most users will want to
 use RStudio, so we'll cover that first.
@@ -146,7 +147,7 @@ vignette devoted to JupyterLab in `vignette("kk-jupyter-lab")`.
 installs the `edgyR` R package and its suggested dependencies with
 `devtools::install`, documents it with `devtools::document` and check it with
 `devtools::check`. Then it rebuilds the `pkgdown` site. This exercises the main
-intended functionality of `edgyR`, providing an R package development
+intended functionality of `edgyR`, which is providing an R package development
 environment for Jetson development kits.
 
 `test-r-reticulate` tests that R can access the `r-reticulate` Python virtual
@@ -154,6 +155,7 @@ environment, that `keras` is available, and that the `caracas` R package and
 its Python library `SymPy` work.
 
 ### Logging in to the command line
+
 There are two scripts to log in to the command line of the container: 
 `login-as-edgyr` and `login-as-root`. Neither one requires a password. Normally
 you'll want to log in as the non-root user `edgyr`. When you do, it will look
@@ -167,8 +169,8 @@ See "man sudo_root" for details.
 edgyr@edgyr:~$ 
 ```
 
-Note that you will need the `edgyr` password if you use `sudo` when logged in as
-`edgyr`.
+Note that you *will* need the `edgyr` password if you use `sudo` when logged in
+as `edgyr`.
 
 What can you do at the command line? Pretty much anything you can do with `bash`
 and `R` from the command line on any Linux system.

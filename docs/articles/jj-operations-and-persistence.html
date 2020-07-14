@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -107,8 +107,8 @@
 <div id="docker-operations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#docker-operations" class="anchor"></a>Docker operations</h2>
-<p>There are two user-visible components to a Docker package: an <code>image</code>, which is a collection of software, and <code>containers</code>, where the software runs. In this release there is a single image, <code>edgyr-ml</code>, and normally you will only be running a single container, called <code>edgyr</code>.</p>
-<p>In the following, all operations will occur on the Docker host in the directory <code>edgyr/container-run-scripts</code>. I’m going to assume the host is a Jetson Nano called “Nano”.</p>
+<p>The two main user-visible components to a Docker package are an <code>image</code>, which is a collection of software, and <code>containers</code>, where the software runs. In this release there is a single image, <code>edgyr-ml</code>, and normally you will only be running a single container, called <code>edgyr</code>.</p>
+<p>In the following, all operations will occur on the Docker host in the directory <code>~/Projects/edgyr/container-run-scripts</code>. I’m going to assume the host is a Jetson Nano called “Nano”.</p>
 <div id="pulling-the-image" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pulling-the-image" class="anchor"></a>Pulling the image</h3>
@@ -163,7 +163,7 @@ The new 'edgyr' password must be at least 12 characters!</code></pre>
 </ol>
 <p>All of this means you can now browse to port <code>7878</code> on the host Nano remotely, or to port <code>7878</code> on <code>localhost</code> from the Nano console, and log in to RStudio Server as <code>edgyr</code> with the password you set.</p>
 <p>The host - container relationship is a bit like one-way mirrors. The processes in the container can only see other processes running in the container, can only read and write to filesystems we allow, which in this case is the filesystem we created from the image with <code>./run-edgyr</code>.</p>
-<p>We haven’t restricted the container’s CPU, GPU or RAM usage, but we could have done so. And we have connected the container directly to the host network, but we could have created an isolated network that only the container and other containers we specified could use.</p>
+<p>We haven’t restricted the container’s CPU, GPU or RAM usage, but we could have done so. And we have connected the container directly to the host network, but we could have created an isolated virtual network that only the container and other containers we specified could use.</p>
 </div>
 <div id="stopping-and-restarting-the-container" class="section level3">
 <h3 class="hasAnchor">

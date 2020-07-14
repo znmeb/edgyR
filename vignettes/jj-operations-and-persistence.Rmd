@@ -19,16 +19,18 @@ knitr::opts_chunk$set(
 ```
 
 ## Docker operations
-There are two user-visible components to a Docker package: an `image`, which is
-a collection of software, and `containers`, where the software runs. In this
+
+The two main user-visible components to a Docker package are an `image`, which
+is a collection of software, and `containers`, where the software runs. In this
 release there is a single image, `edgyr-ml`, and normally you will only be
 running a single container, called `edgyr`.
 
 In the following, all operations will occur on the Docker host in the directory
-`edgyr/container-run-scripts`. I'm going to assume the host is a Jetson Nano
-called "Nano".
+`~/Projects/edgyr/container-run-scripts`. I'm going to assume the host is a
+Jetson Nano called "Nano".
 
 ### Pulling the image
+
 Before you can use the image, you have to have it on your Docker host. To do
 this, run the script `pull-image`:
 
@@ -110,10 +112,11 @@ filesystem we created from the image with `./run-edgyr`.
 
 We haven't restricted the container's CPU, GPU or RAM usage, but we could have
 done so. And we have connected the container directly to the host network, but
-we could have created an isolated network that only the container and other
-containers we specified could use.
+we could have created an isolated virtual network that only the container and
+other containers we specified could use.
 
 ### Stopping and restarting the container
+
 Suppose we want to stop the container but keep all the files on its filesystem
 intact. We do that by *stopping* the container. There's a script for that -
 `stop-edgyr`:

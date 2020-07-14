@@ -74,9 +74,11 @@ get one that's wireless and not Bluetooth; the Nano doesn't have Bluetooth.
 ## Flashing and initialization
 
 The instructions in the "Write Image to the microSD Card" tab of
-^[@NVIDIA2019b] work well.
+^[@NVIDIA2019b] work well. Balena Etcher works on Linux, Mac and Windows; I've
+used it from both Windows and Linux.
 
 ## Setup and first boot
+
 The instructions in the "Setup and First Boot" tab of ^[@NVIDIA2019b]
 are fine. I would advise reading the licensing part carefully. The NVIDIA
 offerings are a mix of proprietary and open source with various licenses, and

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
 <div id="software-from-the-nvidia-l4t-ml-image" class="section level2">
 <h2 class="hasAnchor">
 <a href="#software-from-the-nvidia-l4t-ml-image" class="anchor"></a>Software from the NVIDIA <code>l4t-ml</code> image</h2>
-<p>A Docker image is composed of layers. The first layer on <code>edgyr-ml</code> is the NVIDIA <code>l4t-ml</code> image.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>A Docker image is composed of layers. The first set of layers on <code>edgyr-ml</code> are the layers on the NVIDIA <code>l4t-ml</code> image.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div id="operating-system-and-command-line" class="section level3">
 <h3 class="hasAnchor">
 <a href="#operating-system-and-command-line" class="anchor"></a>Operating system and command line</h3>
@@ -161,12 +161,12 @@
 <div id="the-edgyr-user" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-edgyr-user" class="anchor"></a>The <code>edgyr</code> user</h2>
-<p>Once the Linux layers are complete and RStudio Server is configured, the build process adds a non-root user <code>edgyr</code> with <code>sudo</code> privileges. This is standard practice for services built on Ubuntu Linux. <code>edgyr</code> has numeric user ID 1000 and group ID 1000; this will be important if you mount files from your Jetson host home directory into an <code>edgyr</code> container.</p>
+<p>Once the Linux layers are complete and RStudio Server is configured, the build process adds a non-root user <code>edgyr</code> with main group <code>edgyr</code> and <code>sudo</code> privileges. This is standard practice for services built on Ubuntu Linux.</p>
 <div id="virtualenv-virtualenvwrapper-reticulate" class="section level3">
 <h3 class="hasAnchor">
 <a href="#virtualenv-virtualenvwrapper-reticulate" class="anchor"></a>Virtualenv / virtualenvwrapper / reticulate</h3>
 <p>The R Python interface library <code>reticulate</code><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> can use and manage Python virtual environments.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> The default Python virtual environment for <code>reticulate</code> is called <code>r-reticulate</code>.</p>
-<p>The build process creates this virtual environment and populates it using the <code>--system-site-packages</code> option. Then it adds the Python package <code>SymPy</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> for symbolic mathematics. See the script <code>Installers/python-venv</code> on the image for the details.</p>
+<p>The build process creates this virtual environment and populates it using the <code>--system-site-packages</code> option. This links the Python packages on the NVIDIA image into the virtual environment. Then it adds the Python package <code>SymPy</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> for symbolic mathematics. See the script <code>Installers/python-venv</code> on the image for the details.</p>
 <p><code>edgyr-ml</code> also includes <code>virtualenvwrapper</code>,<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> a command line tool for managing Python virtual environments.</p>
 </div>
 <div id="r-packages" class="section level3">
@@ -179,13 +179,13 @@
 <li>devtools (package development)</li>
 <li>keras (interface to Keras / TensorFlow)</li>
 <li>knitr (R Markdown)</li>
-<li>miniUI (required by <code>pkgdown</code> rebuild addin)</li>
+<li>miniUI (required by <code>pkgdown</code> rebuild addin, imports <code>shiny</code> as a bonus!)</li>
 <li>pkgdown (package site builder)</li>
 <li>rmarkdown (R Markdown)</li>
 <li>rTorch (interface to PyTorch)</li>
 <li>tinytex (LaTeX / PDF generation)</li>
 </ul>
-<p>Some notes about <code>tinytex</code>: it’s installed, and it works. The full LaTeX on an Ubuntu distribution is something like 4 gigabytes, and the image is already almost 7 gigabytes, so this is a big deal.</p>
+<p>Some notes about <code>tinytex</code>:<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> it’s installed, and it works. The full TeXLive LaTeX on an Ubuntu distribution is something like 4 gigabytes, and the image is already almost 7 gigabytes, so this is a big deal.</p>
 <p>The tradeoff is that if you use a LaTeX package that isn’t already there, <code>tinytex</code> will pause and download it before continuing. This takes some time, but it only happens once.</p>
 </div>
 </div>
@@ -216,6 +216,9 @@
 <div id="ref-virtualenvwrapper2020">
 <p>“Virtualenvwrapper.” 2020. <a href="https://virtualenvwrapper.readthedocs.io/en/latest/index.html">https://virtualenvwrapper.readthedocs.io/en/latest/index.html</a>.</p>
 </div>
+<div id="ref-Xie2019">
+<p>Xie, Yihui. 2019. “TinyTeX: A Lightweight, Cross-Platform, and Easy-to-Maintain Latex Distribution Based on Tex Live.” <em>TUGboat</em>, no. 1: 30–32. <a href="http://tug.org/TUGboat/Contents/contents40-1.html">http://tug.org/TUGboat/Contents/contents40-1.html</a>.</p>
+</div>
 </div>
 </div>
 <div class="footnotes">
@@ -227,6 +230,7 @@
 <li id="fn4"><p><span class="citation">(“Virtualenv” 2020)</span><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 <li id="fn5"><p><span class="citation">(“SymPy” 2020)</span><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p><span class="citation">(“Virtualenvwrapper” 2020)</span><a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p><span class="citation">Xie (2019)</span><a href="#fnref7" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
