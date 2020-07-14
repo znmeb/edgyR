@@ -168,7 +168,7 @@ The new 'edgyr' password must be at least 12 characters!</code></pre>
 <div id="stopping-and-restarting-the-container" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stopping-and-restarting-the-container" class="anchor"></a>Stopping and restarting the container</h3>
-<p>Suppose we want to stop the container but keep all the files on its filesystem intact. We do that by <em>stopping</em> the container. There’s a script for that:</p>
+<p>Suppose we want to stop the container but keep all the files on its filesystem intact. We do that by <em>stopping</em> the container. There’s a script for that - <code>stop-edgyr</code>:</p>
 <pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./stop-edgyr 
 Stopping the 'edgyr' container
 edgyr
@@ -176,19 +176,24 @@ CONTAINER ID        IMAGE                   COMMAND                  CREATED    
 867dcf817996        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   3 hours ago         Exited (137) 5 seconds ago                       edgyr
 znmeb@Nano:~/Projects/edgyR/container-run-scripts$ </code></pre>
 <p>Now if you try to log in from a browser you’ll get an error message:</p>
-<p>To start the container back up again, we <em>start</em> the container, and there’s a script for that too:</p>
+<p><img src="screenshot-unable-to-connect.png" width="100%"></p>
+<hr>
+<p>To start the container back up again, we <em>start</em> the container, and there’s a script for that too - <code>start-edgyr</code>:</p>
 <pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./start-edgyr 
 Starting the 'edgyr' container
 edgyr
 CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
 867dcf817996        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   3 hours ago         Up 5 seconds                            edgyr
 znmeb@Nano:~/Projects/edgyR/container-run-scripts$ </code></pre>
+<p>Note that there’s a difference between <code>run-edgyr</code> and <code>start-edgyr</code>. <code>run-edgyr</code> creates a fresh container, loads the image into it, sets up the networking and then starts the container. <code>start-edgyr</code> only starts a stopped container that already exists.</p>
 </div>
 </div>
 <div id="git-and-github" class="section level2">
 <h2 class="hasAnchor">
 <a href="#git-and-github" class="anchor"></a>Git and GitHub</h2>
 <p>The primary goal of the <code>edgyR</code> project is to provide an R / RStudio package development environment for Jetson development kits. As a result, I strongly encourage developers to use Git and GitHub for persistence and collaboration rather than other means. The Nano is especially a one-person machine; it only has 4 GB of RAM and a small filesystem by current standards. See <span class="citation">(Wickham 2015)</span> for more practical advice on R package development.</p>
+<p>The first time you run an <code>edgyr</code> container, edit <code>/home/edgyr/Scripts/edit-me-then-run-4-git-config.bash</code>. Enter your name and email address as they appear on your GitHub repositories, and change the credential caching time if two hours is too long or too short for your workflow. Then run the script.</p>
+<p>To clone a project, go into the <code>Projects</code> directory and use the <code>https</code> form to specify the repository. The first time you push a commit, RStudio will ask for your ID and “password”. If you’re using two-factor authentication as GitHub recommends, the password is your personal access token (PAT). Git will cache those credentials for the time you specified - two hours if you use the default in the script.</p>
 </div>
 <div id="next-using-jupyterlab" class="section level2">
 <h2 class="hasAnchor">

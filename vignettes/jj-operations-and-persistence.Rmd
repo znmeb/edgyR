@@ -115,7 +115,8 @@ containers we specified could use.
 
 ### Stopping and restarting the container
 Suppose we want to stop the container but keep all the files on its filesystem
-intact. We do that by *stopping* the container. There's a script for that:
+intact. We do that by *stopping* the container. There's a script for that -
+`stop-edgyr`:
 
 ```
 znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./stop-edgyr 
@@ -128,8 +129,14 @@ znmeb@Nano:~/Projects/edgyR/container-run-scripts$
 
 Now if you try to log in from a browser you'll get an error message:
 
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('./screenshot-unable-to-connect.png')
+```
+
+--------------------
+
 To start the container back up again, we *start* the container, and there's a
-script for that too:
+script for that too - `start-edgyr`:
 
 ```
 znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./start-edgyr 
@@ -140,6 +147,11 @@ CONTAINER ID        IMAGE                   COMMAND                  CREATED    
 znmeb@Nano:~/Projects/edgyR/container-run-scripts$ 
 ```
 
+Note that there's a difference between `run-edgyr` and `start-edgyr`.
+`run-edgyr` creates a fresh container, loads the image into it, sets up the
+networking and then starts the container. `start-edgyr` only starts a stopped
+container that already exists.
+
 ## Git and GitHub
 The primary goal of the `edgyR` project is to provide an R / RStudio
 package development environment for Jetson development kits. As a result, I
@@ -147,6 +159,19 @@ strongly encourage developers to use Git and GitHub for persistence and
 collaboration rather than other means. The Nano is especially a one-person
 machine; it only has 4 GB of RAM and a small filesystem by current standards.
 See [@Wickham2015r] for more practical advice on R package development.
+
+The first time you run an `edgyr` container, edit
+`/home/edgyr/Scripts/edit-me-then-run-4-git-config.bash`. Enter your name and
+email address as they appear on your GitHub repositories, and change the
+credential caching time if two hours is too long or too short for your
+workflow. Then run the script.
+
+To clone a project, go into the `Projects` directory and use the `https` form
+to specify the repository. The first time you push a commit, RStudio will ask
+for your ID and "password". If you're using two-factor authentication as
+GitHub recommends, the password is your personal access token (PAT). Git will
+cache those credentials for the time you specified - two hours if you use the
+default in the script.
 
 ## Next: Using JupyterLab
 

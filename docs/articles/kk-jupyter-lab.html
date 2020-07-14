@@ -104,9 +104,49 @@
 
     
     
-<div id="references" class="section level2">
+<div id="starting-jupyterlab" class="section level2">
+<h2 class="hasAnchor">
+<a href="#starting-jupyterlab" class="anchor"></a>Starting JupyterLab</h2>
+<p>The <code>edgyr-ml</code> image inherits JupyterLab<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> from the NVIDIA <code>l4t-ml</code> image.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> As a result, all that necessary to use JupyterLab is to add the code to use R kernels in JupyterLab and add a script to start up the service.</p>
+<p>The <code>IRkernel</code> package<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> provides the R kernel interface code. And the startup script is in <code>/home/edgyr/Scripts/start-jupyter-lab</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Browse to the RStudio Server either from the host console or remotely and open the ‘Terminal’ pane.</li>
+<li>Type <code>Scripts/start-jupyter-lab</code>. You’ll see</li>
+</ol>
+<p><img src="start-jupyter-lab.png" width="100%"></p>
+<hr>
+<p>If you’re on the Nano console, you just need to copy and paste the <code>http</code> link into a browser tab and you’ll be in the JupyterLab front page. If you’re connected remotely, copy the <code>http://edgyr</code> link, but replace <code>edgyr</code> with the IP address of your Docker host. For example, mine is <code>192.168.254.23</code>:</p>
+<p><img src="jupyterlab-home-page.png" width="100%"></p>
+<hr>
+<p>To stop the JupyterLab server, press <code>Control-C</code> twice as shown above. As with RStudio Server and R packages, I strongly recommend putting your notebooks in projects in the <code>Projects</code> directory and collaborating via Git / GitHub.</p>
+</div>
+<div id="next" class="section level2">
+<h2 class="hasAnchor">
+<a href="#next" class="anchor"></a>Next</h2>
+<p>The next steps are up to you! Please feel free to open issues at <a href="https://github.com/znmeb/edgyR/issues/new" class="uri">https://github.com/znmeb/edgyR/issues/new</a>. Bug reports, documentation questions and especially feature requests are fair game.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
+<div id="refs" class="references">
+<div id="ref-jupyterlab2020">
+<p>“JupyterLab Documentation.” 2020. <a href="https://jupyterlab.readthedocs.io/en/stable/">https://jupyterlab.readthedocs.io/en/stable/</a>.</p>
+</div>
+<div id="ref-Kluyver2019">
+<p>Kluyver, Thomas, Philipp Angerer, Jan Schulz, and Karthik Ram. 2019. <em>IRkernel: Native R Kernel for the ’Jupyter Notebook’</em>. <a href="https://CRAN.R-project.org/package=IRkernel">https://CRAN.R-project.org/package=IRkernel</a>.</p>
+</div>
+<div id="ref-NVIDIA2019d">
+<p>“Machine Learning for Jetson/L4t.” 2019. <a href="https://ngc.nvidia.com/catalog/containers/nvidia:l4t-ml">https://ngc.nvidia.com/catalog/containers/nvidia:l4t-ml</a>.</p>
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p><span class="citation">(“JupyterLab Documentation” 2020)</span><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><span class="citation">(“Machine Learning for Jetson/L4t” 2019)</span><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><span class="citation">Kluyver et al. (2019)</span><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
   </div>
 
