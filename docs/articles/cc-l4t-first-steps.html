@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@
 <p>I’m going to assume you have a Jetson Nano and have completed <code><a href="../articles/aa-setting-up-the-jetson-nano.html">vignette("aa-setting-up-the-jetson-nano")</a></code> and are at the Jetson desktop as shown in “After Logging In” on the “Setup and First Boot” tab of.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p>When you flashed the microSD card, the software you installed was a collection of NVIDIA tools called <a href="https://developer.nvidia.com/embedded/jetpack"><code>JetPack SDK</code></a> <span class="citation">(“JetPack Sdk” 2019)</span>. JetPack SDK is a mature collection of utilities for developing edge computing applications on Jetson hardware. If you have time and are interested in the state of the NVIDIA art, there are a wealth of tutorials and examples, most of which will run on the Nano. See<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> to get started.</p>
 <p>The operating system component of JetPack SDK is called Linux for Tegra (L4T). L4T is built on top of Ubuntu Linux 18.04 LTS “Bionic Beaver” running on the 64-bit ARM hardware (<code>arm64</code> or <code>aarch64</code> if you’re into code names).</p>
-<p>If you’re familiar with Ubuntu Linux 18.04 LTS, most of this will be second nature. Ubuntu is a very popular Linux distro, so if you’re a Linux newcomer you probably know someone who can show you around. But I’ll show you what you need to do to get the <a href="https://hub.docker.com/repository/docker/znmeb/edgyr-ml"><code>edgyr-ml Docker image</code></a> up and running.</p>
+<p>If you’re familiar with Ubuntu Linux 18.04 LTS, most of this will be second nature. Ubuntu is a very popular Linux distro, so if you’re a Linux newcomer you probably know someone who can show you around. But I’ll show you what you need to do to get the <a href="https://hub.docker.com/r/znmeb/edgyr-ml"><code>edgyr-ml Docker image</code></a> up and running.</p>
 </div>
 <div id="updating-the-operating-system" class="section level2">
 <h2 class="hasAnchor">
@@ -130,7 +130,7 @@
 <div id="remote-access" class="section level2">
 <h2 class="hasAnchor">
 <a href="#remote-access" class="anchor"></a>Remote access</h2>
-<p>At this point, you’re all set up and can proceed to running the <code>edgyR</code> Docker container. But you’ll probably want to set up remote access, so you can share the Nano desktop and open a terminal from another machine with Secure Shell (SSH).</p>
+<p>At this point, you’re all set up and can proceed to pulling the <code>edgyR</code> Docker image and running it in a container. But you’ll probably want to set up remote access, so you can open a terminal from another machine with Secure Shell (SSH) or share the Nano desktop via VNC.</p>
 <p>If you have a typical home local area network (LAN), you have a router somewhere connected to the internet and the router sets up a wireless LAN for you. The router may have wired jacks in it that you can connect to directly as well. In either case, the router assigned your Nano and every other device on your home LAN an Internet Protocol (IP) address.</p>
 <p>To find out what the IP address of the Nano is, open the dialog box in the upper right. For a wireless connection it will be a wireless symbol and for a wired connection like mine it will be two arrows. Then select the “Connection Information” entry.</p>
 <p><img src="ip-address.png" width="100%"></p>
@@ -165,7 +165,7 @@
 <div id="booting-to-a-linux-console" class="section level2">
 <h2 class="hasAnchor">
 <a href="#booting-to-a-linux-console" class="anchor"></a>Booting to a Linux console</h2>
-<p>If you’re planning to access the Nano mostly via remote SSH sessions and RStudio Server or JupyterLab web services inside an <code>edgyR</code> container, you won’t be using the L4T desktop.</p>
+<p>If you’re planning to access the Nano mostly via remote SSH sessions and RStudio Server or JupyterLab web services inside an <code>edgyR</code> container, you won’t be using the full L4T desktop.</p>
 <p>The full L4T desktop takes up more RAM than a Linux console, and the Nano has only 4 GB of RAM. To set the Nano to boot to a Linux console, enter</p>
 <pre><code>sudo systemctl set-default multi-user.target
 sudo systemctl reboot</code></pre>

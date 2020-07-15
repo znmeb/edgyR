@@ -15,22 +15,109 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-```
+## Software from the NVIDIA `l4t-ml` image
 
-## Operating system and command line
+A Docker image is composed of layers. The first set of layers on `edgyr-ml` are
+the layers on the NVIDIA `l4t-ml` image. ^[@NVIDIA2019d]
 
-## Python data science / machine learning 
+### Operating system and command line
 
-## Virtualenv / virtualenvwrapper / reticulate
+The operating system on the image is Linux for Tegra (L4T). ^[@NVIDIA2020a] L4T
+is Ubuntu 18.04 LTS "Bionic Beaver" for the `arm64` architecture, with added
+NVIDIA drivers, libraries, compilers and other development tools for the GPU
+on Jetson modules and development kits. A Jetson developer can use C/C++,
+Python or both with the software on an L4T system. The `vim` editor is standard,
+as is the `git` version control system.
 
-## SymPy / caracas
+### Python data science / machine learning
 
-## JupyterLab
+The base `l4t-ml` image also contains a complete Python 3 data science /
+machine learning stack:
 
-## R packages
+- jupyterlab 2.1.1
+- jupyterlab-server 1.1.1
+- Keras-Applications 1.0.8
+- Keras-Preprocessing 1.0.5
+- matplotlib  2.1.1
+- numpy 1.18.3
+- onnx  1.6.0
+- pandas  1.0.3
+- pycuda  2019.1.2
+- scikit-learn  0.22.2.post1
+- scipy 1.4.1
+- tensorboard 1.15.0
+- tensorflow  1.15.2+nv
+- tensorflow-estimator 1.15.1
+- torch 1.5.0
+- torchvision 0.6.0a0+b68adcf
 
-## RStudio Server
+## Added Linux packages
+
+`edgyr-ml` adds some Linux packages to the base:
+
+- git-lfs (handles large files in repositories)
+- lynx (command-line browser)
+- openjdk-8-jdk-headless (Java 8 - required for RStudio Server)
+- pandoc (R Markdown processing)
+- pandoc-citeproc (R Markdown processing)
+- python-virtualenv (Python virtual environment handling)
+- python3-virtualenv (Python virtual environment handling)
+- virtualenv (Python virtual environment handling)
+- virtualenvwrapper (Python virtual environment handling)
+
+## R and RStudio from source
+
+`edgyr-ml` includes R 4.0.2 and RStudio Server 1.3.959 compiled from source.
+The compressed logfiles from the builds are on the image in 
+`/usr/local/src/install-r.log.gz` and
+`/usr/local/src/install-rstudio-server.log.gz`.
+
+## The `edgyr` user
+
+Once the Linux layers are complete and RStudio Server is configured, the build
+process adds a non-root user `edgyr` with main group `edgyr` and `sudo`
+privileges. This is standard practice for services built on Ubuntu Linux.
+
+### Virtualenv / virtualenvwrapper / reticulate
+
+The R Python interface library `reticulate` ^[@Ushey2020] can use and manage
+Python virtual environments. ^[@virtualenv2020] The default Python virtual
+environment for `reticulate` is called `r-reticulate`.
+
+The build process creates this virtual environment and populates it using the
+`--system-site-packages` option. This links the Python packages on the NVIDIA
+image into the virtual environment. Then it adds the Python package `SymPy` 
+^[@sympy2020] for symbolic mathematics. See the script `Installers/python-venv`
+on the image for the details.
+
+`edgyr-ml` also includes `virtualenvwrapper`, ^[@virtualenvwrapper2020] a
+command line tool for managing Python virtual environments.
+
+### R packages
+
+The R packages included on the `edgyr-ml` image are aimed at the core mission
+of `edgyr`, providing an R development environment for the Jetson. Because the
+base image contains a Python machine learning stack, libraries for interfacing
+with it are also provided.
+
+- caracas (symbolic mathematics - uses `SymPy`)
+- data.table (fast data wrangling tool)
+- devtools (package development)
+- keras (interface to Keras / TensorFlow)
+- knitr (R Markdown)
+- miniUI (required by `pkgdown` rebuild addin, imports `shiny` as a bonus!)
+- pkgdown (package site builder)
+- rmarkdown (R Markdown)
+- rTorch (interface to PyTorch)
+- tinytex (LaTeX / PDF generation)
+
+Some notes about `tinytex` ^[@Xie2019]: it's installed, and it works. The full
+TeXLive LaTeX on an Ubuntu distribution is something like 4 gigabytes, and the
+image is already almost 7 gigabytes, so this is a big deal.
+
+The tradeoff is that if you use a LaTeX package that isn't already there,
+`tinytex` will pause and download it before continuing. This takes some time,
+but it only happens once.
 
 ## Next: Operations and Persistence
 

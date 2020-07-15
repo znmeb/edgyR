@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ## What is L4T?
+
 I'm going to assume you have a Jetson Nano and have completed
 `vignette("aa-setting-up-the-jetson-nano")` and are at the Jetson desktop as
 shown in "After Logging In" on the "Setup and First Boot" tab of
@@ -37,10 +38,11 @@ If you're familiar with Ubuntu Linux 18.04 LTS, most of this will be second
 nature. Ubuntu is a very popular Linux distro, so if you're a Linux newcomer
 you probably know someone who can show you around. But I'll show you what you
 need to do to get the
-[`edgyr-ml Docker image`](https://hub.docker.com/repository/docker/znmeb/edgyr-ml)
-up and running.
+[`edgyr-ml Docker image`](https://hub.docker.com/r/znmeb/edgyr-ml) up and
+running.
 
 ## Updating the operating system
+
 L4T is set up to periodically poll the internet for OS updates. If it finds
 that updates are available it will open an app and ask you if you want to
 install them. Unless you're an expert you should install the updates and
@@ -75,10 +77,11 @@ Press the "Restart Now" button. The system will restart and then you can log
 back in.
 
 ## Remote access
-At this point, you're all set up and can proceed to running the `edgyR` Docker
-container. But you'll probably want to set up remote access, so you can share
-the Nano desktop and open a terminal from another machine with Secure Shell
-(SSH).
+
+At this point, you're all set up and can proceed to pulling the `edgyR` Docker
+image and running it in a container. But you'll probably want to set up remote
+access, so you can open a terminal from another machine with Secure Shell
+(SSH) or share the Nano desktop via VNC.
 
 If you have a typical home local area network (LAN), you have a router
 somewhere connected to the internet and the router sets up a wireless LAN for
@@ -131,6 +134,7 @@ asks for a password, it's *your* password -- the one you specified when you
 set up the system.
 
 ## Remote desktop
+
 As noted above it is also possible to share the desktop. This is a bit tricky
 to set up, so I'll simply show you where the instructions are and let you do
 it if you wish.
@@ -160,9 +164,10 @@ knitr::include_graphics('./configuring-vnc.png')
 --------------------
 
 ## Booting to a Linux console
+
 If you're planning to access the Nano mostly via remote SSH sessions and
 RStudio Server or JupyterLab web services inside an `edgyR` container, you
-won't be using the L4T desktop.
+won't be using the full L4T desktop.
 
 The full L4T desktop takes up more RAM than a Linux console, and the Nano has
 only 4 GB of RAM. To set the Nano to boot to a Linux console, enter

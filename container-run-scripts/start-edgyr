@@ -1,0 +1,6 @@
+#! /bin/bash
+
+echo "Starting the 'edgyr' container"
+sudo docker start edgyr
+sleep 5
+sudo docker ps

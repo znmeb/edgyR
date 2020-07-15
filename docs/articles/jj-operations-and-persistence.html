@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -104,42 +104,110 @@
 
     
     
-<div id="pulling-the-images" class="section level2">
+<div id="docker-operations" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pulling-the-images" class="anchor"></a>Pulling the images</h2>
+<a href="#docker-operations" class="anchor"></a>Docker operations</h2>
+<p>The two main user-visible components to a Docker package are an <code>image</code>, which is a collection of software, and <code>containers</code>, where the software runs. In this release there is a single image, <code>edgyr-ml</code>, and normally you will only be running a single container, called <code>edgyr</code>.</p>
+<p>In the following, all operations will occur on the Docker host in the directory <code>~/Projects/edgyr/container-run-scripts</code>. I’m going to assume the host is a Jetson Nano called “Nano”.</p>
+<div id="pulling-the-image" class="section level3">
+<h3 class="hasAnchor">
+<a href="#pulling-the-image" class="anchor"></a>Pulling the image</h3>
+<p>Before you can use the image, you have to have it on your Docker host. To do this, run the script <code>pull-image</code>:</p>
+<pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./pull-image 
+latest: Pulling from znmeb/edgyr-ml
+3b5e2c02f523: Pulling fs layer 
+b9448035bb0a: Pulling fs layer 
+
+[snip]
+
+464529f5c5bb: Pull complete 
+248fad5e214b: Pull complete 
+6de52330cbb9: Pull complete 
+Digest: sha256:51265581fe03aae8fb6a2cbc28929a56b33229cf5656d04723ad5c9e78a121d0
+Status: Downloaded newer image for znmeb/edgyr-ml:latest
+docker.io/znmeb/edgyr-ml:latest
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+znmeb/edgyr-ml      latest              a74882eb113b        19 hours ago        6.84GB
+znmeb@Nano:~/Projects/edgyR/container-run-scripts$ </code></pre>
 </div>
-<div id="starting-the-image" class="section level2">
-<h2 class="hasAnchor">
-<a href="#starting-the-image" class="anchor"></a>Starting the image</h2>
+<div id="running-the-image-in-a-container" class="section level3">
+<h3 class="hasAnchor">
+<a href="#running-the-image-in-a-container" class="anchor"></a>Running the image in a container</h3>
+<p>Once we’ve pulled the image, we need to create a container with the image and start the service processes in it, in this case RStudio Server. We do this with the <code>run-edgyr</code> script:</p>
+<pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ export EDGYR_PASSWORD="12.angry%characters"
+znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./run-edgyr 
+Force-removing old 'edgyr' container
+You can ignore errors if it doesn't exist
+Error: No such container: edgyr
+Running image znmeb/edgyr-ml:latest
+867dcf8179966c9aa4472e8b0d71267106902a3da572b9ebb2e6bce5a3f2231d
+CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
+867dcf817996        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   13 seconds ago      Up 5 seconds                            edgyr
+Resetting 'edgyr' password
+Starting RStudio Server - browse to port 7878 on Docker host
+znmeb@Nano:~/Projects/edgyR/container-run-scripts$ </code></pre>
+<p>If you forget to define the <code>EDGYR_PASSWORD</code> variable, you’ll get an error message:</p>
+<pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./run-edgyr 
+You need to specify a new password for the 'edgyr'
+account in the 'EDGYR_PASSWORD' environment variable.
+The new 'edgyr' password must be at least 12 characters!</code></pre>
+<p>A Docker container is a collection of Linux processes that are isolated from the host except for well-defined resource usages and behavior. When you did <code>./run-edgyr</code>, the following things happened:</p>
+<ol style="list-style-type: decimal">
+<li>If there was already an <code>edgyr</code> container, Docker removed it.</li>
+<li>Docker created a new container, called <code>edgyr</code>.</li>
+<li>Docker set the filesystem of the container to the contents of the image, <code>docker.io/znmeb/edgyr-ml</code>. This filesystem is independent of the host filesystem; it’s stored in a protected area that Docker manages.</li>
+<li>Docker connected the container’s network to the host network. This means any ports that the processes in the container uses are bound to the host port with the same numbers. For this image, that’s port <code>7878</code> for RStudio Server and port <code>8888</code> if you start up the JupyterLab service.</li>
+<li>Docker started the container by running a script in the container called <code>docker-entrypoint.sh</code>.</li>
+<li>
+<code>docker-entrypoint.sh</code> read the <code>EDGYR_PASSWORD</code> environment variable and set the password for the <code>edgyr</code> account in the container to that value.</li>
+</ol>
+<p>All of this means you can now browse to port <code>7878</code> on the host Nano remotely, or to port <code>7878</code> on <code>localhost</code> from the Nano console, and log in to RStudio Server as <code>edgyr</code> with the password you set.</p>
+<p>The host - container relationship is a bit like one-way mirrors. The processes in the container can only see other processes running in the container, can only read and write to filesystems we allow, which in this case is the filesystem we created from the image with <code>./run-edgyr</code>.</p>
+<p>We haven’t restricted the container’s CPU, GPU or RAM usage, but we could have done so. And we have connected the container directly to the host network, but we could have created an isolated virtual network that only the container and other containers we specified could use.</p>
 </div>
-<div id="mounting-the-home-projects-into-the-container" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mounting-the-home-projects-into-the-container" class="anchor"></a>Mounting the home <code>Projects</code> into the container</h2>
+<div id="stopping-and-restarting-the-container" class="section level3">
+<h3 class="hasAnchor">
+<a href="#stopping-and-restarting-the-container" class="anchor"></a>Stopping and restarting the container</h3>
+<p>Suppose we want to stop the container but keep all the files on its filesystem intact. We do that by <em>stopping</em> the container. There’s a script for that - <code>stop-edgyr</code>:</p>
+<pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./stop-edgyr 
+Stopping the 'edgyr' container
+edgyr
+CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS                       PORTS               NAMES
+867dcf817996        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   3 hours ago         Exited (137) 5 seconds ago                       edgyr
+znmeb@Nano:~/Projects/edgyR/container-run-scripts$ </code></pre>
+<p>Now if you try to log in from a browser you’ll get an error message:</p>
+<p><img src="screenshot-unable-to-connect.png" width="100%"></p>
+<hr>
+<p>To start the container back up again, we <em>start</em> the container, and there’s a script for that too - <code>start-edgyr</code>:</p>
+<pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./start-edgyr 
+Starting the 'edgyr' container
+edgyr
+CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
+867dcf817996        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   3 hours ago         Up 5 seconds                            edgyr
+znmeb@Nano:~/Projects/edgyR/container-run-scripts$ </code></pre>
+<p>Note that there’s a difference between <code>run-edgyr</code> and <code>start-edgyr</code>. <code>run-edgyr</code> creates a fresh container, loads the image into it, sets up the networking and then starts the container. <code>start-edgyr</code> only starts a stopped container that already exists.</p>
+</div>
 </div>
 <div id="git-and-github" class="section level2">
 <h2 class="hasAnchor">
 <a href="#git-and-github" class="anchor"></a>Git and GitHub</h2>
-</div>
-<div id="stopping-and-restarting-containers" class="section level2">
-<h2 class="hasAnchor">
-<a href="#stopping-and-restarting-containers" class="anchor"></a>Stopping and restarting containers</h2>
-</div>
-<div id="saving-modified-images" class="section level2">
-<h2 class="hasAnchor">
-<a href="#saving-modified-images" class="anchor"></a>Saving modified images</h2>
-</div>
-<div id="docker-hub-and-pushing-images" class="section level2">
-<h2 class="hasAnchor">
-<a href="#docker-hub-and-pushing-images" class="anchor"></a>Docker Hub and pushing images</h2>
+<p>The primary goal of the <code>edgyR</code> project is to provide an R / RStudio package development environment for Jetson development kits. As a result, I strongly encourage developers to use Git and GitHub for persistence and collaboration rather than other means. The Nano is especially a one-person machine; it only has 4 GB of RAM and a small filesystem by current standards. See <span class="citation">(Wickham 2015)</span> for more practical advice on R package development.</p>
+<p>The first time you run an <code>edgyr</code> container, edit <code>/home/edgyr/Scripts/edit-me-then-run-4-git-config.bash</code>. Enter your name and email address as they appear on your GitHub repositories, and change the credential caching time if two hours is too long or too short for your workflow. Then run the script.</p>
+<p>To clone a project, go into the <code>Projects</code> directory and use the <code>https</code> form to specify the repository. The first time you push a commit, RStudio will ask for your ID and “password”. If you’re using two-factor authentication as GitHub recommends, the password is your personal access token (PAT). Git will cache those credentials for the time you specified - two hours if you use the default in the script.</p>
 </div>
 <div id="next-using-jupyterlab" class="section level2">
 <h2 class="hasAnchor">
 <a href="#next-using-jupyterlab" class="anchor"></a>Next: Using JupyterLab</h2>
 <p><code><a href="../articles/kk-jupyter-lab.html">vignette("kk-jupyter-lab")</a></code></p>
 </div>
-<div id="references" class="section level2">
+<div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
+<div id="refs" class="references">
+<div id="ref-Wickham2015r">
+<p>Wickham, H. 2015. <em>R Packages: Organize, Test, Document, and Share Your Code</em>. O’Reilly Media. <a href="http://r-pkgs.had.co.nz/">http://r-pkgs.had.co.nz/</a>.</p>
+</div>
+</div>
 </div>
   </div>
 

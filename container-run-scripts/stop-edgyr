@@ -1,0 +1,6 @@
+#! /bin/bash
+
+echo "Stopping the 'edgyr' container"
+sudo docker stop edgyr
+sleep 5
+sudo docker ps -a
