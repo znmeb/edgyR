@@ -18,8 +18,8 @@ COPY --from=binaries /usr/local/lib/R /usr/local/lib/R
 COPY --from=binaries /usr/local/share/man/man1 /usr/local/share/man/man1
 COPY --from=binaries /usr/local/bin /usr/local/bin
 COPY --from=binaries /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
-COPY R.conf ld.so.conf.d/
-RUN /sbin/ldconfig
+COPY R.conf /etc/ld.so.conf.d/
+RUN /sbin/ldconfig --verbose 2> /dev/null
 
 # copy RStudio Server files from binaries image
 COPY --from=binaries /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
