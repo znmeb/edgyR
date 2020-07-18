@@ -116,10 +116,36 @@ we could have created an isolated virtual network that only the container and
 other containers we specified could use.
 
 ### Stopping and restarting the container
-
 Suppose we want to stop the container but keep all the files on its filesystem
-intact. We do that by *stopping* the container. There's a script for that -
-`stop-edgyr`:
+intact. First, we stop the R session in the container from the RStudio Server
+browser window:
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('./Screenshot_2020-07-11_RStudio_Server.png')
+```
+
+--------------------
+
+Press the red button at the top right of the window to stop the R session. You
+will see this:
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('./Screenshot_2020-07-17_RStudio_Server.png')
+```
+
+--------------------
+
+***You need to do this before stopping the container.*** If you forget, you may
+lose data, and you may see this warning when you bring it back up:
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('./Screenshot_2020-07-17_Session_Error.png')
+```
+
+--------------------
+
+After you've stopped the session, you can stop the container. There's a script
+for that - `stop-edgyr`:
 
 ```
 znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./stop-edgyr 
@@ -137,6 +163,9 @@ knitr::include_graphics('./screenshot-unable-to-connect.png')
 ```
 
 --------------------
+
+Once you've stopped the container, you can shut the host down or restart it and
+your files will be there when you start everything up again.
 
 To start the container back up again, we *start* the container, and there's a
 script for that too - `start-edgyr`:

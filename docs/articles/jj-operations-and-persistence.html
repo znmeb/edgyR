@@ -168,7 +168,16 @@ The new 'edgyr' password must be at least 12 characters!</code></pre>
 <div id="stopping-and-restarting-the-container" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stopping-and-restarting-the-container" class="anchor"></a>Stopping and restarting the container</h3>
-<p>Suppose we want to stop the container but keep all the files on its filesystem intact. We do that by <em>stopping</em> the container. There’s a script for that - <code>stop-edgyr</code>:</p>
+<p>Suppose we want to stop the container but keep all the files on its filesystem intact. First, we stop the R session in the container from the RStudio Server browser window:</p>
+<p><img src="Screenshot_2020-07-11_RStudio_Server.png" width="100%"></p>
+<hr>
+<p>Press the red button at the top right of the window to stop the R session. You will see this:</p>
+<p><img src="Screenshot_2020-07-17_RStudio_Server.png" width="100%"></p>
+<hr>
+<p><strong><em>You need to do this before stopping the container.</em></strong> If you forget, you may lose data, and you may see this warning when you bring it back up:</p>
+<p><img src="Screenshot_2020-07-17_Session_Error.png" width="100%"></p>
+<hr>
+<p>After you’ve stopped the session, you can stop the container. There’s a script for that - <code>stop-edgyr</code>:</p>
 <pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./stop-edgyr 
 Stopping the 'edgyr' container
 edgyr
@@ -178,6 +187,7 @@ znmeb@Nano:~/Projects/edgyR/container-run-scripts$ </code></pre>
 <p>Now if you try to log in from a browser you’ll get an error message:</p>
 <p><img src="screenshot-unable-to-connect.png" width="100%"></p>
 <hr>
+<p>Once you’ve stopped the container, you can shut the host down or restart it and your files will be there when you start everything up again.</p>
 <p>To start the container back up again, we <em>start</em> the container, and there’s a script for that too - <code>start-edgyr</code>:</p>
 <pre><code>znmeb@Nano:~/Projects/edgyR/container-run-scripts$ ./start-edgyr 
 Starting the 'edgyr' container
