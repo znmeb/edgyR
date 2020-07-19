@@ -1,4 +1,4 @@
-FROM "nvcr.io/nvidia/l4t-ml:r32.4.2-py3"
+FROM "nvcr.io/nvidia/l4t-ml:r32.4.3-py3"
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
@@ -16,11 +16,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 # image building
 USER root
 WORKDIR $SOURCE_DIR/
-
-# upgrade the OS
-COPY apt-upgrade $SOURCE_DIR/
-RUN $SOURCE_DIR/apt-upgrade > apt-upgrade.log 2>&1 \
-  && gzip -9 apt-upgrade.log
 
 # install linux dependencies
 COPY install-linux-dependencies $SOURCE_DIR/
