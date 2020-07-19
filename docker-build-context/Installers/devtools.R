@@ -4,6 +4,7 @@ to_install <- c(
   "caracas",
   "data.table",
   "devtools",
+  "greta",
   "keras",
   "knitr",
   "miniUI",
