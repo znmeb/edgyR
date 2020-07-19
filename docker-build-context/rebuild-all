@@ -1,7 +1,11 @@
 #! /bin/bash
 
 echo "Pulling base images"
-sudo docker pull "nvcr.io/nvidia/l4t-ml:r32.4.2-py3"
+sudo docker pull "nvcr.io/nvidia/l4t-base:r32.4.3"
+sudo docker pull "nvcr.io/nvidia/l4t-pytorch:r32.4.3-pth1.6-py3"
+sudo docker pull "nvcr.io/nvidia/l4t-ml:r32.4.3-py3"
+sudo docker pull "nvcr.io/nvidia/l4t-tensorflow:r32.4.3-tf1.15-py3"
+
 echo "Building images"
 export DOCKER_REPO=znmeb
 /usr/bin/time ./build-base
