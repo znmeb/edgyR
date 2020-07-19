@@ -62,8 +62,10 @@ RUN mkdir --parents $WORKON_HOME $PROJECT_HOME; chown -R edgyr:edgyr $EDGYR_HOME
 # and R developer tools
 USER edgyr
 WORKDIR $EDGYR_HOME
-RUN Installers/python-venv > Installers/python-venv.log 2>&1 \
-  && gzip -9 Installers/python-venv.log
+RUN Installers/python-r-reticulate > Installers/python-r-reticulate.log 2>&1 \
+  && gzip -9 Installers/python-r-reticulate.log
+RUN Installers/python-tensorflow-2 > Installers/python-tensorflow-2.log 2>&1 \
+  && gzip -9 Installers/python-tensorflow-2.log
 RUN Installers/devtools.R > Installers/devtools.R.log 2>&1 \
   && gzip -9 Installers/devtools.R.log
 
