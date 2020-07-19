@@ -18,6 +18,11 @@ cd build_dir
 
 echo "Compiling"
 make --jobs=`nproc`
+echo "Making standalone math library"
+pushd src/nmath/standalone
+make --jobs=`nproc`
+make install
+popd
 
 echo "Checking"
 make check
