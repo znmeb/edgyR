@@ -9,6 +9,14 @@ then
   exit -20
 fi
 
+# check the image
+if [ "$IMAGE_NAME" != "ml" -a "$IMAGE_NAME" != "system" ]
+then
+  echo "The 'IMAGE_NAME' variable must equal either 'ml'"
+  echo "or 'system'."
+  exit -30
+fi
+
 # run L4T images only on Tegra host
 if [ `uname -r | grep tegra | wc -l` -le "0" -o `uname -m` != "aarch64" ]
 then
@@ -24,7 +32,7 @@ sudo docker run --detach \
   --env EDGYR_PASSWORD="$EDGYR_PASSWORD" \
   --network host --name edgyr --hostname edgyr \
   --runtime nvidia \
-  docker.io/znmeb/edgyr-ml:latest
+  "docker.io/znmeb/edgyr-$IMAGE_NAME:latest"
 
 sleep 5
 sudo docker ps

@@ -2,11 +2,6 @@
 
 set -e
 
-echo "Installing RStudio Server build dependencies"
-apt-get install -qqy --no-install-recommends \
-  ant \
-  cmake
-
 cd $SOURCE_DIR
 rm -fr rstudio*
 curl -Ls \
