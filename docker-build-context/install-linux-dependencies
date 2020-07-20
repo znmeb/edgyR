@@ -4,6 +4,7 @@ set -e
 
 echo "Installing Linux dependencies"
 apt-get update
+apt-get upgrade -y
 apt-get install -qqy --no-install-recommends \
   ant \
   bash-completion \
