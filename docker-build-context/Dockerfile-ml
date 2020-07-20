@@ -14,18 +14,21 @@ ENV EDGYR_LOGFILES=$EDGYR_HOME/Logfiles
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# shift to 'edgyr' account to install 'r-reticulate' virtual environment
-# and R library tools
+# copy scripts
+COPY --chown=edgyr:edgyr ml-installers $EDGYR_HOME/ml-installers
+
+# switch to 'edgyr' account to install 'r-reticulate' virtual environment
+# and R library packages
 USER edgyr
 WORKDIR $EDGYR_HOME
-RUN Installers/python-r-reticulate > $EDGYR_LOGFILES/python-r-reticulate.log 2>&1 \
+RUN ml-installers/python-r-reticulate > $EDGYR_LOGFILES/python-r-reticulate.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/python-r-reticulate.log
-RUN Installers/devtools.R > $EDGYR_LOGFILES/devtools.R.log 2>&1 \
+RUN ml-installers/devtools.R > $EDGYR_LOGFILES/devtools.R.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/devtools.R.log
 
 # switch back to 'root' for the rest
 USER root
 WORKDIR $SOURCE_DIR
 
-# copy scripts
-COPY --chown=edgyr:edgyr Scripts $EDGYR_HOME/Scripts
+# copy test scripts at the end
+COPY --chown=edgyr:edgyr ml-test-scripts $EDGYR_HOME/ml-test-scripts
