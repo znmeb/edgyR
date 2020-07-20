@@ -1,0 +1,65 @@
+FROM base
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
+ENV RSTUDIO_VERSION_MAJOR=1
+ENV RSTUDIO_VERSION_MINOR=3
+ENV RSTUDIO_VERSION_PATCH=959
+ENV SOURCE_DIR=/usr/local/src
+ENV EDGYR_HOME=/home/edgyr
+ENV PAPERSIZE=letter
+ENV PROJECT_HOME=$EDGYR_HOME/Projects
+ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# copy R files from binaries image
+COPY --from=binaries /usr/local/lib/R /usr/local/lib/R
+COPY --from=binaries /usr/local/share/man/man1 /usr/local/share/man/man1
+COPY --from=binaries /usr/local/bin /usr/local/bin
+COPY --from=binaries /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
+COPY --from=binaries /usr/local/lib/libRmath.a /usr/local/lib/
+COPY --from=binaries /usr/local/lib/libRmath.so /usr/local/lib/
+
+# rebuild linker cache
+COPY R.conf /etc/ld.so.conf.d/
+RUN /sbin/ldconfig --verbose > $SOURCE_DIR/ldconfig.log 2>&1 \
+  && gzip -9 $SOURCE_DIR/ldconfig.log
+
+# copy RStudio Server files from binaries image
+COPY --from=binaries /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
+
+# see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
+COPY rstudio-configure $SOURCE_DIR/
+COPY rserver.conf /etc/rstudio/
+RUN $SOURCE_DIR/rstudio-configure
+
+# create non-root user with 'sudo' privilege
+RUN useradd \
+  --shell /bin/bash \
+  --user-group \
+  --groups sudo \
+  --create-home \
+  --uid 1000 edgyr \
+  && echo "edgyr:edgyr" | chpasswd
+
+# populate 'edgyr' home
+COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
+COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
+COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
+COPY --chown=edgyr:edgyr edit-me-then-run-4-git-config.bash $PROJECT_HOME/
+
+# fetch build logs from binaries image
+COPY --from=binaries --chown=edgyr:edgyr \
+  $SOURCE_DIR/install-linux-dependencies.log.gz \
+  $SOURCE_DIR/install-julia.log.gz \
+  $SOURCE_DIR/install-site-packages.log.gz \
+  $SOURCE_DIR/install-r.log.gz \
+  $SOURCE_DIR/install-rstudio-server.log.gz \
+  $EDGYR_HOME/Logfiles
+
+RUN mkdir --parents $WORKON_HOME; chown -R edgyr:edgyr $EDGYR_HOME
+
+# set entry point
+COPY docker-entrypoint.sh /
+CMD [ "/docker-entrypoint.sh" ]

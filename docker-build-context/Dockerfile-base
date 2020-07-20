@@ -18,9 +18,13 @@ USER root
 WORKDIR $SOURCE_DIR/
 
 # install linux dependencies
-COPY install-linux-dependencies $SOURCE_DIR/
+COPY install-linux-dependencies install-julia install-site-packages $SOURCE_DIR/
 RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 \
   && gzip -9 install-linux-dependencies.log
+RUN $SOURCE_DIR/install-julia > install-julia.log 2>&1 \
+  && gzip -9 install-julia.log
+RUN $SOURCE_DIR/install-site-packages > install-site-packages.log 2>&1 \
+  && gzip -9 install-site-packages.log
 
 RUN locale-gen en_US.UTF-8 \
   && update-locale \

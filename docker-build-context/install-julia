@@ -1,0 +1,11 @@
+#! /bin/bash
+
+set -e
+
+echo ""
+echo "Installing 'julia'"
+curl -Ls \
+  https://julialang-s3.julialang.org/bin/linux/aarch64/1.4/julia-1.4.2-linux-aarch64.tar.gz \
+  | tar --strip-components=1 --directory=/usr/local -xzf -
+export JUPYTER=/usr/local/bin/jupyter
+/usr/local/bin/julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("CUDA")'
