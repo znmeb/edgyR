@@ -13,12 +13,10 @@ source $WORKON_HOME/r-reticulate/bin/activate
 alias make="make --jobs=`nproc`"
 
 echo ""
-echo "Installing 'SymPy'"
-pip install SymPy
-echo ""
-echo "Enabling R kernel in JupyterLab"
-Rscript -e \
-  "source('~/.Rprofile'); install.packages('IRkernel', quiet = TRUE); IRkernel::installspec()"
+echo "Installing 'TensorFlow 2'"
+pip install --upgrade --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow
+echo "Installing 'tensorflow-probability'"
+pip install --upgrade tensorflow-probability
 
 echo ""
 echo "Python packages in 'r-reticulate'"

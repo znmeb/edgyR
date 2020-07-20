@@ -48,7 +48,14 @@ RUN useradd \
 COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
 COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
 COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
-COPY --chown=edgyr:edgyr edit-me-then-run-4-git-config.bash $PROJECT_HOME/
+COPY --chown=edgyr:edgyr \
+  edit-me-then-run-4-git-config.bash \
+  start-jupyter-lab \
+  $PROJECT_HOME/
+
+# enable R kernel in JupyterLab
+RUN Rscript -e \
+  "source('~/.Rprofile'); install.packages('IRkernel', quiet = TRUE); IRkernel::installspec()"
 
 # fetch build logs from binaries image
 COPY --from=binaries --chown=edgyr:edgyr \

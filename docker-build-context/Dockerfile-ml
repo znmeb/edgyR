@@ -10,64 +10,18 @@ ENV EDGYR_HOME=/home/edgyr
 ENV PAPERSIZE=letter
 ENV PROJECT_HOME=$EDGYR_HOME/Projects
 ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
+ENV EDGYR_LOGFILES=$EDGYR_HOME/Logfiles
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# copy R files from binaries image
-COPY --from=binaries /usr/local/lib/R /usr/local/lib/R
-COPY --from=binaries /usr/local/share/man/man1 /usr/local/share/man/man1
-COPY --from=binaries /usr/local/bin /usr/local/bin
-COPY --from=binaries /usr/local/lib/pkgconfig /usr/local/lib/pkgconfig
-COPY --from=binaries /usr/local/lib/libRmath.a /usr/local/lib/
-COPY --from=binaries /usr/local/lib/libRmath.so /usr/local/lib/
-
-# rebuild linker cache
-COPY R.conf /etc/ld.so.conf.d/
-RUN /sbin/ldconfig --verbose > $SOURCE_DIR/ldconfig.log 2>&1 \
-  && gzip -9 $SOURCE_DIR/ldconfig.log
-
-# copy RStudio Server files from binaries image
-COPY --from=binaries /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
-
-# fetch build logs from binaries image
-COPY --from=binaries \
-  $SOURCE_DIR/install-r.log.gz \
-  $SOURCE_DIR/install-rstudio-server.log.gz \
-  $SOURCE_DIR/
-
-# configure RStudio Server
-# see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
-COPY rstudio-configure $SOURCE_DIR/
-COPY rserver.conf /etc/rstudio/
-RUN $SOURCE_DIR/rstudio-configure
-
-# create non-root user with 'sudo' privilege
-RUN useradd \
-  --shell /bin/bash \
-  --user-group \
-  --groups sudo \
-  --create-home \
-  --uid 1000 edgyr \
-  && echo "edgyr:edgyr" | chpasswd
-
-# populate 'edgyr' home
-COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
-COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
-COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
-COPY --chown=edgyr:edgyr Installers $EDGYR_HOME/Installers
-RUN cp $SOURCE_DIR/*.log.gz $EDGYR_HOME/Installers/
-RUN mkdir --parents $WORKON_HOME $PROJECT_HOME; chown -R edgyr:edgyr $EDGYR_HOME
-
 # shift to 'edgyr' account to install 'r-reticulate' virtual environment
-# and R developer tools
+# and R library tools
 USER edgyr
 WORKDIR $EDGYR_HOME
-RUN Installers/python-r-reticulate > Installers/python-r-reticulate.log 2>&1 \
-  && gzip -9 Installers/python-r-reticulate.log
-RUN Installers/python-tensorflow-2 > Installers/python-tensorflow-2.log 2>&1 \
-  && gzip -9 Installers/python-tensorflow-2.log
-RUN Installers/devtools.R > Installers/devtools.R.log 2>&1 \
-  && gzip -9 Installers/devtools.R.log
+RUN Installers/python-r-reticulate > $EDGYR_LOGFILES/python-r-reticulate.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/python-r-reticulate.log
+RUN Installers/devtools.R > $EDGYR_LOGFILES/devtools.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/devtools.R.log
 
 # switch back to 'root' for the rest
 USER root
@@ -75,7 +29,3 @@ WORKDIR $SOURCE_DIR
 
 # copy scripts
 COPY --chown=edgyr:edgyr Scripts $EDGYR_HOME/Scripts
-
-# set entry point
-COPY docker-entrypoint.sh /
-CMD [ "/docker-entrypoint.sh" ]

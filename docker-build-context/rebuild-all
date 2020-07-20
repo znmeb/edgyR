@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 echo "Pulling base images"
 sudo docker pull "nvcr.io/nvidia/l4t-base:r32.4.3"
 sudo docker pull "nvcr.io/nvidia/l4t-pytorch:r32.4.3-pth1.6-py3"
@@ -12,4 +14,6 @@ export DOCKER_REPO=znmeb
 /usr/bin/time ./build-binaries
 /usr/bin/time ./build-system
 sudo docker tag edgyr-system $DOCKER_REPO/edgyr-system
+/usr/bin/time ./build-ml
+sudo docker tag edgyr-ml $DOCKER_REPO/edgyr-ml
 sudo docker images
