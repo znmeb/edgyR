@@ -10,6 +10,7 @@ ENV EDGYR_HOME=/home/edgyr
 ENV PAPERSIZE=letter
 ENV PROJECT_HOME=$EDGYR_HOME/Projects
 ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
+ENV EDGYR_LOGFILES=$EDGYR_HOME/Logfiles
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -56,7 +57,7 @@ COPY --from=binaries --chown=edgyr:edgyr \
   $SOURCE_DIR/install-site-packages.log.gz \
   $SOURCE_DIR/install-r.log.gz \
   $SOURCE_DIR/install-rstudio-server.log.gz \
-  $EDGYR_HOME/Logfiles
+  $EDGYR_LOGFILES/
 
 RUN mkdir --parents $WORKON_HOME; chown -R edgyr:edgyr $EDGYR_HOME
 
