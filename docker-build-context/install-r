@@ -24,9 +24,6 @@ make --jobs=`nproc`
 make install
 popd
 
-echo "Checking"
-make check
-
 echo "Installing"
 make install
 cp ../R.conf /etc/ld.so.conf.d/
