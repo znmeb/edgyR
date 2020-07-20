@@ -11,6 +11,7 @@ sudo docker pull "nvcr.io/nvidia/l4t-tensorflow:r32.4.3-tf1.15-py3"
 echo "Building images"
 export DOCKER_REPO=znmeb
 /usr/bin/time ./build-base
+/usr/bin/time ./build-rsprep
 /usr/bin/time ./build-binaries
 /usr/bin/time ./build-system
 sudo docker tag edgyr-system $DOCKER_REPO/edgyr-system

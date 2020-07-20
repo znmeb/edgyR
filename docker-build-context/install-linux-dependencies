@@ -4,15 +4,14 @@ set -e
 
 echo "Installing Linux dependencies"
 apt-get update
-apt-get upgrade -y
 apt-get install -qqy --no-install-recommends \
-  ant \
   bash-completion \
   build-essential \
   bzip2 \
   ca-certificates \
   cmake \
   curl \
+  openjdk-8-jdk-headless \
   file \
   gfortran \
   git \
@@ -38,8 +37,6 @@ apt-get install -qqy --no-install-recommends \
   libxml2-dev \
   locales \
   lynx \
-  openjdk-8-jdk-headless \
-  openjdk-8-jre-headless \
   pandoc \
   pandoc-citeproc \
   pandoc-citeproc-preamble \

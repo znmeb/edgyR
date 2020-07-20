@@ -1,4 +1,4 @@
-FROM rsprep
+FROM base
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
@@ -14,8 +14,13 @@ ENV EDGYR_LOGFILES=$EDGYR_HOME/Logfiles
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# install RStudio Server
+# install R
+# see https://cloud.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
+COPY install-r R.conf prep-rstudio-server $SOURCE_DIR/
+RUN $SOURCE_DIR/install-r > install-r.log 2>&1 \
+  && gzip -9 install-r.log
+
+# prep RStudio Server
 # see https://rstudio.com/products/rstudio/download-server/other-platforms/
-COPY install-rstudio-server $SOURCE_DIR/
-RUN $SOURCE_DIR/install-rstudio-server #> install-rstudio-server.log 2>&1 \
-  #&& gzip -9 install-rstudio-server.log
+RUN $SOURCE_DIR/prep-rstudio-server > prep-rstudio-server.log 2>&1 \
+  && gzip -9 prep-rstudio-server.log

@@ -27,6 +27,10 @@ COPY R.conf /etc/ld.so.conf.d/
 RUN /sbin/ldconfig --verbose > $SOURCE_DIR/ldconfig.log 2>&1 \
   && gzip -9 $SOURCE_DIR/ldconfig.log
 
+# reconfigure R Java interface
+RUN R CMD javareconf > $SOURCE_DIR/r-java-reconf.log 2>&1 \
+  && gzip -9 $SOURCE_DIR/r-java-reconf.log
+
 # copy RStudio Server files from binaries image
 COPY --from=binaries /usr/local/lib/rstudio-server /usr/local/lib/rstudio-server
 

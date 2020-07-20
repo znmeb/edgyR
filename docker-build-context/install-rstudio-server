@@ -2,41 +2,9 @@
 
 set -e
 
-cd $SOURCE_DIR
-rm -fr rstudio*
-curl -Ls \
-  https://github.com/rstudio/rstudio/tarball/v$RSTUDIO_VERSION_MAJOR.$RSTUDIO_VERSION_MINOR.$RSTUDIO_VERSION_PATCH \
-  | tar xzf -
-mv rstudio-rstudio-* rstudio
-cd rstudio
-
-# Non-L4t Dependencies
-export PANDOC_VERSION=`pandoc --version|head -n 1|sed 's/^pandoc //'`
-echo "PANDOC_VERSION=$PANDOC_VERSION"
-
-pushd dependencies/common
-echo "Installing RStudio boost from source - may take a while"
-/usr/bin/time ./install-boost > $SOURCE_DIR/install-boost.log 2>&1
-echo "Installing dictionaries"
-./install-dictionaries > /dev/null 2>&1
-echo "Installing MathJax" 
-./install-mathjax > /dev/null 2>&1
-echo "Copying Pandoc binaries"
-mkdir -p pandoc/$PANDOC_VERSION/
-cp /usr/bin/pandoc* pandoc/$PANDOC_VERSION/
-popd
-
-echo "Testing R version"
-# R 4.0.0+ no longer uses the symbol 'R_Slave'. As a result, there will be an
-# error compiling RStudio for R more recent than 3.6.3. So if we have a newer
-# R we patch the source here.
-export R_VERSION_MAJOR=`R --version | head -n 1 | sed 's/^R version //' | sed 's/\..*$//'`
-echo "R_VERSION_MAJOR = $R_VERSION_MAJOR"
-if [ $R_VERSION_MAJOR -gt "3" ]
-then
-  echo "Patching RStudio source"
-  sed --in-place=.bak --expression='s/R_Slave/R_NoEcho/g' $SOURCE_DIR/rstudio/src/cpp/r/session/REmbeddedPosix.cpp
-fi
+apt-get update && apt-get install -qqy ant && apt-get clean
+update-alternatives --set java /usr/lib/jvm/java-8-openjdk-arm64/jre/bin/java
+ls -lAtr /etc/alternatives | grep java
 
 echo "CMake"
 mkdir --parents $SOURCE_DIR/rstudio/build/ && cd $SOURCE_DIR/rstudio/build/
