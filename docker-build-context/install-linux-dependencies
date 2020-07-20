@@ -39,6 +39,7 @@ apt-get install -qqy --no-install-recommends \
   locales \
   lynx \
   openjdk-8-jdk-headless \
+  openjdk-8-jre-headless \
   pandoc \
   pandoc-citeproc \
   pandoc-citeproc-preamble \
