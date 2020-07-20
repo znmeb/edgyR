@@ -57,6 +57,9 @@ COPY --chown=edgyr:edgyr \
 RUN Rscript -e \
   "source('~/.Rprofile'); install.packages('IRkernel', quiet = TRUE); IRkernel::installspec()"
 
+# enable Julia kernel
+RUN JUPYTER=/usr/local/bin/jupyter julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("CUDA")'
+
 # fetch build logs from binaries image
 COPY --from=binaries --chown=edgyr:edgyr \
   $SOURCE_DIR/install-linux-dependencies.log.gz \
