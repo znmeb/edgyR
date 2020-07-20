@@ -55,16 +55,11 @@ COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
 COPY --chown=edgyr:edgyr \
   edit-me-then-run-4-git-config.bash \
   start-jupyter-lab \
-  $PROJECT_HOME/
+  $EDGYR_HOME/
+COPY --chown=edgyr:edgyr system-installers $EDGYR_HOME/system-installers
+COPY --chown=edgyr:edgyr system-test-scripts $EDGYR_HOME/system-test-scripts
 
-# enable R kernel in JupyterLab
-RUN Rscript -e \
-  "source('~/.Rprofile'); install.packages('IRkernel', quiet = TRUE); IRkernel::installspec()"
-
-# enable Julia kernel
-RUN JUPYTER=/usr/local/bin/jupyter julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("CUDA")'
-
-# fetch build logs from binaries image
+# save system build logfiles
 COPY --from=binaries --chown=edgyr:edgyr \
   $SOURCE_DIR/install-linux-dependencies.log.gz \
   $SOURCE_DIR/install-julia.log.gz \
@@ -73,7 +68,26 @@ COPY --from=binaries --chown=edgyr:edgyr \
   $SOURCE_DIR/install-rstudio-server.log.gz \
   $EDGYR_LOGFILES/
 
-RUN mkdir --parents $WORKON_HOME; chown -R edgyr:edgyr $EDGYR_HOME
+RUN mkdir --parents $PROJECT_HOME $WORKON_HOME; chown -R edgyr:edgyr $EDGYR_HOME
+
+# switch to 'edgyr' account to enable R and Julia kernels
+USER edgyr
+WORKDIR $EDGYR_HOME
+
+# install R packages that interface with the system
+RUN system-installers/install-system-packages.R > $EDGYR_LOGFILES/install-system-packages.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/install-system-packages.R.log
+RUN system-test-scripts/test-system-packages.R > $EDGYR_LOGFILES/test-system-packages.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/test-system-packages.R.log
+
+# enable Julia kernel
+RUN JUPYTER=/usr/local/bin/jupyter julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("CUDA")' \
+  > $EDGYR_LOGFILES/julia-kernel.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/julia-kernel.log
+
+# switch back to 'root' for the rest
+USER root
+WORKDIR $SOURCE_DIR
 
 # set entry point
 COPY docker-entrypoint.sh /
