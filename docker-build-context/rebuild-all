@@ -20,7 +20,4 @@ export DOCKER_REPO=znmeb
 /usr/bin/time ./build-ml
 sudo docker tag edgyr-ml $DOCKER_REPO/edgyr-ml
 
-/usr/bin/time ./build-tf2
-sudo docker tag edgyr-tf2 $DOCKER_REPO/edgyr-tf2
-
 sudo docker images

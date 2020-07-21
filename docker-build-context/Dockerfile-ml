@@ -74,7 +74,7 @@ USER edgyr
 WORKDIR $EDGYR_HOME
 
 # install R packages that interface with the system
-RUN ml-installers/system-connect.R > $EDGYR_LOGFILES/system-connect.R.log 2>&1 \
+RUN installers/system-connect.R > $EDGYR_LOGFILES/system-connect.R.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/system-connect.R.log
 
 # enable Julia kernel
