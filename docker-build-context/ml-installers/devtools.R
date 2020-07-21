@@ -18,9 +18,6 @@ print("")
 print("Installing developer tools")
 install.packages(c(
   "devtools",
-  "DiagrammeR",
-  "greta",
-  "igraph",
   "knitr",
   "miniUI",
   "pkgdown",
