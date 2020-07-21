@@ -14,19 +14,13 @@ ENV EDGYR_LOGFILES=$EDGYR_HOME/Logfiles
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# copy scripts
-COPY --chown=edgyr:edgyr tf2-installers $EDGYR_HOME/tf2-installers
-
 # switch to 'edgyr' account to install 'tensorflow-2' virtual environment
 # and R library packages
 USER edgyr
 WORKDIR $EDGYR_HOME
-RUN tf2-installers/python-tensorflow-2 > $EDGYR_LOGFILES/python-tensorflow-2.log 2>&1 \
+RUN installers/python-tensorflow-2 > $EDGYR_LOGFILES/python-tensorflow-2.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/python-tensorflow-2.log
 
-# switch back to 'root' for the rest
+# switch back to 'root'
 USER root
 WORKDIR $SOURCE_DIR
-
-# copy test scripts at the end
-COPY --chown=edgyr:edgyr tf2-test-scripts $EDGYR_HOME/tf2-test-scripts

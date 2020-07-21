@@ -56,7 +56,7 @@ COPY --chown=edgyr:edgyr \
   edit-me-then-run-4-git-config.bash \
   start-jupyter-lab \
   $EDGYR_HOME/
-COPY --chown=edgyr:edgyr ml-installers $EDGYR_HOME/ml-installers
+COPY --chown=edgyr:edgyr installers $EDGYR_HOME/installers
 
 # save system build logfiles
 COPY --from=binaries --chown=edgyr:edgyr \
@@ -74,8 +74,8 @@ USER edgyr
 WORKDIR $EDGYR_HOME
 
 # install R packages that interface with the system
-RUN ml-installers/install-ml-packages.R > $EDGYR_LOGFILES/install-ml-packages.R.log 2>&1 \
-  && gzip -9 $EDGYR_LOGFILES/install-ml-packages.R.log
+RUN ml-installers/system-connect.R > $EDGYR_LOGFILES/system-connect.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/system-connect.R.log
 
 # enable Julia kernel
 RUN JUPYTER=/usr/local/bin/jupyter julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("CUDA")' \
@@ -91,4 +91,4 @@ COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
 
 # copy test scripts at the end
-COPY --chown=edgyr:edgyr ml-test-scripts $EDGYR_HOME/ml-test-scripts
+COPY --chown=edgyr:edgyr test-scripts $EDGYR_HOME/test-scripts
