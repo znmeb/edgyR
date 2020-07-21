@@ -11,11 +11,16 @@ Description: `edgyR` is a collection of utilities
 License: AGPL-3 + file LICENSE
 Suggests:
     devtools,
+    DiagrammeR,
+    greta,
+    igraph,
     knitr,
     miniUI,
     pkgdown,
     tibble,
-    rmarkdown
+    tinytex,
+    rmarkdown,
+    rprojroot
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
