@@ -23,8 +23,6 @@ USER edgyr
 WORKDIR $EDGYR_HOME
 RUN tf2-installers/python-tensorflow-2 > $EDGYR_LOGFILES/python-tensorflow-2.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/python-tensorflow-2.log
-RUN tf2-installers/devtools.R > $EDGYR_LOGFILES/devtools.R.log 2>&1 \
-  && gzip -9 $EDGYR_LOGFILES/devtools.R.log
 
 # switch back to 'root' for the rest
 USER root
