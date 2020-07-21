@@ -1,4 +1,4 @@
-FROM base
+FROM edgyr-system
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
