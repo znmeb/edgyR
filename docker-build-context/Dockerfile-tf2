@@ -1,0 +1,34 @@
+FROM edgyr-system
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
+ENV RSTUDIO_VERSION_MAJOR=1
+ENV RSTUDIO_VERSION_MINOR=3
+ENV RSTUDIO_VERSION_PATCH=1056
+ENV SOURCE_DIR=/usr/local/src
+ENV EDGYR_HOME=/home/edgyr
+ENV PAPERSIZE=letter
+ENV PROJECT_HOME=$EDGYR_HOME/Projects
+ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
+ENV EDGYR_LOGFILES=$EDGYR_HOME/Logfiles
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# copy scripts
+COPY --chown=edgyr:edgyr tf2-installers $EDGYR_HOME/tf2-installers
+
+# switch to 'edgyr' account to install 'tensorflow-2' virtual environment
+# and R library packages
+USER edgyr
+WORKDIR $EDGYR_HOME
+RUN tf2-installers/python-tensorflow-2 > $EDGYR_LOGFILES/python-tensorflow-2.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/python-tensorflow-2.log
+RUN tf2-installers/devtools.R > $EDGYR_LOGFILES/devtools.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/devtools.R.log
+
+# switch back to 'root' for the rest
+USER root
+WORKDIR $SOURCE_DIR
+
+# copy test scripts at the end
+COPY --chown=edgyr:edgyr tf2-test-scripts $EDGYR_HOME/tf2-test-scripts

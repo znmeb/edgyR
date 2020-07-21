@@ -1,6 +1,0 @@
-#! /bin/bash
-
-set -e
-
-echo "Building the 'edgyr-system' image"
-./build-image.bash "edgyr-system" "Dockerfile-system"

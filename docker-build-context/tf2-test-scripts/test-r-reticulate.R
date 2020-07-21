@@ -1,9 +1,9 @@
 #! /usr/bin/env Rscript
 
 print("")
-print("Initializing 'r-reticulate'")
-reticulate::use_python("~/.virtualenvs/r-reticulate/bin/python3", required = TRUE)
-reticulate::use_virtualenv("r-reticulate", required = TRUE)
+print("Initializing 'tensorflow-2'")
+reticulate::use_python("~/.virtualenvs/tensorflow-2/bin/python3", required = TRUE)
+reticulate::use_virtualenv("tensorflow-2", required = TRUE)
 print(reticulate::py_config())
 print("")
 print("Is 'keras' available?")
