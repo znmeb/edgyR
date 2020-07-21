@@ -11,6 +11,29 @@ mkdir --parents $SOURCE_DIR/rstudio/build/ && cd $SOURCE_DIR/rstudio/build/
 cmake .. \
   -DRSTUDIO_TARGET=Server -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_SOURCE_GENERATOR=TGZ
 
+# The C/C++ builds and the Java "gwt_build" appear to be competing for cores
+# and RAM. And the Java one doesn't seem to remember that it's been done.
+# So we run the C/C++ ones first, then do a "make install" to clean up
+# and stragglers and do the "gwt_build".
+
+echo "Building the C/C++ components"
+make --jobs=`nproc` rstudio-core-synctex
+make --jobs=`nproc` rstudio-core-hunspell
+make --jobs=`nproc` rstudio-shared-core
+make --jobs=`nproc` rstudio-shared-core-tests
+make --jobs=`nproc` rstudio-core
+make --jobs=`nproc` rstudio-session-workers
+make --jobs=`nproc` crash-handler-proxy
+make --jobs=`nproc` rstudio-monitor
+make --jobs=`nproc` rstudio-server-core
+make --jobs=`nproc` rstudio-core-tests
+make --jobs=`nproc` rstudio-server-core-tests
+make --jobs=`nproc` rserver-pam
+make --jobs=`nproc` rpostback
+make --jobs=`nproc` rstudio-r
+make --jobs=`nproc` rserver
+make --jobs=`nproc` rsession
+
 echo "Installing"
 
 # The Nano only has 4 GB of RAM. As a result, the Java builds swamp the available
@@ -26,4 +49,4 @@ else
   export JOBS=2
 fi
 echo "RAM_KILOBYTES = $RAM_KILOBYTES; 'make' will use $JOBS jobs."
-/usr/bin/time make --jobs=$JOBS install
+make --jobs=$JOBS install
