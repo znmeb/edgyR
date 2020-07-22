@@ -74,14 +74,18 @@ RUN mkdir --parents $PROJECT_HOME $WORKON_HOME; chown -R edgyr:edgyr $EDGYR_HOME
 USER edgyr
 WORKDIR $EDGYR_HOME
 
-# install R packages that interface with the system
-RUN already-installed/system-connect.R > $EDGYR_LOGFILES/system-connect.R.log 2>&1 \
-  && gzip -9 $EDGYR_LOGFILES/system-connect.R.log
-
 # enable Julia kernel
 RUN JUPYTER=/usr/local/bin/jupyter julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("CUDA")' \
   > $EDGYR_LOGFILES/julia-kernel.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/julia-kernel.log
+
+# install R packages that interface with the system
+RUN already-installed/system-connect.R > $EDGYR_LOGFILES/system-connect.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/system-connect.R.log
+
+# install developer tools
+RUN already-installed/devtools.R > $EDGYR_LOGFILES/devtools.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/devtools.R.log
 
 # switch back to 'root' for the rest
 USER root
