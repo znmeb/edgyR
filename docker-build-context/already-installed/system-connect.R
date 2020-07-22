@@ -10,6 +10,7 @@ print("Installing new packages")
 install.packages(c(
   "caracas",
   "data.table",
+  "greta",
   "IRkernel",
   "keras",
   "rTorch"
