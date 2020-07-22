@@ -57,6 +57,7 @@ COPY --chown=edgyr:edgyr \
   start-jupyter-lab \
   $EDGYR_HOME/
 COPY --chown=edgyr:edgyr installers $EDGYR_HOME/installers
+COPY --chown=edgyr:edgyr already-installed $EDGYR_HOME/already-installed
 
 # save system build logfiles
 COPY --from=binaries --chown=edgyr:edgyr \
@@ -74,7 +75,7 @@ USER edgyr
 WORKDIR $EDGYR_HOME
 
 # install R packages that interface with the system
-RUN installers/system-connect.R > $EDGYR_LOGFILES/system-connect.R.log 2>&1 \
+RUN already-installed/system-connect.R > $EDGYR_LOGFILES/system-connect.R.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/system-connect.R.log
 
 # enable Julia kernel
