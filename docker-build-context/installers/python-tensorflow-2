@@ -10,16 +10,18 @@ echo ""
 echo "Creating virtualenv 'tensorflow-2'"
 virtualenv --system-site-packages --python=/usr/bin/python3 $WORKON_HOME/tensorflow-2
 source $WORKON_HOME/tensorflow-2/bin/activate
-alias make="make --jobs=`nproc`"
+alias make="/usr/bin/make --jobs=`nproc`"
 
 echo ""
 echo "Installing 'TensorFlow 2'"
-pip install --upgrade \
+pip install \
   --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 \
-  tensorflow
+  'tensorflow > 1.99'
 echo "Installing 'tensorflow-probability'"
-pip install --upgrade tensorflow-probability
+pip install tensorflow-probability
 
 echo ""
 echo "Python packages in 'tensorflow-2'"
 pip list
+
+$HOME/test-scripts/test-tensorflow-2.R
