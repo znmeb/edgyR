@@ -14,7 +14,7 @@ cd edgyR
 echo "Checking out the 'staging' branch"
 git checkout staging
 echo "Installing 'devtools'"
-installers/devtools.R
+$HOME/installers/devtools.R
 echo "Installing 'edgyR' and its suggested dependencies"
 echo "with 'devtools::install'"
 Rscript -e "devtools::install(dependencies = TRUE, quiet = TRUE)"
