@@ -22,6 +22,8 @@ install.packages(c(
   "miniUI",
   "pkgdown",
   "rmarkdown",
-  "rprojroot"
+  "rprojroot",
+  "shiny",
+  "tidyverse"
 ), quiet = TRUE)
 warnings()
