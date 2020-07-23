@@ -56,7 +56,6 @@ COPY --chown=edgyr:edgyr \
   edit-me-then-run-4-git-config.bash \
   start-jupyter-lab \
   $EDGYR_HOME/
-COPY --chown=edgyr:edgyr installers $EDGYR_HOME/installers
 COPY --chown=edgyr:edgyr already-installed $EDGYR_HOME/already-installed
 
 # save system build logfiles
@@ -95,5 +94,6 @@ WORKDIR $SOURCE_DIR
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
 
-# copy test scripts at the end
+# copy installers test scripts at the end
+COPY --chown=edgyr:edgyr installers $EDGYR_HOME/installers
 COPY --chown=edgyr:edgyr test-scripts $EDGYR_HOME/test-scripts
