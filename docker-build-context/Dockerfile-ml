@@ -69,7 +69,7 @@ COPY --from=binaries --chown=edgyr:edgyr \
 
 RUN mkdir --parents $PROJECT_HOME $WORKON_HOME; chown -R edgyr:edgyr $EDGYR_HOME
 
-# switch to 'edgyr' account to enable R and Julia kernels
+# switch to 'edgyr' account to enable Julia kernel and install R packages
 USER edgyr
 WORKDIR $EDGYR_HOME
 
@@ -94,6 +94,6 @@ WORKDIR $SOURCE_DIR
 COPY docker-entrypoint.sh /
 CMD [ "/docker-entrypoint.sh" ]
 
-# copy installers test scripts at the end
+# copy installers and test scripts at the end
 COPY --chown=edgyr:edgyr installers $EDGYR_HOME/installers
 COPY --chown=edgyr:edgyr test-scripts $EDGYR_HOME/test-scripts
