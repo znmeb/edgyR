@@ -5,6 +5,7 @@ set -e
 echo "Installing Linux dependencies"
 apt-get update
 apt-get upgrade -y
+apt-get autoremove --purge -y
 apt-get install -qqy --no-install-recommends \
   bash-completion \
   build-essential \
