@@ -1,6 +1,6 @@
 Package: edgyR
 Title: edgyR: R on the Edge -- NVIDIAⓇ Jetson™ tools for R developers
-Version: 0.5.0
+Version: 0.5.9.9999
 Authors@R: 
     person(given = "M. Edward (Ed)",
            family = "Borasky",
@@ -10,17 +10,26 @@ Description: `edgyR` is a collection of utilities
     for using R on NVIDIA Jetson development kits.
 License: AGPL-3 + file LICENSE
 Suggests:
+    caracas,
+    data.table,
     devtools,
     DiagrammeR,
+    DT,
     greta,
     igraph,
+    IRkernel,
+    keras,
     knitr,
     miniUI,
     pkgdown,
-    tibble,
-    tinytex,
+    reticulate,
     rmarkdown,
-    rprojroot
+    rprojroot,
+    rTorch,
+    shiny,
+    tibble,
+    tidyverse,
+    tinytex
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
