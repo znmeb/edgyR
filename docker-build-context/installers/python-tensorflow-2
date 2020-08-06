@@ -15,11 +15,11 @@ alias make="/usr/bin/make --jobs=`nproc`"
 
 echo ""
 echo "Installing 'TensorFlow 2'"
-pip install \
+/usr/bin/time pip install \
   --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 \
   'tensorflow > 1.99'
 echo "Installing 'tensorflow-probability'"
-pip install 'tensorflow-probability<0.11'
+/usr/bin/time pip install 'tensorflow-probability<0.11'
 
 echo ""
 echo "Python packages in 'tensorflow-2'"
