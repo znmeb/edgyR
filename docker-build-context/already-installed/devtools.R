@@ -18,6 +18,7 @@ print("")
 print("Installing developer tools")
 install.packages(c(
   "devtools",
+  "DT",
   "knitr",
   "miniUI",
   "pkgdown",
