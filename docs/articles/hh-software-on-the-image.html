@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.9.9999</span>
       </span>
     </div>
 
@@ -116,25 +116,99 @@
 <div id="python-data-science-machine-learning" class="section level3">
 <h3 class="hasAnchor">
 <a href="#python-data-science-machine-learning" class="anchor"></a>Python data science / machine learning</h3>
-<p>The base <code>l4t-ml</code> image also contains a complete Python 3 data science / machine learning stack:</p>
-<ul>
-<li>jupyterlab 2.1.1</li>
-<li>jupyterlab-server 1.1.1</li>
-<li>Keras-Applications 1.0.8</li>
-<li>Keras-Preprocessing 1.0.5</li>
-<li>matplotlib 2.1.1</li>
-<li>numpy 1.18.3</li>
-<li>onnx 1.6.0</li>
-<li>pandas 1.0.3</li>
-<li>pycuda 2019.1.2</li>
-<li>scikit-learn 0.22.2.post1</li>
-<li>scipy 1.4.1</li>
-<li>tensorboard 1.15.0</li>
-<li>tensorflow 1.15.2+nv</li>
-<li>tensorflow-estimator 1.15.1</li>
-<li>torch 1.5.0</li>
-<li>torchvision 0.6.0a0+b68adcf</li>
-</ul>
+<p>The base <code>l4t-ml</code> image contains a complete Python 3 data science / machine learning stack. <code>edgyr</code> adds the <code>virtualenv</code> environment manager, the <code>SymPy</code> computer algebra package and the <code>tensorflow-probability</code> probabilistic programming package.</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Package</th>
+<th align="left">Version</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">jupyterlab</td>
+<td align="left">2.1.5</td>
+</tr>
+<tr class="even">
+<td align="left">jupyterlab-server</td>
+<td align="left">1.1.5</td>
+</tr>
+<tr class="odd">
+<td align="left">Keras-Applications</td>
+<td align="left">1.0.8</td>
+</tr>
+<tr class="even">
+<td align="left">Keras-Preprocessing</td>
+<td align="left">1.0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">matplotlib</td>
+<td align="left">2.1.1</td>
+</tr>
+<tr class="even">
+<td align="left">numba</td>
+<td align="left">0.50.0</td>
+</tr>
+<tr class="odd">
+<td align="left">numpy</td>
+<td align="left">1.19.0</td>
+</tr>
+<tr class="even">
+<td align="left">onnx</td>
+<td align="left">1.7.0</td>
+</tr>
+<tr class="odd">
+<td align="left">pandas</td>
+<td align="left">1.0.5</td>
+</tr>
+<tr class="even">
+<td align="left">pycuda</td>
+<td align="left">2019.1.2</td>
+</tr>
+<tr class="odd">
+<td align="left">scikit-learn</td>
+<td align="left">0.23.1</td>
+</tr>
+<tr class="even">
+<td align="left">scipy</td>
+<td align="left">1.5.0</td>
+</tr>
+<tr class="odd">
+<td align="left">sympy</td>
+<td align="left">1.6.1</td>
+</tr>
+<tr class="even">
+<td align="left">tensorboard</td>
+<td align="left">1.15.0</td>
+</tr>
+<tr class="odd">
+<td align="left">tensorflow</td>
+<td align="left">1.15.2+nv20.6</td>
+</tr>
+<tr class="even">
+<td align="left">tensorflow-estimator</td>
+<td align="left">1.15.1</td>
+</tr>
+<tr class="odd">
+<td align="left">tensorflow-probability</td>
+<td align="left">0.8.0</td>
+</tr>
+<tr class="even">
+<td align="left">torch</td>
+<td align="left">1.6.0</td>
+</tr>
+<tr class="odd">
+<td align="left">torchaudio</td>
+<td align="left">0.6.0a0+d6f81d1</td>
+</tr>
+<tr class="even">
+<td align="left">torchvision</td>
+<td align="left">0.7.0a0+6631b74</td>
+</tr>
+<tr class="odd">
+<td align="left">virtualenv</td>
+<td align="left">15.1.0</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="added-linux-packages" class="section level2">
@@ -153,21 +227,24 @@
 <li>virtualenvwrapper (Python virtual environment handling)</li>
 </ul>
 </div>
+<div id="julia" class="section level2">
+<h2 class="hasAnchor">
+<a href="#julia" class="anchor"></a>Julia</h2>
+<p><code>edgyr-ml</code> includes Julia 1.5.0<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> installed from the Julia project download page. The <code>IJulia</code> Jupyter kernel<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> and the <code>CUDA.jl</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> GPU interface package are also included. <em>Note that at present there are no tests that the Jetson GPU is accessible from Julia</em> - see issue <a href="https://github.com/znmeb/edgyR/issues/30" class="uri">https://github.com/znmeb/edgyR/issues/30</a>.</p>
+</div>
 <div id="r-and-rstudio-from-source" class="section level2">
 <h2 class="hasAnchor">
 <a href="#r-and-rstudio-from-source" class="anchor"></a>R and RStudio from source</h2>
-<p><code>edgyr-ml</code> includes R 4.0.2 and RStudio Server 1.3.959 compiled from source. The compressed logfiles from the builds are on the image in <code>/usr/local/src/install-r.log.gz</code> and <code>/usr/local/src/install-rstudio-server.log.gz</code>.</p>
+<p><code>edgyr-ml</code> includes R 4.0.2 and RStudio Server 1.3.1056 compiled from source. The compressed log files from all builds are on the image in <code>/home/edgyr/logfiles/</code>.</p>
 </div>
 <div id="the-edgyr-user" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-edgyr-user" class="anchor"></a>The <code>edgyr</code> user</h2>
-<p>Once the Linux layers are complete and RStudio Server is configured, the build process adds a non-root user <code>edgyr</code> with main group <code>edgyr</code> and <code>sudo</code> privileges. This is standard practice for services built on Ubuntu Linux.</p>
-<div id="virtualenv-virtualenvwrapper-reticulate" class="section level3">
+<p>Once the Linux layers are complete and RStudio Server is configured, the build process adds a non-root user <code>edgyr</code> with main group <code>edgyr</code> and <code>sudo</code> privileges. This is standard practice for servers built on Ubuntu Linux.</p>
+<div id="reticulate-virtualenv-virtualenvwrapper" class="section level3">
 <h3 class="hasAnchor">
-<a href="#virtualenv-virtualenvwrapper-reticulate" class="anchor"></a>Virtualenv / virtualenvwrapper / reticulate</h3>
-<p>The R Python interface library <code>reticulate</code><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> can use and manage Python virtual environments.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> The default Python virtual environment for <code>reticulate</code> is called <code>r-reticulate</code>.</p>
-<p>The build process creates this virtual environment and populates it using the <code>--system-site-packages</code> option. This links the Python packages on the NVIDIA image into the virtual environment. Then it adds the Python package <code>SymPy</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> for symbolic mathematics. See the script <code>Installers/python-venv</code> on the image for the details.</p>
-<p><code>edgyr-ml</code> also includes <code>virtualenvwrapper</code>,<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> a command line tool for managing Python virtual environments.</p>
+<a href="#reticulate-virtualenv-virtualenvwrapper" class="anchor"></a>Reticulate / virtualenv / virtualenvwrapper</h3>
+<p><code>edgyr-ml</code> includes the R Python interface library <code>reticulate</code>.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> By default, <code>reticulate</code> uses <code>virtualenv</code><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> to manage Python virtual environments.<code>edgyr-ml</code> also includes <code>virtualenvwrapper</code>,<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> a command line tool for managing Python virtual environments.</p>
 </div>
 <div id="r-packages" class="section level3">
 <h3 class="hasAnchor">
@@ -177,15 +254,21 @@
 <li>caracas (symbolic mathematics - uses <code>SymPy</code>)</li>
 <li>data.table (fast data wrangling tool)</li>
 <li>devtools (package development)</li>
+<li>DiagrammeR (create and edit diagrams)</li>
+<li>DT (display tables)</li>
+<li>greta (probabilistic programming)</li>
+<li>igraph (graph theoretic computing)</li>
+<li>IRkernel (Jupyter R kernel)</li>
 <li>keras (interface to Keras / TensorFlow)</li>
 <li>knitr (R Markdown)</li>
 <li>miniUI (required by <code>pkgdown</code> rebuild addin, imports <code>shiny</code> as a bonus!)</li>
 <li>pkgdown (package site builder)</li>
 <li>rmarkdown (R Markdown)</li>
 <li>rTorch (interface to PyTorch)</li>
+<li>tidyverse (R data science stack)</li>
 <li>tinytex (LaTeX / PDF generation)</li>
 </ul>
-<p>Some notes about <code>tinytex</code>:<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> it’s installed, and it works. The full TeXLive LaTeX on an Ubuntu distribution is something like 4 gigabytes, and the image is already almost 7 gigabytes, so this is a big deal.</p>
+<p>Some notes about <code>tinytex</code>:<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> it’s installed, and it works. The full TeXLive LaTeX on an Ubuntu distribution is something like 4 gigabytes, and the image is already almost 7 gigabytes, so this is a big deal.</p>
 <p>The tradeoff is that if you use a LaTeX package that isn’t already there, <code>tinytex</code> will pause and download it before continuing. This takes some time, but it only happens once.</p>
 </div>
 </div>
@@ -203,9 +286,6 @@
 </div>
 <div id="ref-NVIDIA2019d">
 <p>“Machine Learning for Jetson/L4t.” 2019. <a href="https://ngc.nvidia.com/catalog/containers/nvidia:l4t-ml">https://ngc.nvidia.com/catalog/containers/nvidia:l4t-ml</a>.</p>
-</div>
-<div id="ref-sympy2020">
-<p>“SymPy.” 2020. <a href="https://www.sympy.org/en/index.html">https://www.sympy.org/en/index.html</a>.</p>
 </div>
 <div id="ref-Ushey2020">
 <p>Ushey, Kevin, JJ Allaire, and Yuan Tang. 2020. <em>Reticulate: Interface to ’Python’</em>. <a href="https://CRAN.R-project.org/package=reticulate">https://CRAN.R-project.org/package=reticulate</a>.</p>
@@ -226,11 +306,13 @@
 <ol>
 <li id="fn1"><p><span class="citation">(“Machine Learning for Jetson/L4t” 2019)</span><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p><span class="citation">(“L4T | Nvidia Developer” 2020)</span><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><span class="citation">Ushey, Allaire, and Tang (2020)</span><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p><span class="citation">(“Virtualenv” 2020)</span><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p><span class="citation">(“SymPy” 2020)</span><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p><span class="citation">(“Virtualenvwrapper” 2020)</span><a href="#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p><span class="citation">Xie (2019)</span><a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>julia2020<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>ijulia2020<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>cudajl2020<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p><span class="citation">Ushey, Allaire, and Tang (2020)</span><a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p><span class="citation">(“Virtualenv” 2020)</span><a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p><span class="citation">(“Virtualenvwrapper” 2020)</span><a href="#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p><span class="citation">Xie (2019)</span><a href="#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
