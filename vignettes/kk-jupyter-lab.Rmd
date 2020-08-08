@@ -19,11 +19,10 @@ knitr::opts_chunk$set(
 
 The `edgyr-ml` image inherits JupyterLab ^[@jupyterlab2020] from the NVIDIA
 `l4t-ml` image. ^[@NVIDIA2019d] As a result, all that necessary to use
-JupyterLab is to add the code to use R kernels in JupyterLab and add a script to
-start up the service.
-
-The `IRkernel` package ^[@Kluyver2019] provides the R kernel interface code. And
-the startup script is in `/home/edgyr/Scripts/start-jupyter-lab`.
+JupyterLab is to add the Julia and R kernels a script to start up the service.
+The `IJulia` package ^[ijulia2020] provides the Julia kernel and the `IRkernel`
+package ^[@Kluyver2019] provides the R kernel. The startup script is
+`/home/edgyr/Scripts/start-jupyter-lab`.
 
 1. Browse to the RStudio Server either from the host console or remotely and
 open the 'Terminal' pane.

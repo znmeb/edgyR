@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.9.9999</span>
       </span>
     </div>
 
@@ -107,8 +107,7 @@
 <div id="starting-jupyterlab" class="section level2">
 <h2 class="hasAnchor">
 <a href="#starting-jupyterlab" class="anchor"></a>Starting JupyterLab</h2>
-<p>The <code>edgyr-ml</code> image inherits JupyterLab<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> from the NVIDIA <code>l4t-ml</code> image.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> As a result, all that necessary to use JupyterLab is to add the code to use R kernels in JupyterLab and add a script to start up the service.</p>
-<p>The <code>IRkernel</code> package<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> provides the R kernel interface code. And the startup script is in <code>/home/edgyr/Scripts/start-jupyter-lab</code>.</p>
+<p>The <code>edgyr-ml</code> image inherits JupyterLab<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> from the NVIDIA <code>l4t-ml</code> image.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> As a result, all that necessary to use JupyterLab is to add the Julia and R kernels a script to start up the service. The <code>IJulia</code> package<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> provides the Julia kernel and the <code>IRkernel</code> package<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> provides the R kernel. The startup script is <code>/home/edgyr/Scripts/start-jupyter-lab</code>.</p>
 <ol style="list-style-type: decimal">
 <li>Browse to the RStudio Server either from the host console or remotely and open the ‘Terminal’ pane.</li>
 <li>Type <code>Scripts/start-jupyter-lab</code>. You’ll see</li>
@@ -145,7 +144,8 @@
 <ol>
 <li id="fn1"><p><span class="citation">(“JupyterLab Documentation” 2020)</span><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p><span class="citation">(“Machine Learning for Jetson/L4t” 2019)</span><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><span class="citation">Kluyver et al. (2019)</span><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>ijulia2020<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><span class="citation">Kluyver et al. (2019)</span><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>

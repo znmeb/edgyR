@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">edgyR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.9.9999</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@ CONTAINER ID        IMAGE                   COMMAND                  CREATED    
 fc04e5d9edbf        znmeb/edgyr-ml:latest   "/docker-entrypoint.…"   6 seconds ago       Up 5 seconds                            edgyr
 Resetting 'edgyr' password
 Starting RStudio Server - browse to port 7878 on Docker host</code></pre>
-<p>The long hexadecimal string and container ID will be different on your system, but the rest should look like what’s above.</p>
+<p>The long hexadecimal string and container ID will be different on your system, but the rest should look like what’s above. Note that port <code>7878</code> is <strong><em>not</em></strong> the default RStudio Server port!</p>
 <p>This script runs the <code>edgyr</code> container in <em>detached</em> mode. The processes in the container are running in the background, and you can use the terminal for other operations.</p>
 </li>
 </ol>
@@ -175,21 +175,9 @@ Starting RStudio Server - browse to port 7878 on Docker host</code></pre>
 <p>The <code>Files</code> pane shows some of the extras that are installed on the image and are available to you in the container.</p>
 <p><img src="Screenshot_2020-07-12_RStudio_Server_Files.png" width="100%"></p>
 <hr>
-<p><code>.Renviron</code> and <code>.Rprofile</code> are the standard environment setting files; remember to restart your <code>R</code> session if you change them. <code>bin</code> is the directory where <code>TinyTeX</code> installed its executables when the image build process installed <code>TinyTeX</code>.</p>
-<p>The scripts that installed the <code>r-reticulate</code> Python virutal environment and the R packages on the image are in <code>Installers</code>. They’ve already been run; you don’t need to run them. The log files from those installs are there as well; <code>gunzip</code> them if you want to look at them.</p>
-<p><code>Projects</code> is an empty folder for you to store your projects. And <code>Scripts</code> has some scripts you can run and use as examples:</p>
-<pre><code>edgyr@edgyr:~$ tree Scripts
-Scripts
-├── edit-me-then-run-4-git-config.bash
-├── start-jupyter-lab
-├── test-package-install
-└── test-r-reticulate.R
-
-0 directories, 4 files
-edgyr@edgyr:~$ </code></pre>
-<p><code>edit-me-then-run-4-git-config.bash</code> is a script you can edit and run to set your <code>git</code> configuration. If you’re going to use <code>git</code>, you’ll need to edit and then run it. <code>start-jupyter-lab</code> starts a JupyterLab server; there is an entire vignette devoted to JupyterLab in <code><a href="../articles/kk-jupyter-lab.html">vignette("kk-jupyter-lab")</a></code>.</p>
-<p><code>test-package-install</code> clones the <code>edgyR</code> git repository into <code>Projects</code>, then installs the <code>edgyR</code> R package and its suggested dependencies with <code><a href="https://rdrr.io/pkg/devtools/man/install.html">devtools::install</a></code>, documents it with <code><a href="https://rdrr.io/pkg/devtools/man/document.html">devtools::document</a></code> and checks it with <code><a href="https://rdrr.io/pkg/devtools/man/check.html">devtools::check</a></code>. Then it rebuilds the <code>pkgdown</code> site. This exercises the main intended functionality of <code>edgyR</code>, which is providing an R package development environment for Jetson development kits.</p>
-<p><code>test-r-reticulate</code> tests that R can access the <code>r-reticulate</code> Python virtual environment, that <code>keras</code> is available, and that the <code>caracas</code> R package and its Python library <code>SymPy</code> work.</p>
+<p><code>.Renviron</code> and <code>.Rprofile</code> are the standard environment setting files; remember to restart your <code>R</code> session if you change them. <code>already-installed</code> contains the scripts that installed the R packages on the image; you don’t need to run them. <code>bin</code> is the directory where <code>TinyTeX</code> installed its executables.</p>
+<p><code>edit-me-then-run-4-git-config.bash</code> is a script you can edit and run to set your <code>git</code> configuration. If you’re going to use <code>git</code>, you’ll need to edit and then run it. <code>installers</code> contains scripts you can run to install add-ons. Currently the only available add-on is TensorFlow 2. <code>logfiles</code> contains compressed log files from all the software installs; <code>gunzip</code> them if you want to look at them.</p>
+<p><code>Projects</code> is an empty folder for you to store your projects. <code>start-jupyter-lab</code> starts a JupyterLab server; there is an entire vignette devoted to JupyterLab in <code><a href="../articles/kk-jupyter-lab.html">vignette("kk-jupyter-lab")</a></code>. <code>test-scripts</code> has some scripts you can run and use as examples.</p>
 </div>
 <div id="logging-in-to-the-command-line" class="section level3">
 <h3 class="hasAnchor">
@@ -201,7 +189,7 @@ See "man sudo_root" for details.
 
 edgyr@edgyr:~$ </code></pre>
 <p>Note that you <em>will</em> need the <code>edgyr</code> password if you use <code>sudo</code> when logged in as <code>edgyr</code>.</p>
-<p>What can you do at the command line? Pretty much anything you can do with <code>bash</code> and <code>R</code> from the command line on any Linux system. The functionality is identical to an <code>Terminal</code> pane in RStudio Server.</p>
+<p>What can you do at the command line? Pretty much anything you can do with <code>bash</code>, <code>Julia</code>, <code>Python</code> and <code>R</code> from the command line on any Linux system. The functionality is identical to a <code>Terminal</code> pane in RStudio Server.</p>
 </div>
 </div>
 <div id="next-software-on-the-image" class="section level2">

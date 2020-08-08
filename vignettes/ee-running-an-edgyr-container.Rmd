@@ -59,7 +59,8 @@ password for `sudo` again.
     ```
     
     The long hexadecimal string and container ID will be different on your
-    system, but the rest should look like what's above.
+    system, but the rest should look like what's above. Note that port `7878` is
+    ***not*** the default RStudio Server port!
     
     This script runs the `edgyr` container in *detached* mode. The
     processes in the container are running in the background, and you can
@@ -114,46 +115,21 @@ knitr::include_graphics('./Screenshot_2020-07-12_RStudio_Server_Files.png')
 --------------------
 
 `.Renviron` and `.Rprofile` are the standard environment setting files;
-remember to restart your `R` session if you change them. `bin` is the
-directory where `TinyTeX` installed its executables when the image build
-process installed `TinyTeX`. 
-
-The scripts that installed the `r-reticulate` Python virutal environment
-and the R packages on the image are in `Installers`. They've already been
-run; you don't need to run them. The log files from those installs are
-there as well; `gunzip` them if you want to look at them.
-
-`Projects` is an empty folder for you to store your projects. And `Scripts`
-has some scripts you can run and use as examples:
-
-```
-edgyr@edgyr:~$ tree Scripts
-Scripts
-├── edit-me-then-run-4-git-config.bash
-├── start-jupyter-lab
-├── test-package-install
-└── test-r-reticulate.R
-
-0 directories, 4 files
-edgyr@edgyr:~$ 
-```
+remember to restart your `R` session if you change them. `already-installed`
+contains the scripts that installed the R packages on the image; you don't need
+to run them. `bin` is the directory where `TinyTeX` installed its executables.
 
 `edit-me-then-run-4-git-config.bash` is a script you can edit and run to
 set your `git` configuration. If you're going to use `git`, you'll need to
-edit and then run it. `start-jupyter-lab` starts a JupyterLab server; there
-is an entire vignette devoted to JupyterLab in
-`vignette("kk-jupyter-lab")`.
+edit and then run it. `installers` contains scripts you can run to install
+add-ons. Currently the only available add-on is TensorFlow 2. `logfiles`
+contains compressed log files from all the software installs; `gunzip` them
+if you want to look at them.
 
-`test-package-install` clones the `edgyR` git repository into `Projects`,
-then installs the `edgyR` R package and its suggested dependencies with
-`devtools::install`, documents it with `devtools::document` and checks it
-with `devtools::check`. Then it rebuilds the `pkgdown` site. This exercises
-the main intended functionality of `edgyR`, which is providing an R package
-development environment for Jetson development kits.
-
-`test-r-reticulate` tests that R can access the `r-reticulate` Python
-virtual environment, that `keras` is available, and that the `caracas` R
-package and its Python library `SymPy` work.
+`Projects` is an empty folder for you to store your projects.
+`start-jupyter-lab` starts a JupyterLab server; there is an entire vignette
+devoted to JupyterLab in `vignette("kk-jupyter-lab")`. `test-scripts` has some
+scripts you can run and use as examples.
 
 ### Logging in to the command line
 
@@ -174,8 +150,8 @@ Note that you *will* need the `edgyr` password if you use `sudo` when
 logged in as `edgyr`.
 
 What can you do at the command line? Pretty much anything you can do with
-`bash` and `R` from the command line on any Linux system. The functionality
-is identical to an `Terminal` pane in RStudio Server.
+`bash`, `Julia`, `Python` and `R` from the command line on any Linux system.
+The functionality is identical to a `Terminal` pane in RStudio Server.
 
 ## Next: Software on the Image
 
