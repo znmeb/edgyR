@@ -15,6 +15,7 @@ alias make="/usr/bin/make --jobs=`nproc`"
 
 echo ""
 echo "Installing 'TensorFlow 2'"
+echo "This can take a long time - over an hour on a Jetson Nano"
 /usr/bin/time pip install \
   --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 \
   'tensorflow > 1.99'
