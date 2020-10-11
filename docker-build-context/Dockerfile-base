@@ -1,10 +1,10 @@
 FROM "nvcr.io/nvidia/l4t-ml:r32.4.3-py3"
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.2.tar.gz"
+ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.3.tar.gz"
 ENV RSTUDIO_VERSION_MAJOR=1
 ENV RSTUDIO_VERSION_MINOR=3
-ENV RSTUDIO_VERSION_PATCH=1056
+ENV RSTUDIO_VERSION_PATCH=1093
 ENV SOURCE_DIR=/usr/local/src
 ENV EDGYR_HOME=/home/edgyr
 ENV PAPERSIZE=letter
