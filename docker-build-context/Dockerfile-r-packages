@@ -1,0 +1,79 @@
+FROM "nvcr.io/nvidia/l4t-base:r32.4.3"
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Apt operations
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y \
+    build-essential \
+    dpkg-dev \
+    fakeroot \
+    gnupg \
+    sudo \
+    vim-nox
+
+# allow fetching sources and add R Ubuntu repository
+COPY sources.list.new /etc/apt/sources.list
+
+# passwordless sudo for "edgyr"
+COPY 10-installer /etc/sudoers.d/
+
+# create non-root user with 'sudo' privilege
+RUN useradd \
+  --shell /bin/bash \
+  --user-group \
+  --groups sudo \
+  --create-home \
+  --uid 1000 edgyr \
+  && echo "edgyr:edgyr" | chpasswd
+
+# build and install r-base packages
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
+  && apt-get update
+
+WORKDIR /home/edgyr
+USER edgyr
+RUN mkdir r-base \
+  && cd r-base \
+  && sudo apt-get build-dep -y r-base > build-dep.log \
+  && apt-get source --compile r-base > compile.log \
+  && sudo apt-get install -y \
+    ./r-base-core_*.deb \
+    ./r-base-dev_*.deb \
+    ./r-doc-html_*.deb \
+    ./r-mathlib_*.deb \
+  > install.log
+
+# build and install recommended packages
+RUN for i in \
+    r-cran-boot \
+    r-cran-cluster \
+    r-cran-codetools \
+    r-cran-foreign \
+    r-cran-kernsmooth \
+    r-cran-lattice \
+    r-cran-mass \
+    r-cran-matrix \
+    r-cran-class \
+    r-cran-nlme \
+    r-cran-mgcv \
+    r-cran-nnet \
+    r-cran-spatial \
+    r-cran-survival \
+    r-cran-rpart; \
+  do mkdir $i; \
+  cd $i; \
+    sudo apt-get build-dep -y $i > build-dep.log; \
+    apt-get source --compile $i > compile.log; \
+    sudo apt-get install -y ./$i_*.deb; \
+  cd ..; \
+  done
+
+# collect the packages
+RUN mkdir packages \
+  && cp r-*/*.deb r-*/*.ddeb packages/
+
+# smoke test - install "arrow" and "data.table" from CRAN
+RUN sudo R -e "install.packages('arrow')"
+RUN sudo R -e "install.packages('data.table')"
