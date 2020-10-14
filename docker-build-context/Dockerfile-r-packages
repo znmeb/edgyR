@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:experimental
 FROM ubuntu:bionic
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 ARG DEBIAN_FRONTEND=noninteractive
