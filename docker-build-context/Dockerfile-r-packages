@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:experimental
 FROM ubuntu:bionic
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 ARG DEBIAN_FRONTEND=noninteractive
@@ -5,7 +6,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Apt operations
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install -y \
+  && apt-get --no-install-recommends install -y \
     build-essential \
     dpkg-dev \
     fakeroot \
@@ -36,9 +37,9 @@ WORKDIR /home/edgyr
 USER edgyr
 RUN mkdir r-base \
   && cd r-base \
-  && sudo apt-get build-dep -y r-base > build-dep.log \
+  && sudo apt-get --no-install-recommends build-dep -y r-base > build-dep.log \
   && apt-get source --compile r-base > compile.log \
-  && sudo apt-get install -y \
+  && sudo apt-get --no-install-recommends install -y \
     ./r-base-core_*.deb \
     ./r-base-dev_*.deb \
     ./r-doc-html_*.deb \
@@ -64,15 +65,15 @@ RUN for i in \
     r-cran-rpart; \
   do mkdir $i; \
   cd $i; \
-    sudo apt-get build-dep -y $i > build-dep.log; \
+    sudo apt-get build-dep --no-install-recommends -y $i > build-dep.log; \
     apt-get source --compile $i > compile.log; \
-    sudo apt-get install -y ./$i_*.deb; \
+    sudo apt-get install --no-install-recommends -y ./$i_*.deb; \
   cd ..; \
   done
 
 # collect the packages
 RUN mkdir packages \
-  && cp r-*/*.deb r-*/*.ddeb packages/
+  && cp r-*/*.deb packages/
 
 # smoke test - install "arrow" and "data.table" from CRAN
 RUN sudo R -e "install.packages('arrow')"
