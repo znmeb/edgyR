@@ -4,6 +4,5 @@ set -e
 
 echo ""
 echo "Installing 'julia'"
-curl -Ls \
-  https://julialang-s3.julialang.org/bin/linux/aarch64/1.5/julia-1.5.0-linux-aarch64.tar.gz \
+curl -Ls $JULIA_TARBALL \
   | tar --strip-components=1 --directory=/usr/local -xzf -
