@@ -1,31 +1,53 @@
 FROM "nvcr.io/nvidia/l4t-ml:r32.4.3-py3"
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.3.tar.gz"
-ENV RSTUDIO_VERSION_MAJOR=1
-ENV RSTUDIO_VERSION_MINOR=3
-ENV RSTUDIO_VERSION_PATCH=1093
-ENV SOURCE_DIR=/usr/local/src
-ENV EDGYR_HOME=/home/edgyr
-ENV PAPERSIZE=letter
-ENV PROJECT_HOME=$EDGYR_HOME/Projects
-ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
-ENV EDGYR_LOGFILES=$EDGYR_HOME/logfiles
+# create non-root user with 'sudo' privilege
+RUN useradd \
+  --shell /bin/bash \
+  --user-group \
+  --groups sudo \
+  --create-home \
+  --uid 1000 edgyr \
+  && echo "edgyr:edgyr" | chpasswd
 
-ARG DEBIAN_FRONTEND=noninteractive
+# passwordless sudo for "edgyr"
+COPY 10-installer /etc/sudoers.d/
 
-# image building
+# create 'edgyr' home directories
+ARG EDGYR_HOME
+ARG EDGYR_LOGFILES
+ARG PROJECT_HOME
+ARG WORKON_HOME
+ENV PROJECT_HOME=$PROJECT_HOME
+ENV WORKON_HOME=$WORKON_HOME
+RUN mkdir --parents $EDGYR_LOGFILES $PROJECT_HOME $WORKON_HOME
+
 USER root
+ARG SOURCE_DIR
 WORKDIR $SOURCE_DIR/
+ARG DEBIAN_FRONTEND
+
+# get the package repository
+ARG R_PACKAGE_REPO
+COPY --from=r-package-repo $R_PACKAGE_REPO $R_PACKAGE_REPO
 
 # install linux dependencies
-COPY install-linux-dependencies install-julia install-site-packages $SOURCE_DIR/
-RUN $SOURCE_DIR/install-linux-dependencies > install-linux-dependencies.log 2>&1 \
-  && gzip -9 install-linux-dependencies.log
-RUN $SOURCE_DIR/install-site-packages > install-site-packages.log 2>&1 \
-  && gzip -9 install-site-packages.log
-RUN $SOURCE_DIR/install-julia > install-julia.log 2>&1 \
-  && gzip -9 install-julia.log
+COPY install-linux-dependencies install-julia install-site-packages install-repo-packages $SOURCE_DIR/
+RUN $SOURCE_DIR/install-linux-dependencies > $EDGYR_LOGFILES/install-linux-dependencies.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/install-linux-dependencies.log
+
+# install Python site-packages
+RUN $SOURCE_DIR/install-site-packages > $EDGYR_LOGFILES/install-site-packages.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/install-site-packages.log
+
+# install Julia
+ARG JULIA_TARBALL
+RUN $SOURCE_DIR/install-julia > $EDGYR_LOGFILES/install-julia.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/install-julia.log
+
+# install R and recommended packages
+RUN $SOURCE_DIR/install-repo-packages > $EDGYR_LOGFILES/install-repo-packages.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/install-repo-packages.log
 
 RUN locale-gen en_US.UTF-8 \
   && update-locale \
@@ -43,3 +65,17 @@ RUN locale-gen en_US.UTF-8 \
     LC_MEASUREMENT=en_US.UTF-8 \
     LC_IDENTIFICATION=en_US.UTF-8 \
   && cat /etc/default/locale
+
+# populate $EDGYR_HOME
+COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
+COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
+COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
+COPY --chown=edgyr:edgyr \
+    edit-me-then-run-4-git-config.bash \
+  $EDGYR_HOME/
+
+# switch to non-root user
+RUN chown -R edgyr:edgyr $EDGYR_HOME
+USER edgyr
+WORKDIR $EDGYR_HOME
+CMD /bin/bash

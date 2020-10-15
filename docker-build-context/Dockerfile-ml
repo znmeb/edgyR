@@ -1,19 +1,6 @@
 FROM base
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-ENV R_SOURCE_TARBALL="https://cloud.r-project.org/src/base/R-4/R-4.0.3.tar.gz"
-ENV RSTUDIO_VERSION_MAJOR=1
-ENV RSTUDIO_VERSION_MINOR=3
-ENV RSTUDIO_VERSION_PATCH=1093
-ENV SOURCE_DIR=/usr/local/src
-ENV EDGYR_HOME=/home/edgyr
-ENV PAPERSIZE=letter
-ENV PROJECT_HOME=$EDGYR_HOME/Projects
-ENV WORKON_HOME=$EDGYR_HOME/.virtualenvs
-ENV EDGYR_LOGFILES=$EDGYR_HOME/logfiles
-
-ARG DEBIAN_FRONTEND=noninteractive
-
 # copy R files from binaries image
 COPY --from=binaries /usr/local/lib/R /usr/local/lib/R
 COPY --from=binaries /usr/local/share/man/man1 /usr/local/share/man/man1
