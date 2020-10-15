@@ -28,26 +28,33 @@ RUN mkdir r-base \
   && cd ..
 RUN cd r-base \
     && apt-get --no-install-recommends install -y \
-      ./r-base-core_*.deb > install.log \
+      ./r-base-core_*.deb \
+      ./r-base-dev_*.deb \
+      ./r-base-html_*.deb \
+      ./r-doc-html_*.deb \
+      ./r-doc-info_*.deb \
+      ./r-doc-pdf_*.deb \
+      ./r-mathlib_*.deb \
+    > install.log \
     && cd ..
 
 # build and install recommended packages
 RUN for i in \
-    r-cran-lattice \
-    r-cran-mass \
-    r-cran-matrix \
-    r-cran-nlme \
-    r-cran-survival \
     r-cran-boot \
-    r-cran-class \
     r-cran-cluster \
     r-cran-codetools \
     r-cran-foreign \
     r-cran-kernsmooth \
-    r-cran-mgcv \
+    r-cran-lattice \
+    r-cran-mass \
+    r-cran-matrix \
+    r-cran-nlme \
     r-cran-nnet \
-    r-cran-rpart \
-    r-cran-spatial; \
+    r-cran-spatial \
+    r-cran-survival \
+    r-cran-class \
+    r-cran-mgcv \
+    r-cran-rpart; \
   do mkdir $i; \
   cd $i; \
     apt-get build-dep -y $i > build-dep.log; \
