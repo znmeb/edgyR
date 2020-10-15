@@ -26,4 +26,5 @@ apt-get install -qqy \
   ./r-doc-html_*.deb \
   ./r-mathlib_*.deb \
   ./r-recommended_*.deb
+apt-get autoremove --purge -y
 apt-get clean

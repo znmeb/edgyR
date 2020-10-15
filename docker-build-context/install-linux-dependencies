@@ -5,7 +5,6 @@ set -e
 echo "Installing Linux dependencies"
 apt-get update
 apt-get upgrade -y
-apt-get autoremove --purge -y
 apt-get install -qqy --no-install-recommends \
   apt-utils \
   bash-completion \
@@ -51,4 +50,5 @@ apt-get install -qqy --no-install-recommends \
   virtualenvwrapper \
   wget \
   zip
+apt-get autoremove --purge -y
 apt-get clean
