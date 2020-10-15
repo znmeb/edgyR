@@ -14,3 +14,4 @@ export LC_IDENTIFICATION=en_US.UTF-8
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Projects
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
