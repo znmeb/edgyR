@@ -27,6 +27,19 @@ fi
 
 echo "Building the image"
 /usr/bin/time sudo docker build \
+  --build-arg DEBIAN_FRONTEND="noninteractive" \
+  --build-arg EDGYR_HOME="/home/edgyr" \
+  --build-arg EDGYR_LOGFILES="/home/edgyr/logfile"s \
+  --build-arg \
+    JULIA_TARBALL="https://julialang-s3.julialang.org/bin/linux/aarch64/1.5/julia-1.5.2-linux-aarch64.tar.gz" \
+  --build-arg PAPERSIZE="letter" \
+  --build-arg R_PACKAGE_REPO="/usr/local/source/r-package-repo" \
+  --build-arg PROJECT_HOME="/home/edgyr/Projects" \
+  --build-arg RSTUDIO_VERSION_MAJOR="1" \
+  --build-arg RSTUDIO_VERSION_MINOR="3" \
+  --build-arg RSTUDIO_VERSION_PATCH="1093" \
+  --build-arg SOURCE_DIR="/usr/local/src" \
+  --build-arg WORKON_HOME="/home/edgyr/.virtualenvs" \
   --tag="$1" \
   --file="$2" \
 .

@@ -1,0 +1,66 @@
+FROM ubuntu:bionic
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+# Apt operations
+ARG DEBIAN_FRONTEND
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y \
+    build-essential \
+    dpkg-dev \
+    fakeroot \
+    gnupg \
+    vim-nox
+
+# allow fetching sources and add R Ubuntu repository
+COPY sources.list.new /etc/apt/sources.list
+
+# build and install r-base packages
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
+  && apt-get update
+
+ARG SOURCE_DIR
+WORKDIR $SOURCE_DIR
+RUN mkdir r-base \
+  && cd r-base \
+    && apt-get build-dep -y r-base > build-dep.log \
+    && apt-get source --compile r-base > compile.log \
+  && cd ..
+RUN cd r-base \
+    && apt-get --no-install-recommends install -y \
+      ./r-base-core_*.deb > install.log \
+    && cd ..
+
+# build and install recommended packages
+RUN for i in \
+    r-cran-lattice \
+    r-cran-mass \
+    r-cran-matrix \
+    r-cran-nlme \
+    r-cran-survival \
+    r-cran-boot \
+    r-cran-class \
+    r-cran-cluster \
+    r-cran-codetools \
+    r-cran-foreign \
+    r-cran-kernsmooth \
+    r-cran-mgcv \
+    r-cran-nnet \
+    r-cran-rpart \
+    r-cran-spatial; \
+  do mkdir $i; \
+  cd $i; \
+    apt-get build-dep -y $i > build-dep.log; \
+    apt-get source --compile $i > compile.log; \
+    apt-get install --no-install-recommends -y ./$i_*.deb; \
+  cd ..; \
+  done
+
+# collect the packages into a repository
+ARG R_PACKAGE_REPO
+RUN mkdir --parents $R_PACKAGE_REPO \
+  && cp r-*/*.deb $R_PACKAGE_REPO
+
+# smoke test - install "arrow" and "data.table" from CRAN
+RUN R -e "install.packages('arrow'); library(arrow)"
+RUN R -e "install.packages('data.table'); library(data.table)"
