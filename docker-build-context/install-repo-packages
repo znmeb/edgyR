@@ -1,0 +1,29 @@
+#! /bin/bash
+
+set -e
+
+cd $R_PACKAGE_REPO
+apt-get install -qqy \
+  ./r-base-core_*.deb \
+  ./r-base-dev_*.deb \
+  ./r-base-html*.deb \
+  ./r-base_*.deb \
+  ./r-cran-boot_*.deb \
+  ./r-cran-class_*.deb \
+  ./r-cran-cluster_*.deb \
+  ./r-cran-codetools_*.deb \
+  ./r-cran-foreign_*.deb \
+  ./r-cran-kernsmooth_*.deb \
+  ./r-cran-lattice_*.deb \
+  ./r-cran-mass_*.deb \
+  ./r-cran-matrix_*.deb \
+  ./r-cran-mgcv_*.deb \
+  ./r-cran-nlme_*.deb \
+  ./r-cran-nnet_*.deb \
+  ./r-cran-rpart_*.deb \
+  ./r-cran-spatial_*.deb \
+  ./r-cran-survival_*.deb \
+  ./r-doc-html_*.deb \
+  ./r-mathlib_*.deb \
+  ./r-recommended_*.deb
+apt-get clean
