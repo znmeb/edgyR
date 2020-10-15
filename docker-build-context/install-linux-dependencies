@@ -7,38 +7,24 @@ apt-get update
 apt-get upgrade -y
 apt-get autoremove --purge -y
 apt-get install -qqy --no-install-recommends \
+  apt-utils \
   bash-completion \
   build-essential \
   bzip2 \
   ca-certificates \
   cmake \
   curl \
-  openjdk-8-jdk-headless \
+  dpkg-dev \
+  fakeroot \
   file \
   gfortran \
   git \
   git-lfs \
+  gnupg \
   gzip \
-  libbz2-dev \
-  libcairo2-dev \
-  libicu-dev \
-  libgit2-dev \
-  libjpeg-dev \
-  libjpeg-turbo8-dev \
-  liblzma-dev \
-  libopenblas-dev \
-  libopenmpi-dev \
-  libpam0g-dev \
-  libpango1.0-dev \
-  libpcre2-dev \
-  libpng-dev \
-  libreadline-dev \
-  libssh2-1-dev \
-  libssl-dev \
-  libtiff-dev \
-  libxml2-dev \
   locales \
   lynx \
+  openjdk-8-jdk-headless \
   pandoc \
   pandoc-citeproc \
   pandoc-citeproc-preamble \
@@ -56,21 +42,13 @@ apt-get install -qqy --no-install-recommends \
   qpdf \
   sudo \
   tar \
-  texinfo \
   time \
-  tk-dev \
   tree \
   tzdata \
   unzip \
-  uuid-dev \
-  vim \
+  vim-nox \
   virtualenv \
   virtualenvwrapper \
   wget \
-  xauth \
-  xfonts-base \
-  xorg-dev \
-  xvfb \
-  zip \
-  zlib1g-dev
+  zip
 apt-get clean
