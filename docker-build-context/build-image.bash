@@ -33,7 +33,7 @@ echo "Building the image"
   --build-arg \
     JULIA_TARBALL="https://julialang-s3.julialang.org/bin/linux/aarch64/1.5/julia-1.5.2-linux-aarch64.tar.gz" \
   --build-arg PAPERSIZE="letter" \
-  --build-arg R_PACKAGE_REPO="/usr/local/source/r-package-repo" \
+  --build-arg R_PACKAGE_REPO="/usr/local/src/r-package-repo" \
   --build-arg PROJECT_HOME="/home/edgyr/Projects" \
   --build-arg RSTUDIO_VERSION_MAJOR="1" \
   --build-arg RSTUDIO_VERSION_MINOR="3" \
