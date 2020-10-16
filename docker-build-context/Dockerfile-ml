@@ -9,8 +9,8 @@ ARG SOURCE_DIR
 USER root
 WORKDIR $SOURCE_DIR
 
-# copy RStudio Server package from binaries image
-COPY --from=binaries $R_PACKAGE_REPO/$PACKAGE_FILE $R_PACKAGE_REPO/
+# copy RStudio Server package from rstudio-package image
+COPY --from=rstudio-package $R_PACKAGE_REPO/$PACKAGE_FILE $R_PACKAGE_REPO/
 
 # install it
 RUN apt-get install -qqy --no-install-recommends \
