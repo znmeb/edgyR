@@ -1,15 +1,16 @@
 FROM base
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# install R
-# see https://cloud.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
-COPY install-r R.conf update-packages.R prep-rstudio-server $SOURCE_DIR/
-RUN $SOURCE_DIR/install-r > install-r.log 2>&1 \
-  && gzip -9 install-r.log
-RUN $SOURCE_DIR/update-packages.R > update-packages.log 2>&1 \
-  && gzip -9 update-packages.log
-
 # prep RStudio Server - mostly download time and building boost
 # see https://rstudio.com/products/rstudio/download-server/other-platforms/
-RUN $SOURCE_DIR/prep-rstudio-server > prep-rstudio-server.log 2>&1 \
-  && gzip -9 prep-rstudio-server.log
+ARG SOURCE_DIR
+ARG RSTUDIO_VERSION_MAJOR
+ARG RSTUDIO_VERSION_MINOR
+ARG RSTUDIO_VERSION_PATCH
+ARG EDGYR_LOGFILES
+ 
+USER root
+WORKDIR $SOURCE_DIR
+COPY prep-rstudio-server $SOURCE_DIR/
+RUN $SOURCE_DIR/prep-rstudio-server > $EDGYR_LOGFILES/prep-rstudio-server.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/prep-rstudio-server.log

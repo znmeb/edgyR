@@ -2,14 +2,24 @@
 
 set -e
 
-apt-get update && apt-get install -qqy ant && apt-get clean
+apt-get update \
+  && apt-get install -qqy --no-install-recommends \
+    ant \
+    libpam0g-dev \
+    uuid-dev \
+  && apt-get autoremove --purge -y \
+  && apt-get clean
 update-alternatives --set java /usr/lib/jvm/java-8-openjdk-arm64/jre/bin/java
 ls -lAtr /etc/alternatives | grep java
 
 echo "CMake"
-mkdir --parents $SOURCE_DIR/rstudio/build/ && cd $SOURCE_DIR/rstudio/build/
+export BUILD_DIR="$SOURCE_DIR/rstudio/build"
+rm -fr $BUILD_DIR
+mkdir --parents $BUILD_DIR
+cd $BUILD_DIR
+pwd
 cmake .. \
-  -DRSTUDIO_TARGET=Server -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_SOURCE_GENERATOR=TGZ
+  -DRSTUDIO_TARGET=Server -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=DEB -DCPACK_SOURCE_GENERATOR=DEB
 
 # The C/C++ builds and the Java "gwt_build" appear to be competing for cores
 # and RAM. And the Java one doesn't seem to remember that it's been done.
@@ -34,7 +44,7 @@ make --jobs=`nproc` rstudio-r
 make --jobs=`nproc` rserver
 make --jobs=`nproc` rsession
 
-echo "Installing"
+echo "Packaging"
 
 # The Nano only has 4 GB of RAM. As a result, the Java builds swamp the available
 # RAM and multi-job makes are problematic - they swap and the system appears
@@ -49,4 +59,4 @@ else
   export JOBS=2
 fi
 echo "RAM_KILOBYTES = $RAM_KILOBYTES; 'make' will use $JOBS jobs."
-make --jobs=$JOBS install
+make --jobs=$JOBS package
