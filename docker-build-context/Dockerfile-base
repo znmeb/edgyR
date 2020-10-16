@@ -10,9 +10,6 @@ RUN useradd \
   --uid 1000 edgyr \
   && echo "edgyr:edgyr" | chpasswd
 
-# passwordless sudo for "edgyr"
-COPY 10-installer /etc/sudoers.d/
-
 # create 'edgyr' home directories
 ARG EDGYR_HOME
 ARG EDGYR_LOGFILES
@@ -66,16 +63,43 @@ RUN locale-gen en_US.UTF-8 \
     LC_IDENTIFICATION=en_US.UTF-8 \
   && cat /etc/default/locale
 
-# populate $EDGYR_HOME
+# reconfigure R Java interface
+RUN R CMD javareconf > $SOURCE_DIR/r-java-reconf.log 2>&1 \
+  && gzip -9 $SOURCE_DIR/r-java-reconf.log
+
+# populate 'edgyr' home
 COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
 COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
 COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
 COPY --chown=edgyr:edgyr \
-    edit-me-then-run-4-git-config.bash \
+  base-linux-packages \
+  base-r-packages.R \
+  edit-me-then-run-4-git-config.bash \
+  start-jupyter-lab \
   $EDGYR_HOME/
+
+# install dependencies for R packages
+RUN $EDGYR_HOME/base-linux-packages > $EDGYR_LOGFILES/base-linux-packages.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/base-linux-packages.log
 
 # switch to non-root user
 RUN chown -R edgyr:edgyr $EDGYR_HOME
 USER edgyr
 WORKDIR $EDGYR_HOME
 CMD /bin/bash
+
+# enable Julia kernel
+RUN JUPYTER=/usr/local/bin/jupyter julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("CUDA")' \
+  > $EDGYR_LOGFILES/julia-kernel.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/julia-kernel.log
+
+# install base R packages
+RUN $EDGYR_HOME/base-r-packages.R > $EDGYR_LOGFILES/base-r-packages.R.log 2>&1 \
+  && gzip -9 $EDGYR_LOGFILES/base-r-packages.R.log
+
+# copy installers and test scripts at the end
+COPY --chown=edgyr:edgyr installers $EDGYR_HOME/installers
+COPY --chown=edgyr:edgyr test-scripts $EDGYR_HOME/test-scripts
+
+# set entry point
+CMD [ "/bin/bash" ]

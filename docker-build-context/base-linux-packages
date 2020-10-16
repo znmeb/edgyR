@@ -1,0 +1,18 @@
+#! /bin/bash -v
+
+set -e
+
+sudo apt-get install -qqy --no-install-recommends \
+  libcurl4-openssl-dev \
+  libfontconfig1-dev \
+  libfreetype6-dev \
+  libfribidi-dev \
+  libharfbuzz-dev \
+  libjpeg-dev \
+  libpng-dev \
+  libssh2-1-dev \
+  libssl-dev \
+  libtiff5-dev \
+  libxml2-dev
+sudo apt-get autoremove -y
+sudo apt-get clean
