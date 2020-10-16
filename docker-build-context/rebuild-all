@@ -17,10 +17,10 @@ echo "Building images"
 export DOCKER_REPO=znmeb
 
 # working images
-/usr/bin/time ./build-r-packages
+/usr/bin/time ./build-r-package-repo
 /usr/bin/time ./build-base
-/usr/bin/time ./build-rsprep
-/usr/bin/time ./build-binaries
+/usr/bin/time ./build-rs-prep
+/usr/bin/time ./build-rstudio-package
 
 # keepers
 /usr/bin/time ./build-ml

@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM "nvcr.io/nvidia/l4t-ml:r32.4.3-py3"
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Apt operations
@@ -68,6 +68,5 @@ ARG R_PACKAGE_REPO
 RUN mkdir --parents $R_PACKAGE_REPO \
   && cp r-*/*.deb $R_PACKAGE_REPO
 
-# smoke test - install "arrow" and "data.table" from CRAN
+# smoke test - install "arrow"
 RUN R -e "install.packages('arrow'); library(arrow)"
-RUN R -e "install.packages('data.table'); library(data.table)"
