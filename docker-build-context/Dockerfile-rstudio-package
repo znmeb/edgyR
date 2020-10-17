@@ -11,6 +11,12 @@ ARG SOURCE_DIR
 
 ARG BUILD_DIR=$SOURCE_DIR/rstudio/build
 
+USER root
+WORKDIR $SOURCE_DIR
+
+# copy logfiles from rsprep
+COPY --from=rsprep $EDGYR_LOGFILES $EDGYR_LOGFILES
+
 # package RStudio Server
 # see https://rstudio.com/products/rstudio/download-server/other-platforms/
 COPY package-rstudio-server $SOURCE_DIR/
