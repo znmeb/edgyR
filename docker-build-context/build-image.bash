@@ -27,6 +27,7 @@ fi
 
 echo "Building the image"
 /usr/bin/time sudo docker build \
+  --build-arg ARROW_TARBALL="https://github.com/apache/arrow/archive/apache-arrow-1.0.1.tar.gz" \
   --build-arg DEBIAN_FRONTEND="noninteractive" \
   --build-arg EDGYR_HOME="/home/edgyr" \
   --build-arg EDGYR_LOGFILES="/home/edgyr/logfile"s \
