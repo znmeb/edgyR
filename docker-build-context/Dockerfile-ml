@@ -2,6 +2,8 @@ FROM base
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 ARG DEBIAN_INTERACTIVE
+ARG EDGYR_HOME
+ARG EDGYR_LOGFILES
 ARG PACKAGE_FILE
 ARG R_PACKAGE_REPO
 ARG SOURCE_DIR
@@ -9,15 +11,18 @@ ARG SOURCE_DIR
 USER root
 WORKDIR $SOURCE_DIR
 
-# copy RStudio Server package from rstudio-package image
+# copy RStudio Server package and logfiles from rstudio-package image
 COPY --from=rstudio-package $R_PACKAGE_REPO/$PACKAGE_FILE $R_PACKAGE_REPO/
+COPY --from=rstudio-package $EDGYR_LOGFILES $EDGYR_LOGFILES
+RUN chown -R edgyr:edgyr $EDGYR_HOME
 
-# install it
+# install the package
 RUN apt-get install -qqy --no-install-recommends \
     $R_PACKAGE_REPO/$PACKAGE_FILE \
   && apt-get autoremove --purge \
   && apt-get clean
 
+# configure the server
 # see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
 COPY rstudio-configure $SOURCE_DIR/
 COPY rserver.conf /etc/rstudio/
