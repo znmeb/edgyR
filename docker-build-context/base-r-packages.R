@@ -16,6 +16,7 @@ print(tinytex::tlmgr_conf())
 options(warn = 0)
 
 install.packages(c(
+  "arrow",
   "caracas",
   "data.table",
   "devtools",
