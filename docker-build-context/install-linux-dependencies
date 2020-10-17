@@ -26,6 +26,8 @@ apt-get install -qqy --no-install-recommends \
   gnupg \
   gzip \
   libssl-dev \
+  libclang-10-dev \
+  libclang-cpp10-dev \
   llvm-10-dev \
   llvm-10-runtime \
   llvm-10-tools \
