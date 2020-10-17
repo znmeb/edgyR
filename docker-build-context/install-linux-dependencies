@@ -11,6 +11,10 @@ apt-get install -qqy --no-install-recommends \
   build-essential \
   bzip2 \
   ca-certificates \
+  clang-10 \
+  clang-format-10 \
+  clang-tidy-10 \
+  clang-tools-10 \
   cmake \
   curl \
   dpkg-dev \
@@ -21,6 +25,10 @@ apt-get install -qqy --no-install-recommends \
   git-lfs \
   gnupg \
   gzip \
+  libssl-dev \
+  llvm-10-dev \
+  llvm-10-runtime \
+  llvm-10-tools \
   locales \
   lynx \
   openjdk-8-jdk-headless \
