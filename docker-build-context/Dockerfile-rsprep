@@ -11,6 +11,7 @@ ARG EDGYR_LOGFILES
  
 USER root
 WORKDIR $SOURCE_DIR
+
 COPY prep-rstudio-server $SOURCE_DIR/
 RUN $SOURCE_DIR/prep-rstudio-server > $EDGYR_LOGFILES/prep-rstudio-server.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/prep-rstudio-server.log

@@ -3,6 +3,12 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Apt operations
 ARG DEBIAN_FRONTEND
+ARG R_PACKAGE_REPO
+ARG SOURCE_DIR
+
+USER root
+WORKDIR $SOURCE_DIR
+
 RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y \
@@ -10,7 +16,9 @@ RUN apt-get update \
     dpkg-dev \
     fakeroot \
     gnupg \
-    vim-nox
+    vim-nox \
+  && apt-get autoremove --purge -y \
+  && apt-get clean
 
 # allow fetching sources and add R Ubuntu repository
 COPY sources.list.new /etc/apt/sources.list
@@ -19,8 +27,6 @@ COPY sources.list.new /etc/apt/sources.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
   && apt-get update
 
-ARG SOURCE_DIR
-WORKDIR $SOURCE_DIR
 RUN mkdir r-base \
   && cd r-base \
     && apt-get build-dep -y r-base > build-dep.log \
@@ -64,6 +70,5 @@ RUN for i in \
   done
 
 # collect the packages into a repository
-ARG R_PACKAGE_REPO
 RUN mkdir --parents $R_PACKAGE_REPO \
   && cp r-*/*.deb $R_PACKAGE_REPO
