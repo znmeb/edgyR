@@ -6,6 +6,7 @@ ARG DEBIAN_FRONTEND
 ARG EDGYR_HOME
 ARG EDGYR_LOGFILES
 ARG JULIA_TARBALL
+ARG PACKAGE_FILE
 ARG PROJECT_HOME
 ARG R_PACKAGE_REPO
 ARG SOURCE_DIR
@@ -30,33 +31,30 @@ RUN useradd \
 RUN mkdir --parents $EDGYR_LOGFILES $PROJECT_HOME $WORKON_HOME
 
 # get the package repository
-COPY --from=r-package-repo $R_PACKAGE_REPO $R_PACKAGE_REPO
-
-# copy install scripts
-COPY \
-    install-arrow-cpp \
-    install-linux-dependencies \
-    install-julia install-site-packages \
-    install-repo-packages \
-  $SOURCE_DIR/
+COPY --from=rstudio-package $R_PACKAGE_REPO $R_PACKAGE_REPO
 
 # install linux dependencies
+COPY install-linux-dependencies $SOURCE_DIR/
 RUN $SOURCE_DIR/install-linux-dependencies > $EDGYR_LOGFILES/install-linux-dependencies.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/install-linux-dependencies.log
 
 # install Apache Arrow C++ libraries
+COPY install-arrow-cpp $SOURCE_DIR/
 RUN $SOURCE_DIR/install-arrow-cpp > $EDGYR_LOGFILES/install-arrow-cpp.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/install-arrow-cpp.log
 
 # install Python site-packages
+COPY install-site-packages $SOURCE_DIR/
 RUN $SOURCE_DIR/install-site-packages > $EDGYR_LOGFILES/install-site-packages.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/install-site-packages.log
 
 # install Julia
+COPY install-julia $SOURCE_DIR/
 RUN $SOURCE_DIR/install-julia > $EDGYR_LOGFILES/install-julia.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/install-julia.log
 
 # install R and recommended packages
+COPY install-repo-packages $SOURCE_DIR/
 RUN $SOURCE_DIR/install-repo-packages > $EDGYR_LOGFILES/install-repo-packages.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/install-repo-packages.log
 
@@ -86,10 +84,10 @@ COPY --chown=edgyr:edgyr bash_aliases $EDGYR_HOME/.bash_aliases
 COPY --chown=edgyr:edgyr Rprofile $EDGYR_HOME/.Rprofile
 COPY --chown=edgyr:edgyr Renviron $EDGYR_HOME/.Renviron
 COPY --chown=edgyr:edgyr \
-  base-linux-packages \
-  base-r-packages.R \
-  edit-me-then-run-4-git-config.bash \
-  start-jupyter-lab \
+    base-linux-packages \
+    base-r-packages.R \
+    edit-me-then-run-4-git-config.bash \
+    start-jupyter-lab \
   $EDGYR_HOME/
 
 # install dependencies for R packages
@@ -110,9 +108,21 @@ RUN JUPYTER=/usr/local/bin/jupyter julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.a
 RUN $EDGYR_HOME/base-r-packages.R > $EDGYR_LOGFILES/base-r-packages.R.log 2>&1 \
   && gzip -9 $EDGYR_LOGFILES/base-r-packages.R.log
 
+# switch back to root and wrap up
+USER root
+WORKDIR $SOURCE_DIR
+
+# configure the server
+# see https://support.rstudio.com/hc/en-us/articles/200552306-Getting-Started
+COPY rstudio-configure $SOURCE_DIR/
+COPY rserver.conf /etc/rstudio/
+RUN $SOURCE_DIR/rstudio-configure
+
+# set entry point
+COPY docker-entrypoint.sh /
+CMD [ "/docker-entrypoint.sh" ]
+
 # copy installers and test scripts at the end
 COPY --chown=edgyr:edgyr installers $EDGYR_HOME/installers
 COPY --chown=edgyr:edgyr test-scripts $EDGYR_HOME/test-scripts
-
-# set entry point
-CMD [ "/bin/bash" ]
+RUN chown -R edgyr:edgyr $EDGYR_HOME

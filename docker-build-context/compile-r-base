@@ -1,0 +1,21 @@
+#! /bin/bash
+
+set -e
+
+rm -fr $SOURCE_DIR/r-base
+mkdir --parents $SOURCE_DIR/r-base
+cd $SOURCE_DIR/r-base
+
+apt-get build-dep -y r-base > build-dep.log 2>&1
+apt-get source --compile r-base > compile.log 2>&1
+apt-get install -qqy --no-install-recommends \
+    ./r-base-core_*.deb \
+    ./r-base-dev_*.deb \
+    ./r-base-html_*.deb \
+    ./r-doc-html_*.deb \
+    ./r-doc-info_*.deb \
+    ./r-doc-pdf_*.deb \
+    ./r-mathlib_*.deb \
+  > install.log 2>&1 \
+  && apt-get autoremove --purge -y \
+  && apt-get clean

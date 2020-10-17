@@ -3,7 +3,7 @@
 set -e
 
 cd $R_PACKAGE_REPO
-apt-get install -qqy \
+apt-get install -qqy --no-install-recommends \
   ./r-base-core_*.deb \
   ./r-base-dev_*.deb \
   ./r-base-html*.deb \
@@ -25,6 +25,7 @@ apt-get install -qqy \
   ./r-cran-survival_*.deb \
   ./r-doc-html_*.deb \
   ./r-mathlib_*.deb \
-  ./r-recommended_*.deb
+  ./r-recommended_*.deb \
+  ./rstudio-server-*.deb
 apt-get autoremove --purge -y
 apt-get clean

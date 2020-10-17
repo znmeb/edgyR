@@ -2,6 +2,16 @@
 
 set -e
 
+apt-get install -qqy --no-install-recommends \
+    curl \
+    pandoc \
+    pandoc-citeproc \
+    pandoc-citeproc-preamble \
+    sudo \
+    time \
+  && apt-get autoremove --purge -y \
+  && apt-get clean
+
 cd $SOURCE_DIR
 rm -fr rstudio*
 curl -Ls \

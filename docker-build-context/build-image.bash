@@ -45,3 +45,6 @@ echo "Building the image"
   --tag="$1" \
   --file="$2" \
 .
+
+sudo docker system prune -f
+sudo docker images

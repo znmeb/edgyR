@@ -1,7 +1,6 @@
 FROM rsprep
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-ARG EDGYR_LOGFILES
 ARG PACKAGE_FILE
 ARG R_PACKAGE_REPO
 ARG RSTUDIO_VERSION_MAJOR
@@ -14,16 +13,9 @@ ARG BUILD_DIR=$SOURCE_DIR/rstudio/build
 USER root
 WORKDIR $SOURCE_DIR
 
-# copy logfiles from rsprep
-COPY --from=rsprep $EDGYR_LOGFILES $EDGYR_LOGFILES
-
 # package RStudio Server
 # see https://rstudio.com/products/rstudio/download-server/other-platforms/
 COPY package-rstudio-server $SOURCE_DIR/
-RUN $SOURCE_DIR/package-rstudio-server > $EDGYR_LOGFILES/package-rstudio-server.log 2>&1 \
-  && gzip -9 $EDGYR_LOGFILES/package-rstudio-server.log
-RUN apt-get install -qqy --no-install-recommends \
-  $BUILD_DIR/$PACKAGE_FILE \
-  > $EDGYR_LOGFILES/package-test-install.log 2>&1 \
-  && gzip -9 $EDGYR_LOGFILES/package-test-install.log \
-  && cp $BUILD_DIR/$PACKAGE_FILE $R_PACKAGE_REPO/
+RUN $SOURCE_DIR/package-rstudio-server > package-rstudio-server.log 2>&1
+RUN apt-get install -y $BUILD_DIR/$PACKAGE_FILE > package-test-install.log 2>&1
+RUN cp $BUILD_DIR/$PACKAGE_FILE $R_PACKAGE_REPO/

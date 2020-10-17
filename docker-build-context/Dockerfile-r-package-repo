@@ -11,63 +11,26 @@ WORKDIR $SOURCE_DIR
 
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install -y \
-    build-essential \
-    dpkg-dev \
-    fakeroot \
+  && apt-get install -qqy --no-install-recommends \
     gnupg \
-    vim-nox \
-  && apt-get autoremove --purge -y \
+  && apt-get autoremove --purge \
   && apt-get clean
+    #ca-certificates \
+    #build-essential \
+    #dpkg-dev \
+    #fakeroot \
 
 # allow fetching sources and add R Ubuntu repository
 COPY sources.list.new /etc/apt/sources.list
 
 # build and install r-base packages
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
-  && apt-get update
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN apt-get update
 
-RUN mkdir r-base \
-  && cd r-base \
-    && apt-get build-dep -y r-base > build-dep.log \
-    && apt-get source --compile r-base > compile.log \
-  && cd ..
-RUN cd r-base \
-    && apt-get --no-install-recommends install -y \
-      ./r-base-core_*.deb \
-      ./r-base-dev_*.deb \
-      ./r-base-html_*.deb \
-      ./r-doc-html_*.deb \
-      ./r-doc-info_*.deb \
-      ./r-doc-pdf_*.deb \
-      ./r-mathlib_*.deb \
-    > install.log \
-    && cd ..
-
-# build and install recommended packages
-RUN for i in \
-    r-cran-boot \
-    r-cran-cluster \
-    r-cran-codetools \
-    r-cran-foreign \
-    r-cran-kernsmooth \
-    r-cran-lattice \
-    r-cran-mass \
-    r-cran-matrix \
-    r-cran-nlme \
-    r-cran-nnet \
-    r-cran-spatial \
-    r-cran-survival \
-    r-cran-class \
-    r-cran-mgcv \
-    r-cran-rpart; \
-  do mkdir $i; \
-  cd $i; \
-    apt-get build-dep -y $i > build-dep.log; \
-    apt-get source --compile $i > compile.log; \
-    apt-get install --no-install-recommends -y ./$i_*.deb; \
-  cd ..; \
-  done
+# make and install the packages
+COPY compile-r-base compile-r-recommended $SOURCE_DIR/
+RUN $SOURCE_DIR/compile-r-base
+RUN $SOURCE_DIR/compile-r-recommended
 
 # collect the packages into a repository
 RUN mkdir --parents $R_PACKAGE_REPO \
