@@ -2,6 +2,8 @@
 
 set -e
 
+alias make="make --jobs=`nproc`"
+
 rm -fr $SOURCE_DIR/r-base
 mkdir --parents $SOURCE_DIR/r-base
 cd $SOURCE_DIR/r-base

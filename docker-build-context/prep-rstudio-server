@@ -2,6 +2,8 @@
 
 set -e
 
+alias make="make --jobs=`nproc`"
+
 apt-get install -qqy --no-install-recommends \
     curl \
     pandoc \

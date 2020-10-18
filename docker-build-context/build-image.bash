@@ -33,10 +33,9 @@ echo "Building the image"
   --build-arg EDGYR_LOGFILES="/home/edgyr/logfile"s \
   --build-arg \
     JULIA_TARBALL="https://julialang-s3.julialang.org/bin/linux/aarch64/1.5/julia-1.5.2-linux-aarch64.tar.gz" \
-  --build-arg PACKAGE_FILE="rstudio-server-1.3.1093-arm64.deb" \
+  --build-arg RSTUDIO_PACKAGE_FILE="rstudio-server-1.3.1093-arm64.deb" \
   --build-arg PAPERSIZE="letter" \
   --build-arg PROJECT_HOME="/home/edgyr/Projects" \
-  --build-arg R_PACKAGE_REPO="/usr/local/src/r-package-repo" \
   --build-arg RSTUDIO_VERSION_MAJOR="1" \
   --build-arg RSTUDIO_VERSION_MINOR="3" \
   --build-arg RSTUDIO_VERSION_PATCH="1093" \
@@ -46,5 +45,4 @@ echo "Building the image"
   --file="$2" \
 .
 
-sudo docker system prune -f
 sudo docker images

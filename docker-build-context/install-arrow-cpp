@@ -2,12 +2,26 @@
 
 set -e
 
+apt-get install -qqy --no-install-recommends \
+    clang-9 \
+    clang-format-9 \
+    clang-tidy-9 \
+    clang-tools-9 \
+    libclang-9-dev \
+    llvm-9 \
+    llvm-9-dev \
+    llvm-9-runtime \
+    llvm-9-tools \
+  && apt-get autoremove --purge -y \
+  && apt-get clean
+
 cd $SOURCE_DIR
 curl -Ls $ARROW_TARBALL \
   | tar xzf -
+mv arrow-apache-arrow-* arrow
 
-cd $SOURCE_DIR/arrow-apache-arrow-*/cpp/
-rm -fr build; mkdir build; cd build
+mkdir --parents $ARROW_BUILD_DIR
+cd $ARROW_BUILD_DIR
 cmake .. \
   -DPYTHON_EXECUTABLE=/usr/bin/python3 \
   -DARROW_BUILD_EXAMPLES=ON \
@@ -36,7 +50,5 @@ cmake .. \
   -DARROW_WITH_UTF8PROC=ON \
   -DPARQUET_BUILD_EXECUTABLES=ON \
   -DPARQUET_BUILD_EXAMPLES=ON
-make -j`nproc` install
-
-cd $SOURCE_DIR
-rm -fr arrow-apache-arrow-*
+make --jobs=`nproc`
+make install
