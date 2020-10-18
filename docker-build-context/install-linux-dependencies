@@ -46,7 +46,6 @@ apt-get install -qqy --no-install-recommends \
   python-optcomplete \
   python-pip \
   python3-pip \
-  python-venv \
   python3-venv \
   python-virtualenv \
   python3-virtualenv \

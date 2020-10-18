@@ -11,5 +11,5 @@ fi
 echo "Resetting 'edgyr' password"
 echo "edgyr:${EDGYR_PASSWORD}" | chpasswd
 export RSTUDIO_PORT=`grep www-port /etc/rstudio/rserver.conf | sed 's/^www-port=//'`
-echo "Starting RStudio Server - browse to port $RSTUDIO_PORT on Docker host"
+echo "Starting RStudio Server - browse to http://edgyr:$RSTUDIO_PORT"
 /usr/local/lib/rstudio-server/bin/rserver --server-daemonize 0
