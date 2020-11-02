@@ -1,0 +1,6 @@
+#! /bin/bash
+
+set -e
+
+echo "Building the 'package-file-server' image"
+../build-image.bash "package-file-server" "Dockerfile-package-file-server"

@@ -4,9 +4,9 @@ set -e
 
 alias make="make --jobs=`nproc`"
 
-rm -fr $SOURCE_DIR/r-base
-mkdir --parents $SOURCE_DIR/r-base
-cd $SOURCE_DIR/r-base
+rm -fr $SOURCE_DIR/r-base-build
+mkdir --parents $SOURCE_DIR/r-base-build
+pushd $SOURCE_DIR/r-base-build
 
 apt-get build-dep -y r-base > build-dep.log 2>&1
 apt-get source --compile r-base > compile.log 2>&1
@@ -21,3 +21,4 @@ apt-get install -qqy --no-install-recommends \
   > install.log 2>&1 \
   && apt-get autoremove --purge -y \
   && apt-get clean
+popd

@@ -2,3 +2,4 @@
 .RData
 .Rhistory
 inst/doc
+*.log

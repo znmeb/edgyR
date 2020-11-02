@@ -1,0 +1,47 @@
+FROM "nvcr.io/nvidia/l4t-base:r32.4.4"
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV SOURCE_DIR=/usr/local/src/
+
+USER root
+WORKDIR $SOURCE_DIR
+
+COPY linux-dependencies $SOURCE_DIR/
+RUN $SOURCE_DIR/linux-dependencies > linux-dependencies.log 2>&1 \
+  && gzip -9 linux-dependencies.log
+
+# allow fetching sources and add R Ubuntu repository
+COPY sources.list.new /etc/apt/sources.list
+RUN apt-key adv \
+    --keyserver keyserver.ubuntu.com \
+    --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
+  && apt-get update
+
+# make and install the packages
+COPY r-base $SOURCE_DIR/
+RUN $SOURCE_DIR/r-base
+COPY r-recommended $SOURCE_DIR/
+RUN $SOURCE_DIR/r-recommended > $SOURCE_DIR/r-recommended.log 2>&1
+
+# collect the packages into a repository
+ENV PACKAGE_REPO=$SOURCE_DIR/package-repo
+RUN mkdir --parents $PACKAGE_REPO \
+  && cp r-*/*.deb $PACKAGE_REPO/
+
+# There are two long-running pieces to an RStudio build: RStudio
+# itself and the compilation of their required 'boost' version
+# from source. So we do the 'boost' as a separate layer first.
+ENV RSTUDIO_VERSION_MAJOR=1 RSTUDIO_VERSION_MINOR=3 RSTUDIO_VERSION_PATCH=1093
+
+COPY rs-depends $SOURCE_DIR/rs-depends
+RUN $SOURCE_DIR/rs-depends > rs-depends.log 2>&1
+
+# package RStudio Server
+# see https://rstudio.com/products/rstudio/download-server/other-platforms/
+COPY server-package $SOURCE_DIR/
+RUN $SOURCE_DIR/server-package > server-package.log 2>&1
+ENV BUILD_DIR=$SOURCE_DIR/rstudio/build
+ENV PACKAGE_FILE=rstudio-server-$RSTUDIO_VERSION_MAJOR.$RSTUDIO_VERSION_MINOR.$RSTUDIO_VERSION_PATCH-arm64.deb
+RUN apt-get install -y $BUILD_DIR/$PACKAGE_FILE > package-test-install.log 2>&1
+RUN cp $BUILD_DIR/$PACKAGE_FILE $PACKAGE_REPO/

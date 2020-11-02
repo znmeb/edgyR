@@ -5,6 +5,7 @@ set -e
 apt-get update \
   && apt-get install -qqy --no-install-recommends \
     ant \
+    cmake \
     libpam0g-dev \
     libssl-dev \
     openjdk-8-jdk-headless \
